@@ -34,9 +34,9 @@ public class AppTest
         System.out.println("Test is available.");
     }
 
-    @Test
+   /* @Test
     public void test2(){
 	ability.calculate();    
-    }
+    }*/
 
 }

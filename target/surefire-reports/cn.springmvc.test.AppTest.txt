@@ -1,0 +1,18 @@
+-------------------------------------------------------------------------------
+Test set: cn.springmvc.test.AppTest
+-------------------------------------------------------------------------------
+Tests run: 2, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 3.148 s <<< FAILURE! - in cn.springmvc.test.AppTest
+test2 on test2(cn.springmvc.test.AppTest)(cn.springmvc.test.AppTest)  Time elapsed: 0.119 s  <<< FAILURE!
+org.springframework.jdbc.BadSqlGrammarException: 
+
+### Error querying database.  Cause: com.mysql.jdbc.exceptions.jdbc4.MySQLSyntaxErrorException: Table 'ghtorrent.Languages' doesn't exist
+### The error may exist in file [/root/github/target/classes/mapper/LanguageMapper.xml]
+### The error may involve defaultParameterMap
+### The error occurred while setting parameters
+### SQL: SELECT * FROM Languages;
+### Cause: com.mysql.jdbc.exceptions.jdbc4.MySQLSyntaxErrorException: Table 'ghtorrent.Languages' doesn't exist
+; bad SQL grammar []; nested exception is com.mysql.jdbc.exceptions.jdbc4.MySQLSyntaxErrorException: Table 'ghtorrent.Languages' doesn't exist
+	at cn.springmvc.test.AppTest.test2(AppTest.java:39)
+Caused by: com.mysql.jdbc.exceptions.jdbc4.MySQLSyntaxErrorException: Table 'ghtorrent.Languages' doesn't exist
+	at cn.springmvc.test.AppTest.test2(AppTest.java:39)
+

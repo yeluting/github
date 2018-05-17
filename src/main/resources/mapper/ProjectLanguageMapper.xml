@@ -49,5 +49,27 @@
     WHERE project_id = #{project_id,jdbcType=INTEGER}
   </select>
 
+  <select id="getAllProjectIds" resultType="java.lang.Integer">
+    SELECT DISTINCT project_id FROM project_languages_percent
+  </select>
+
+  <select id="getProjectLanBatch" resultType="java.lang.String">
+    select concat(project_id,'==',group_CONCAT(language SEPARATOR '##'),'==',group_CONCAT(bytes SEPARATOR '##')) FROM project_languages_percent
+    where project_id IN
+    <foreach item = "item" index = "index" collection="list" open="(" separator="," close=")">
+      #{item}
+    </foreach> group by project_id
+  </select>
+
+  <update id="updateLanguagePercentBatch" parameterType="java.util.ArrayList">
+    <foreach collection="list" item="item" index="index" separator=";">
+    UPDATE project_languages_percent SET percent = #{item.percent} WHERE project_id = #{item.projectId} and language = #{item.language}
+    </foreach>
+  </update>
+
+  <update id="updateLanguagePercent" parameterType="cn.springmvc.model.ProjectLanguage">
+      UPDATE project_languages_percent SET percent = #{item.percent}
+      WHERE project_id = #{item.projectId} and language = #{item.language}
+  </update>
 
 </mapper>

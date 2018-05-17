@@ -12,6 +12,15 @@ public class ProjectLanguage implements Serializable {
 
     private Date createdAt;
 
+    private Double percent;
+
+    public Double getPercent() {
+        return percent;
+    }
+
+    public void setPercent(Double percent) {
+        this.percent = percent;
+    }
     private static final long serialVersionUID = 1L;
 
     public Integer getProjectId() {

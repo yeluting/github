@@ -26,8 +26,8 @@ class LanguagePercentCal implements Runnable{
             ArrayList<Integer> calList;
             int calLength = -1;
             synchronized (mutex){
-                if (allProjectIds.size() > 500){
-                    calLength = 500;
+                if (allProjectIds.size() > 200){
+                    calLength = 200;
                 }else {
                     calLength = allProjectIds.size();
                 }

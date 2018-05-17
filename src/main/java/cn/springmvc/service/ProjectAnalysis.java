@@ -22,12 +22,12 @@ public class ProjectAnalysis {
         LanguagePercentCal lan = new LanguagePercentCal(projectLanguageMapper);
         new Thread(lan).start();
         new Thread(lan).start();
-        /*new Thread(lan).start();
         new Thread(lan).start();
         new Thread(lan).start();
         new Thread(lan).start();
         new Thread(lan).start();
-        new Thread(lan).start();*/
+        new Thread(lan).start();
+        new Thread(lan).start();
     }
 
 

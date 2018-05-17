@@ -36,11 +36,4 @@ public class AppTest
         //System.out.println("Test is available.");
     }
 
-    @Test
-    public void test1(){
-        projectAnalysis.test();
-        //gen.generate();
-        //System.out.println("Test is available.");
-    }
-
 }

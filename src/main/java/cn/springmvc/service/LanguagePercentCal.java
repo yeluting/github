@@ -54,7 +54,7 @@ class LanguagePercentCal implements Runnable{
                 }
 
                 for (int j = 0; j < languageTypes; j ++){
-                    bytePercent[i] = bytes[i]/(double)byteSum;
+                    bytePercent[j] = bytes[j]/(double)byteSum;
                     ProjectLanguage temp = new ProjectLanguage();
                     temp.setProjectId(Integer.valueOf(strs[0]));
                     temp.setLanguage(languages[j]);

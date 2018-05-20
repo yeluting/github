@@ -2,6 +2,8 @@ package cn.springmvc.service;
 
 import cn.springmvc.dao.ProjectLanguageMapper;
 import cn.springmvc.model.ProjectLanguage;
+import org.springframework.beans.factory.annotation.Autowired;
+
 import java.util.ArrayList;
 
 /**
@@ -11,12 +13,13 @@ class LanguagePercentCal implements Runnable{
 
     private ArrayList<Integer> allProjectIds;
     private Object mutex = new Object();
+
     ProjectLanguageMapper projectLanguageMapper;
 
     public LanguagePercentCal(ProjectLanguageMapper projectLanguageMapper){
+        this.projectLanguageMapper = projectLanguageMapper;
         allProjectIds = projectLanguageMapper.getAllProjectIds();
         System.out.println(allProjectIds.size());
-        this.projectLanguageMapper = projectLanguageMapper;
     }
 
     public void run() {
@@ -33,11 +36,13 @@ class LanguagePercentCal implements Runnable{
                 }
                 calList = new ArrayList<Integer>(allProjectIds.subList(0,calLength));
                 allProjectIds.subList(0,calLength).clear();
-                mutex.notify();
+                //allProjectIds.removeAll(calList);
             }
+
+            ArrayList<ProjectLanguage> toUpdate = new ArrayList<ProjectLanguage>();
             //这边再加一些处理的代码
             ArrayList<String> projectLans= projectLanguageMapper.getProjectLanBatch(calList);
-            ArrayList<ProjectLanguage> toUpdate = new ArrayList<ProjectLanguage>();
+
             int size = projectLans.size();
 
             for (int i = 0; i < size; i ++){

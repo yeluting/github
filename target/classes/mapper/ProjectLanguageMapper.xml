@@ -50,7 +50,7 @@
   </select>
 
   <select id="getAllProjectIds" resultType="java.lang.Integer">
-    SELECT DISTINCT project_id FROM project_languages_percent
+    SELECT DISTINCT project_id FROM project_languages_percent limit 100
   </select>
 
   <select id="getProjectLanBatch" resultType="java.lang.String">

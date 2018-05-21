@@ -85,8 +85,16 @@ class LanguagePercentCal implements Runnable{
                     }
                 }
             }
+
             if (toUpdate.size() > 0) {
-                projectLanguageMapper.insertProjectLanguageFilter1(toUpdate);
+                try {
+                    projectLanguageMapper.insertProjectLanguageFilter1(toUpdate);
+                }catch (Exception e){
+                    for (int cal:calList){
+                        System.out.print(cal +";");
+                    }
+                    System.out.println();
+                }
             }
             //projectLanguageMapper.updateLanguagePercentBatch(toUpdate);
         }

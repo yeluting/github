@@ -27,7 +27,6 @@ class LanguagePercentCal implements Runnable{
     }
 
     public void run() {
-        //System.out.println("test");
         int k =0;
         while (allProjectIds.size() > 0){
             System.out.println(k++);

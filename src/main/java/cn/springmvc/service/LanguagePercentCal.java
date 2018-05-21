@@ -63,25 +63,31 @@ class LanguagePercentCal implements Runnable{
                     byteSum += bytes[j];
                 }
 
-                if (byteSum == 0){
+                if (byteSum == 0 || languages.length!= byteStr.length){
                     continue;
                 }
                 for (int j = 0; j < languageTypes; j ++){
-                    bytePercent[j] = bytes[j]/(double)byteSum;
-                    ProjectLanguage temp = new ProjectLanguage();
-                    temp.setProjectId(Integer.valueOf(strs[0]));
-                    temp.setLanguage(languages[j]);
-                    temp.setPercent(bytePercent[j]);
-                    temp.setBytes(bytes[j]);
                     try {
-                        temp.setCreatedAt(sdf.parse(strs[3]));
-                    } catch (ParseException e) {
-                        e.printStackTrace();
+                        bytePercent[j] = bytes[j]/(double)byteSum;
+                        ProjectLanguage temp = new ProjectLanguage();
+                        temp.setProjectId(Integer.valueOf(strs[0]));
+                        temp.setLanguage(languages[j]);
+                        temp.setPercent(bytePercent[j]);
+                        temp.setBytes(bytes[j]);
+                        try {
+                            temp.setCreatedAt(sdf.parse(strs[3]));
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
+                        toUpdate.add(temp);
+                    }catch (Exception e){
+                        System.out.println("projectId:"+strs[0]);
                     }
-                    toUpdate.add(temp);
                 }
             }
-            projectLanguageMapper.insertProjectLanguageFilter1(toUpdate);
+            if (toUpdate.size() > 0) {
+                projectLanguageMapper.insertProjectLanguageFilter1(toUpdate);
+            }
             //projectLanguageMapper.updateLanguagePercentBatch(toUpdate);
         }
     }

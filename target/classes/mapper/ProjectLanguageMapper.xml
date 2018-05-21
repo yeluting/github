@@ -54,7 +54,7 @@
   </select>
 
   <select id="getProjectIdsFilter1" resultType="java.lang.Integer">
-    SELECT id FROM projects_1
+    SELECT id FROM projects_1 limit 100
   </select>
 
   <select id="getProjectLanBatch" resultType="java.lang.String">

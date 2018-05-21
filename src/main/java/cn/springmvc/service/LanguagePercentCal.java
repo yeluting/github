@@ -4,7 +4,10 @@ import cn.springmvc.dao.ProjectLanguageMapper;
 import cn.springmvc.model.ProjectLanguage;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * Created by YLT on 2018/5/5.
@@ -18,7 +21,8 @@ class LanguagePercentCal implements Runnable{
 
     public LanguagePercentCal(ProjectLanguageMapper projectLanguageMapper){
         this.projectLanguageMapper = projectLanguageMapper;
-        allProjectIds = projectLanguageMapper.getAllProjectIds();
+       // allProjectIds = projectLanguageMapper.getAllProjectIds();
+        allProjectIds = projectLanguageMapper.getProjectIdsFilter1();
         System.out.println(allProjectIds.size());
     }
 
@@ -42,13 +46,14 @@ class LanguagePercentCal implements Runnable{
             ArrayList<ProjectLanguage> toUpdate = new ArrayList<ProjectLanguage>();
             //这边再加一些处理的代码
             ArrayList<String> projectLans= projectLanguageMapper.getProjectLanBatch(calList);
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
             int size = projectLans.size();
 
             for (int i = 0; i < size; i ++){
                 String[] strs = projectLans.get(i).split("==");
-                String [] languages = strs[1].split("##");
-                String[] byteStr = strs[2].split("##");
+                String [] languages = strs[1].split("%%");
+                String[] byteStr = strs[2].split("%%");
                 int languageTypes = byteStr.length;
                 int byteSum= 0;
                 int [] bytes = new int[languageTypes];
@@ -67,10 +72,17 @@ class LanguagePercentCal implements Runnable{
                     temp.setProjectId(Integer.valueOf(strs[0]));
                     temp.setLanguage(languages[j]);
                     temp.setPercent(bytePercent[j]);
+                    temp.setBytes(bytes[j]);
+                    try {
+                        temp.setCreatedAt(sdf.parse(strs[3]));
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
                     toUpdate.add(temp);
                 }
             }
-            projectLanguageMapper.updateLanguagePercentBatch(toUpdate);
+            projectLanguageMapper.insertProjectLanguageFilter1(toUpdate);
+            //projectLanguageMapper.updateLanguagePercentBatch(toUpdate);
         }
     }
 }

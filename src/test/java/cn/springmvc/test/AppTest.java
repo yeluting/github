@@ -31,7 +31,7 @@ public class AppTest
 
     @Test
     public void test(){
-        projectAnalysis.projectFilter1();
+        projectAnalysis.calculate();
         //gen.generate();
         //System.out.println("Test is available.");
     }

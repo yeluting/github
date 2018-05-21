@@ -28,7 +28,7 @@ public class ProjectAnalysis {
     public void calculate(){
         LanguagePercentCal lan = new LanguagePercentCal(projectLanguageMapper);
 
-        Thread[] threads = new Thread[8];
+        Thread[] threads = new Thread[6];
         for (int i=0;i<threads.length;i++) {
             threads[i] = new Thread(lan);
             threads[i].start();

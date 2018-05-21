@@ -17,8 +17,13 @@ public interface ProjectLanguageMapper {
 
     ArrayList<Integer> getAllProjectIds();
 
+    ArrayList<Integer> getProjectIdsFilter1();
+
     ArrayList<String> getProjectLanBatch(ArrayList<Integer> projects);
 
     void updateLanguagePercentBatch(ArrayList<ProjectLanguage> toUpdate);
+
     void updateLanguagePercent(@Param("item") ProjectLanguage item);
+
+    void insertProjectLanguageFilter1(ArrayList<ProjectLanguage> projectLanguages);
 }

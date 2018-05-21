@@ -15,7 +15,7 @@
     </insert>
 
     <select id="getProjectsFromWatcherNum" resultType="java.lang.Integer">
-        SELECT repo_id FROM watcher_num where watcher_num > 5 limit 100
+        SELECT repo_id FROM watcher_num where watcher_num > 5
     </select>
 
     <select id="getProjectBatch" resultType="cn.springmvc.model.Project">

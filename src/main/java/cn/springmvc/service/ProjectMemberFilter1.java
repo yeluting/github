@@ -37,6 +37,12 @@ public class ProjectMemberFilter1 implements Runnable {
 
             //这边再加一些处理的代码
             ArrayList<ProjectMember> projectLans = projectMemberMapper.getProjectMemberBatch(calList);
+            for (int i = 0 ; i < projectLans.size();){
+                if (projectLans.get(i) == null){
+                    projectLans.remove(i);
+                }
+                i++;
+            }
             projectMemberMapper.insertProjectMemberFilter1(projectLans);
         }
     }

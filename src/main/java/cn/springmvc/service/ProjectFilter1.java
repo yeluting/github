@@ -9,13 +9,13 @@ import java.util.ArrayList;
 /**
  * Created by YLT on 2018/5/21.
  */
-class ProjectFilter implements Runnable{
+class ProjectFilter1 implements Runnable{
     ProjectFilterMapper projectFilterMapper;
     ArrayList<Integer> projectWatchersLT5;
     private Object mutex = new Object();
 
     //从初始表project中选取watcher_num > 5的项目,并且fork=null
-    public ProjectFilter(ProjectFilterMapper projectFilterMapper){
+    public ProjectFilter1(ProjectFilterMapper projectFilterMapper){
         this.projectFilterMapper = projectFilterMapper;
         projectWatchersLT5 = projectFilterMapper.getProjectsFromWatcherNum();
         System.out.print(projectWatchersLT5.size());
@@ -41,6 +41,5 @@ class ProjectFilter implements Runnable{
             ArrayList<Project> projectLans= projectFilterMapper.getProjectBatch(calList);
             this.projectFilterMapper.insertProjects_1(projectLans);
         }
-
     }
 }

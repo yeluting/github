@@ -79,4 +79,26 @@
     where repo_id = #{repoId,jdbcType=INTEGER}
       and user_id = #{userId,jdbcType=INTEGER}
   </update>
+
+  <select id="getProjectSFilter1" resultType="java.lang.Integer">
+    select DISTINCT project_id FROM project_languages_filter1
+  </select>
+
+  <select id="getProjectMemberBatch" resultType="cn.springmvc.model.ProjectMember">
+    select * FROM project_members
+    where project_id IN
+    <foreach item = "item" index = "index" collection="list" open="(" separator="," close=")">
+      #{item}
+    </foreach>
+  </select>
+
+  <insert id="insertProjectMemberFilter1" parameterType="cn.springmvc.model.ProjectMember">
+    insert into project_members_filter1 (repo_id, user_id, created_at, ext_ref_id)
+    values
+    <foreach collection="list" item="item" index="index" separator=",">
+      (#{item.repo_id}, #{item.user_id}, #{item.created_at},
+      #{item.ext_ref_id})
+    </foreach>
+  </insert>
+
 </mapper>

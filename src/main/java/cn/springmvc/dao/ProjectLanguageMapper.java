@@ -26,4 +26,8 @@ public interface ProjectLanguageMapper {
     void updateLanguagePercent(@Param("item") ProjectLanguage item);
 
     void insertProjectLanguageFilter1(ArrayList<ProjectLanguage> projectLanguages);
+
+    ArrayList<HashMap<Object,Object>> getLanguagePercentTotal();
+
+    void deleteProjectWOLan(@Param("projectId") int projectId);
 }

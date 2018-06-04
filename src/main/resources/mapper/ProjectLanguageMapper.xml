@@ -83,4 +83,13 @@
     (#{item.projectId}, #{item.language}, #{item.bytes},#{item.createdAt},#{item.percent})
     </foreach>
   </insert>
+
+  <select id="getLanguagePercentTotal" resultType="java.util.HashMap">
+    SELECT project_id as projectId,sum(percent) as total FROM project_languages_filter1 group by project_id
+  </select>
+
+
+  <delete id="deleteProjectWOLan" parameterType="int">
+    delete from project_languages_filter1 where project_id=#{projectId}
+  </delete>
 </mapper>

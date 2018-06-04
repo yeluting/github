@@ -8,6 +8,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 
 /**
  * Created by YLT on 2018/5/5.
@@ -97,6 +98,22 @@ class LanguagePercentCal implements Runnable{
                 }
             }
             //projectLanguageMapper.updateLanguagePercentBatch(toUpdate);
+        }
+    }
+
+
+    //删除被筛选出项目中，无language占比信息的project
+    public void deleteProjectWOLanguage(){
+        ArrayList<HashMap<Object ,Object >> projectWithPercentTotal = projectLanguageMapper.getLanguagePercentTotal();
+
+        int length = projectWithPercentTotal.size();
+        for (int i = 0 ; i < length; i ++){
+            int projectId = Integer.parseInt((projectWithPercentTotal.get(i).get("projectId").toString()));
+            double percentTotal = Double.parseDouble(projectWithPercentTotal.get(i).get("total").toString());
+
+            if (percentTotal < 0.5){
+                projectLanguageMapper.deleteProjectWOLan(projectId);
+            }
         }
     }
 }

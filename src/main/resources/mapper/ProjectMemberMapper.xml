@@ -96,8 +96,7 @@
     insert into project_members_filter1 (repo_id, user_id, created_at, ext_ref_id)
     values
     <foreach collection="list" item="item" index="index" separator=",">
-      (#{item.repoId}, #{item.userId}, #{item.createdAt},
-      #{item.extRefId})
+      (#{item.repoId}, #{item.userId}, #{item.createdAt},#{item.extRefId})
     </foreach>
   </insert>
 

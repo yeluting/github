@@ -36,7 +36,7 @@ public class CommitsFilter1 implements Runnable{
             }
 
             ArrayList<Commit> commitArr = commitsFilterMapper.getCommitsFilter1(calList);
-
+            System.out.println(commitArr.size());
             commitsFilterMapper.insertProjectCommitFilter1(commitArr);
         }
     }

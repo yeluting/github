@@ -34,6 +34,7 @@ public class CommitsFilter1 implements Runnable{
                 calList = new ArrayList<Integer>(projectIdFilter1.subList(0, calLength));
                 projectIdFilter1.subList(0, calLength).clear();
             }
+            System.out.println("end");
 
             ArrayList<Commit> commitArr = commitsFilterMapper.getCommitsFilter1(calList);
             System.out.println(commitArr.size());

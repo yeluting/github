@@ -26,8 +26,8 @@ public class CommitsFilter1 implements Runnable{
             int calLength = -1;
             ArrayList<Integer> calList;
             synchronized(mutex){
-                if (projectIdFilter1.size() > 1000) {
-                    calLength = 1000;
+                if (projectIdFilter1.size() > 10) {
+                    calLength = 10;
                 } else {
                     calLength = projectIdFilter1.size();
                 }

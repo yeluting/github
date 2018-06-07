@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.springmvc.dao.CommitsFilterMapper">
+
+    <select id="getProjectSFilter1" resultType="java.lang.Integer">
+        select DISTINCT project_id FROM project_languages_filter1
+    </select>
+
+    <select id="getCommitsFilter1" resultType="cn.springmvc.model.Commit">
+        select * FROM commits
+        where project_id IN
+        <foreach item = "item" index = "index" collection="list" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
+
+    <insert id="insertProjectMemberFilter1" parameterType="cn.springmvc.model.Commit">
+        insert into commits_filter1 (id, sha, author_id, committer_id,project_id,created_at)
+        values <foreach collection="list" item="item" index="index" separator=",">
+        (#{item.id}, #{item.sha}, #{item.authorId},#{item.committerId},#{item.projectId},#{item.createdAt})
+    </foreach>
+    </insert>
+
+
+    </mapper>

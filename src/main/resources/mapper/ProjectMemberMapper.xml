@@ -85,7 +85,7 @@
   </select>
 
   <select id="getProjectMemberBatch" resultType="cn.springmvc.model.ProjectMember">
-    select * FROM project_members
+    select repo_id as repoId, user_id as userId, created_at as createdAt, ext_ref_id as extRefId  FROM project_members
     where repo_id IN
     <foreach item = "item" index = "index" collection="list" open="(" separator="," close=")">
       #{item}
@@ -94,8 +94,7 @@
 
   <insert id="insertProjectMemberFilter1" parameterType="cn.springmvc.model.ProjectMember">
     insert into project_members_filter1 (repo_id, user_id, created_at, ext_ref_id)
-    values
-    <foreach collection="list" item="item" index="index" separator=",">
+    values <foreach collection="list" item="item" index="index" separator=",">
       (#{item.repoId}, #{item.userId}, #{item.createdAt},#{item.extRefId})
     </foreach>
   </insert>

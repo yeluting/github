@@ -1,5 +1,6 @@
 package cn.springmvc.service;
 
+import cn.springmvc.dao.CommitsFilterMapper;
 import cn.springmvc.dao.ProjectFilterMapper;
 import cn.springmvc.dao.ProjectLanguageMapper;
 import cn.springmvc.dao.ProjectMemberMapper;
@@ -21,6 +22,9 @@ public class ProjectAnalysis {
 
     @Autowired
     public ProjectMemberMapper projectMemberMapper;
+
+    @Autowired
+    public CommitsFilterMapper commitsFilterMapper;
 
     //计算项目语言占比
     public void languageCalculate(){
@@ -64,7 +68,7 @@ public class ProjectAnalysis {
     //获得filter1方式中筛选获得的project中，project的members。
     public void getProjectMembersFilter1(){
         ProjectMemberFilter1 projectMemberFilter1 = new ProjectMemberFilter1(projectMemberMapper);
-        Thread[] threads = new Thread[6];
+        Thread[] threads = new Thread[1];
         for (int i=0;i<threads.length;i++) {
             threads[i] = new Thread(projectMemberFilter1);
             threads[i].start();
@@ -77,6 +81,24 @@ public class ProjectAnalysis {
                 e.printStackTrace();
             }
         }
+    }
+
+    public void getProjectCommitsFilter1(){
+        CommitsFilter1 commitsFilter1 = new CommitsFilter1(commitsFilterMapper);
+        Thread[] threads = new Thread[6];
+        for (int i=0;i<threads.length;i++) {
+            threads[i] = new Thread(commitsFilter1);
+            threads[i].start();
+        }
+
+        for (Thread thread: threads ) {
+            try {
+                thread.join();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+
     }
 
 }

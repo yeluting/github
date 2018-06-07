@@ -22,7 +22,6 @@ public class ProjectMemberFilter1 implements Runnable {
     public void run() {
         int k = 0;
         while (projectFilter1.size() > 0) {
-            System.out.println(k++);
             ArrayList<Integer> calList;
             int calLength = -1;
             synchronized (mutex) {
@@ -36,14 +35,12 @@ public class ProjectMemberFilter1 implements Runnable {
             }
 
             //这边再加一些处理的代码
-            ArrayList<ProjectMember> projectLans = projectMemberMapper.getProjectMemberBatch(calList);
-            for (int i = 0 ; i < projectLans.size();){
-                if (projectLans.get(i) == null){
-                    projectLans.remove(i);
-                }
-                i++;
+            ArrayList<ProjectMember> projectMembers = projectMemberMapper.getProjectMemberBatch(calList);
+
+            if (projectMembers.size()>0) {
+                projectMemberMapper.insertProjectMemberFilter1(projectMembers);
+                System.out.println(projectMembers.size());
             }
-            projectMemberMapper.insertProjectMemberFilter1(projectLans);
         }
     }
 

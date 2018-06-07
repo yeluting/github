@@ -22,7 +22,7 @@ public class CommitsFilter1 implements Runnable{
     public void run(){
         int k = 0;
         while (projectIdFilter1.size() > 0){
-            System.out.println(++k);
+            //System.out.println(++k);
             int calLength = -1;
             ArrayList<Integer> calList;
             synchronized(mutex){
@@ -34,7 +34,7 @@ public class CommitsFilter1 implements Runnable{
                 calList = new ArrayList<Integer>(projectIdFilter1.subList(0, calLength));
                 projectIdFilter1.subList(0, calLength).clear();
             }
-            System.out.println("end");
+           //System.out.println("end");
 
             ArrayList<Commit> commitArr = commitsFilterMapper.getCommitsFilter1(calList);
             System.out.println(commitArr.size());

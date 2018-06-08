@@ -24,6 +24,7 @@ public class Cooperation {
         for(int p = 0; p < projects.size(); p++){
             int project = projects.indexOf(p);
             ArrayList<Integer> members = cooperationMapper.selectMembersByProjectId(project);
+            if(members.size() <= 1) continue;
             System.out.printf("members:%d\n", members.size());
             for(int i = 0; i < members.size(); i++){
                 Map<Integer, Integer> memberMap = relation.get(members.indexOf(i));

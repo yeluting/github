@@ -54,7 +54,7 @@ public class Cooperation {
                     }
                 }
             }
-            if(count >= size || ((relation.size() >0) && (p == projects.size() - 1))){
+            if(count >= size || ((count >0) && (p == projects.size() - 1))){
                 System.out.printf("Size:%d\n", count);
                 List<Map<String, Integer>> output = new ArrayList<Map<String, Integer>>();
                 for(Map.Entry<Integer, Map<Integer, Integer>> entry : relation.entrySet()){

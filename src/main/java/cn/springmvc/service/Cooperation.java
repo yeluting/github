@@ -26,6 +26,7 @@ public class Cooperation {
             int project = projects.get(p);
             ArrayList<Integer> members = cooperationMapper.selectMembersByProjectId(project);
             if(members.size() <= 1) continue;
+            System.out.println(members);
             for(int i = 0; i < members.size(); i++){
                 Map<Integer, Integer> memberMap = relation.get(members.get(i));
                 if(memberMap == null) {
@@ -35,6 +36,7 @@ public class Cooperation {
                 for(int j = i + 1; j < members.size(); j++){
                     Integer value = memberMap.get(members.get(j));
                     if(value == null){
+                        count += 2;
                         memberMap.put(members.get(j), 1);
                         relation.put(members.get(i), memberMap);
                         Map<Integer, Integer> tmp = relation.get(members.get(j));
@@ -69,7 +71,6 @@ public class Cooperation {
                 relation.clear();
                 count = 0;
             }
-            System.out.printf("Relation Size: %d\n", relation.size());
         }
     }
 }

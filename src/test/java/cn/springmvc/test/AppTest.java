@@ -1,6 +1,7 @@
 package cn.springmvc.test;
 
 import cn.springmvc.service.Ability;
+import cn.springmvc.service.Cooperation;
 import cn.springmvc.service.Gen;
 //import cn.springmvc.service.ProjectAnalysis;
 import cn.springmvc.service.ProjectAnalysis;
@@ -29,10 +30,16 @@ public class AppTest
     @Autowired
     private ProjectAnalysis projectAnalysis;
 
+    @Autowired
+    private Cooperation cooperation;
+
     @Test
     public void test(){
-        projectAnalysis.getProjectCommitsFilter1();
-        //gen.generate();
-        //System.out.println("Test is available.");
+        cooperation.calculate();
+//        projectAnalysis.getProjectCommitsFilter1();
+//        gen.generate();
+//        System.out.println("Test is available.");
     }
+
+
 }

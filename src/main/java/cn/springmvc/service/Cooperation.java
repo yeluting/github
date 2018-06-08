@@ -22,7 +22,7 @@ public class Cooperation {
         relation = new HashMap<Integer, Map<Integer, Integer>>();
         ArrayList<Integer> projects = cooperationMapper.selectProjectId_Filter1();
         for(int p = 0; p < projects.size(); p++){
-            int project = projects.indexOf(p);
+            int project = projects.get(p);
             ArrayList<Integer> members = cooperationMapper.selectMembersByProjectId(project);
             if(members.size() <= 1) continue;
             System.out.printf("members:%d\n", members.size());
@@ -33,28 +33,28 @@ public class Cooperation {
                 }
             }
             for(int i = 0; i < members.size(); i++){
-                Map<Integer, Integer> memberMap = relation.get(members.indexOf(i));
+                Map<Integer, Integer> memberMap = relation.get(members.get(i));
                 if(memberMap == null) {
                     memberMap = new HashMap<Integer, Integer>();
-                    relation.put(members.indexOf(i), memberMap);
+                    relation.put(members.get(i), memberMap);
                 }
                 for(int j = i + 1; j < members.size(); j++){
-                    Integer value = memberMap.get(members.indexOf(j));
+                    Integer value = memberMap.get(members.get(j));
                     if(value == null){
-                        memberMap.put(members.indexOf(j), 1);
-                        relation.put(members.indexOf(i), memberMap);
-                        Map<Integer, Integer> tmp = relation.get(members.indexOf(j));
+                        memberMap.put(members.get(j), 1);
+                        relation.put(members.get(i), memberMap);
+                        Map<Integer, Integer> tmp = relation.get(members.get(j));
                         if(tmp == null){
                             tmp = new HashMap<Integer, Integer>();
-                            tmp.put(members.indexOf(i), 1);
-                            relation.put(members.indexOf(j), tmp);
+                            tmp.put(members.get(i), 1);
+                            relation.put(members.get(j), tmp);
                         }else{
-                            tmp.put(members.indexOf(i), 1);
+                            tmp.put(members.get(i), 1);
                         }
                     }else{
-                        memberMap.put(members.indexOf(j), value + 1);
-                        relation.put(members.indexOf(i), memberMap);
-                        relation.get(members.indexOf(j)).put(members.indexOf(i), value + 1);
+                        memberMap.put(members.get(j), value + 1);
+                        relation.put(members.get(i), memberMap);
+                        relation.get(members.get(j)).put(members.get(i), value + 1);
                     }
                 }
             }

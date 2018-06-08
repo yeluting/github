@@ -16,15 +16,10 @@ public class Cooperation {
     @Autowired
     private CooperationMapper cooperationMapper;
 
-    private int size;
     private Map<Integer, Map<Integer, Integer>> relation;
 
-    public Cooperation(int size){
+    public void calculate(int size){
         relation = new HashMap<Integer, Map<Integer, Integer>>();
-        this.size = size;
-    }
-
-    public void calculate(){
         ArrayList<Integer> projects = cooperationMapper.selectProjectId_Filter1();
         for(int p = 0; p < projects.size(); p++){
             int project = projects.indexOf(p);

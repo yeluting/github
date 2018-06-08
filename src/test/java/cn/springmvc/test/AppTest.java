@@ -35,7 +35,7 @@ public class AppTest
 
     @Test
     public void test(){
-        cooperation.calculate();
+        cooperation.calculate(100);
 //        projectAnalysis.getProjectCommitsFilter1();
 //        gen.generate();
 //        System.out.println("Test is available.");

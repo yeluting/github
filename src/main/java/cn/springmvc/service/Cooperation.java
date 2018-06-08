@@ -24,6 +24,7 @@ public class Cooperation {
         for(int p = 0; p < projects.size(); p++){
             int project = projects.indexOf(p);
             ArrayList<Integer> members = cooperationMapper.selectMembersByProjectId(project);
+            System.out.printf("members:%d\n", members.size());
             for(int i = 0; i < members.size(); i++){
                 Map<Integer, Integer> memberMap = relation.get(members.indexOf(i));
                 if(memberMap == null) {
@@ -63,8 +64,9 @@ public class Cooperation {
                     }
                 }
                 new Thread(new CooperationDB(output, this.cooperationMapper)).start();
+                relation.clear();
             }
-            relation.clear();
+            System.out.printf("Relation Size: %d\n", relation.size());
         }
     }
 }
@@ -82,6 +84,7 @@ class CooperationDB implements Runnable{
     }
 
     public void run(){
+        System.out.println("Saving...");
         cooperationMapper.insertCooperationBatch(relation);
     }
 

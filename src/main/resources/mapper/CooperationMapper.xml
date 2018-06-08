@@ -9,7 +9,7 @@
 
     <select id="selectMembersByProjectId" parameterType="java.lang.Integer">
         SELECT committer_id FROM project_committer_test
-        WHERE project_id = #{projectId,jdbcType=INTEGER}
+        WHERE project_id = #{project_Id,jdbcType=INTEGER}
     </select>
 
     <insert id="insertCooperationBatch" parameterType="java.util.Map">

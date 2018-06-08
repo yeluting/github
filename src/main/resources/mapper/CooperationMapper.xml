@@ -8,12 +8,12 @@
     </select>
 
     <select id="selectMembersByProjectId" parameterType="java.lang.Integer" resultType="java.lang.Integer">
-        SELECT committer_id FROM project_committer_test
+        SELECT committer_id FROM project_committer
         WHERE project_id = #{project_Id,jdbcType=INTEGER}
     </select>
 
     <insert id="insertCooperationBatch" parameterType="java.util.Map">
-        INSERT INTO Cooperation_test VALUES
+        INSERT INTO Cooperation VALUES
         <foreach collection="list" item="item" index="index" separator=",">
             (#{item.userA},#{item.userB},#{item.cop})
         </foreach>

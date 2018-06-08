@@ -26,6 +26,12 @@ public class Cooperation {
             ArrayList<Integer> members = cooperationMapper.selectMembersByProjectId(project);
             if(members.size() <= 1) continue;
             System.out.printf("members:%d\n", members.size());
+            for(Map.Entry<Integer, Map<Integer, Integer>> entry : relation.entrySet()){
+                int userA = entry.getKey();
+                for(Map.Entry<Integer, Integer> en : entry.getValue().entrySet()){
+                    System.out.printf("%d %d %d\n", userA, en.getKey(), en.getValue());
+                }
+            }
             for(int i = 0; i < members.size(); i++){
                 Map<Integer, Integer> memberMap = relation.get(members.indexOf(i));
                 if(memberMap == null) {

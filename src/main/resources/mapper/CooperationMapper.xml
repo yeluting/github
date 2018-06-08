@@ -15,7 +15,7 @@
     <insert id="insertCooperationBatch" parameterType="java.util.Map">
         INSERT INTO Cooperation_test VALUES
         <foreach collection="list" item="item" index="index" separator=",">
-            (#{userA},#{userB},#{cop})
+            (#{item.userA},#{item.userB},#{item.cop})
         </foreach>
         ON DUPLICATE KEY
         UPDATE cop = cop + VALUES(cop)

@@ -19,19 +19,13 @@ public class Cooperation {
     private Map<Integer, Map<Integer, Integer>> relation;
 
     public void calculate(int size){
+        int count = 0;
         relation = new HashMap<Integer, Map<Integer, Integer>>();
         ArrayList<Integer> projects = cooperationMapper.selectProjectId_Filter1();
         for(int p = 0; p < projects.size(); p++){
             int project = projects.get(p);
             ArrayList<Integer> members = cooperationMapper.selectMembersByProjectId(project);
             if(members.size() <= 1) continue;
-            System.out.printf("members:%d\n", members.size());
-            for(Map.Entry<Integer, Map<Integer, Integer>> entry : relation.entrySet()){
-                int userA = entry.getKey();
-                for(Map.Entry<Integer, Integer> en : entry.getValue().entrySet()){
-                    System.out.printf("%d %d %d\n", userA, en.getKey(), en.getValue());
-                }
-            }
             for(int i = 0; i < members.size(); i++){
                 Map<Integer, Integer> memberMap = relation.get(members.get(i));
                 if(memberMap == null) {
@@ -58,7 +52,8 @@ public class Cooperation {
                     }
                 }
             }
-            if(relation.size() >= size || ((relation.size() >0) && (p == projects.size() - 1))){
+            if(count >= size || ((relation.size() >0) && (p == projects.size() - 1))){
+                System.out.printf("Size:%d\n", count);
                 List<Map<String, Integer>> output = new ArrayList<Map<String, Integer>>();
                 for(Map.Entry<Integer, Map<Integer, Integer>> entry : relation.entrySet()){
                     int userA = entry.getKey();
@@ -72,6 +67,7 @@ public class Cooperation {
                 }
                 new Thread(new CooperationDB(output, this.cooperationMapper)).start();
                 relation.clear();
+                count = 0;
             }
             System.out.printf("Relation Size: %d\n", relation.size());
         }
@@ -91,7 +87,7 @@ class CooperationDB implements Runnable{
     }
 
     public void run(){
-        System.out.println("Saving...");
+        System.out.println("Saving.");
         cooperationMapper.insertCooperationBatch(relation);
     }
 

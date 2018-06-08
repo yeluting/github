@@ -7,7 +7,7 @@
         FROM project_languages_filter1
     </select>
 
-    <select id="selectMembersByProjectId" parameterType="java.lang.Integer">
+    <select id="selectMembersByProjectId" parameterType="java.lang.Integer" resultType="java.lang.Integer">
         SELECT committer_id FROM project_committer_test
         WHERE project_id = #{project_Id,jdbcType=INTEGER}
     </select>

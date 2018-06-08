@@ -10,7 +10,7 @@ public interface CooperationMapper {
 
     ArrayList<Integer> selectProjectId_Filter1();
 
-    ArrayList<Integer> selectMembersByProjectId(@Param("project_id") Integer projectId);
+    ArrayList<Integer> selectMembersByProjectId(@Param("project_Id") Integer projectId);
 
     void insertCooperationBatch(List<Map<String, Integer>> coop);
 

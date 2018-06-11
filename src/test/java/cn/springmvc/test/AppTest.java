@@ -1,10 +1,7 @@
 package cn.springmvc.test;
 
-import cn.springmvc.service.Ability;
-import cn.springmvc.service.Cooperation;
-import cn.springmvc.service.Gen;
+import cn.springmvc.service.*;
 //import cn.springmvc.service.ProjectAnalysis;
-import cn.springmvc.service.ProjectAnalysis;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,9 +30,13 @@ public class AppTest
     @Autowired
     private Cooperation cooperation;
 
+    @Autowired
+    private Organization organization;
+
     @Test
     public void test(){
-        cooperation.calculate(10000, 20);
+//        cooperation.calculate(10000, 20);
+        organization.calculate(10000, 20);
 //        projectAnalysis.getProjectCommitsFilter1();
 //        gen.generate();
 //        System.out.println("Test is available.");

@@ -1,6 +1,5 @@
 package cn.springmvc.service;
 
-import cn.springmvc.dao.CooperationMapper;
 import cn.springmvc.dao.OrganizationMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

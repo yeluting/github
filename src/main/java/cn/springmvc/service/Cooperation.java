@@ -18,7 +18,7 @@ public class Cooperation {
 
     private Map<Integer, Map<Integer, Integer>> relation;
 
-    public void calculate(int size){
+    public void calculate(int size, int max_thread){
         int count = 0;
         relation = new HashMap<Integer, Map<Integer, Integer>>();
         ArrayList<Integer> projects = cooperationMapper.selectProjectId_Filter1();
@@ -65,10 +65,12 @@ public class Cooperation {
                         tmp.put("cop", en.getValue());
                         output.add(tmp);
                         csize++;
-                        if(csize >= size)
+                        if(csize >= size) {
+                            while(Thread.activeCount() >= max_thread);
                             new Thread(new CooperationDB(output, this.cooperationMapper)).start();
-                        csize = 0;
-                        output.clear();
+                            csize = 0;
+                            output.clear();
+                        }
                     }
                 }
                 if(csize > 0)

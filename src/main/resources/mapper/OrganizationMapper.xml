@@ -13,7 +13,7 @@
     </select>
 
     <insert id="insertOrganizationBatch" parameterType="java.util.Map">
-        INSERT INTO Cooperation VALUES
+        INSERT INTO Organization VALUES
         <foreach collection="list" item="item" index="index" separator=",">
             (#{item.userA},#{item.userB},#{item.org})
         </foreach>

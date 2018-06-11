@@ -25,8 +25,6 @@ public class Cooperation {
         for(int p = 0; p < projects.size(); p++){
             int project = projects.get(p);
             ArrayList<Integer> members = cooperationMapper.selectMembersByProjectId(project);
-            if(members.size() > 1)
-                System.out.println(members);
             for(int i = 0; i < members.size(); i++){
                 Map<Integer, Integer> memberMap = relation.get(members.get(i));
                 if(memberMap == null) {
@@ -55,8 +53,9 @@ public class Cooperation {
                 }
             }
             if(count >= size || ((count >0) && (p == projects.size() - 1))){
-                System.out.printf("Size:%d\n", count);
+//                System.out.printf("Size:%d\n", count);
                 List<Map<String, Integer>> output = new ArrayList<Map<String, Integer>>();
+                int csize = 0;
                 for(Map.Entry<Integer, Map<Integer, Integer>> entry : relation.entrySet()){
                     int userA = entry.getKey();
                     for(Map.Entry<Integer, Integer> en : entry.getValue().entrySet()){
@@ -65,9 +64,15 @@ public class Cooperation {
                         tmp.put("userB", en.getKey());
                         tmp.put("cop", en.getValue());
                         output.add(tmp);
+                        csize++;
+                        if(csize >= size)
+                            new Thread(new CooperationDB(output, this.cooperationMapper)).start();
+                        csize = 0;
+                        output.clear();
                     }
                 }
-                new Thread(new CooperationDB(output, this.cooperationMapper)).start();
+                if(csize > 0)
+                    new Thread(new CooperationDB(output, this.cooperationMapper)).start();
                 relation.clear();
                 count = 0;
             }
@@ -83,12 +88,14 @@ class CooperationDB implements Runnable{
     private List<Map<String, Integer>> relation;
 
     public CooperationDB(List<Map<String, Integer>> relation, CooperationMapper cooperationMapper){
-        this.relation = relation;
+        this.relation = new ArrayList<Map<String, Integer>>();
+       for(Map<String, Integer> rel : relation)
+           this.relation.add(rel);
         this.cooperationMapper = cooperationMapper;
     }
 
     public void run(){
-        System.out.println("Saving.");
+//        System.out.println("Saving.");
         cooperationMapper.insertCooperationBatch(relation);
     }
 

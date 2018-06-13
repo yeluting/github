@@ -75,7 +75,7 @@ public class Cooperation {
                 }
                 if(csize > 0)
                     new Thread(new CooperationDB(output, this.cooperationMapper)).start();
-                relation.clear();
+                relation.clear(); 
                 count = 0;
             }
         }

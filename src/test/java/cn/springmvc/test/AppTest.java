@@ -19,10 +19,11 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 /**
  * Unit test for simple App.
  */
-public class AppTest 
+public class AppTest
 {
+
     @Autowired
-    private Ability ability;
+    private LangAbility langAbility;
 
     @Autowired
     private ProjectAnalysis projectAnalysis;
@@ -35,8 +36,9 @@ public class AppTest
 
     @Test
     public void test(){
+        langAbility.calculate();
 //        cooperation.calculate(10000, 20);
-        organization.calculate(10000, 20);
+//        organization.calculate(10000, 20);
 //        projectAnalysis.getProjectCommitsFilter1();
 //        gen.generate();
 //        System.out.println("Test is available.");

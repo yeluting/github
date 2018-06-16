@@ -40,4 +40,24 @@
         </foreach>
     </insert>
 
+    <insert id="insertAbilityByProject">
+        INSERT INTO LangAbility
+        (author_id,
+        <foreach collection="langs" close=")" separator="," index="index" item="item">
+            ${item}
+        </foreach>
+        VALUES
+        <foreach collection="langAbility" open="(" close=")" separator="," index="author_id" item="ability">
+            (#{author_id,jdbcType=INTEGER},
+            <foreach collection="ability" close=")" separator="," index="index" item="item">
+                #{item,jdbcType=DOUBLE}
+            </foreach>
+        </foreach>
+        ON DUPLICATE KEY
+        UPDATE
+        <foreach collection="langs" separator="," index="index" item="item">
+            ${item} = ${item} + VALUES(${item})
+        </foreach>
+    </insert>
+
 </mapper>

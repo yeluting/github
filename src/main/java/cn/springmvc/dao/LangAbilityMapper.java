@@ -4,6 +4,7 @@ import org.apache.ibatis.annotations.Param;
 
 import javax.management.openmbean.ArrayType;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 public interface LangAbilityMapper {
@@ -17,4 +18,6 @@ public interface LangAbilityMapper {
     ArrayList<Map<String, Object>> selectAuthorTime(@Param("project_Id") int project_id);
 
     void insertLangAbility(@Param("author_Id") int author_id, @Param("langAbility") Map<String, Double> langAbility);
+
+    void insertAbilityByProject(@Param("langs") List<String> langs, @Param("langAbility") Map<Integer, List<Double>> langAbility);
 }

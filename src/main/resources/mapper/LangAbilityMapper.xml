@@ -29,7 +29,7 @@
             ${key}
         </foreach>
         VALUES
-        (#{auhor_Id,jdbcType=INTEGER},
+        (#{author_Id,jdbcType=INTEGER},
         <foreach collection="langAbility" close=")" separator="," index="key" item="val">
             #{val,jdbcType=DOUBLE}
         </foreach>

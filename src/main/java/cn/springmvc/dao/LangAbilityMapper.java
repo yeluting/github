@@ -16,4 +16,5 @@ public interface LangAbilityMapper {
 
     ArrayList<Map<String, Object>> selectAuthorTime(@Param("project_Id") int project_id);
 
+    void insertLangAbility(@Param("author_Id") int author_id, @Param("langAbility") Map<String, Double> langAbility);
 }

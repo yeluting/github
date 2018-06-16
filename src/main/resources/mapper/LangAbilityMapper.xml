@@ -22,4 +22,20 @@
         WHERE project_id = #{project_Id,jdbcType=INTEGER}
     </select>
 
+    <insert id="insertLangAbility">
+        INSERT INTO LangAbility
+        <foreach collection="langAbility" open="(" close=")" separator="," index="key" item="val">
+            #{key}
+        </foreach>
+        VALUES
+        <foreach collection="langAbility" open="(" close=")" separator="," index="key" item="val">
+            #{val}
+        </foreach>
+        ON DUPLICATE KEY
+        UPDATE
+        <foreach collection="langAbility" separator="," index="key" item="val">
+            #{key} = #{key} + VALUES(#{key})
+        </foreach>
+    </insert>
+
 </mapper>

@@ -36,13 +36,13 @@ public class LangAbility {
                 langs.add(LangParser.get(lp.get("language")));
                 std_score.add(((Double) lp.get("percent")) * watchNum);
             }
-            Double totalTimes = 0.0;
-            for(Map<String, Object> author : authorTimes) totalTimes += (Double) author.get("times");
+            double totalTimes = 0.0;
+            for(Map<String, Object> author : authorTimes) totalTimes += (Integer) author.get("times");
             Map<Integer, List<Double>> langAbility = new HashMap<Integer, List<Double>>();
             for(Map<String, Object> author : authorTimes){
                 List<Double> ability = new ArrayList<Double>();
                 for(Double score :  std_score)
-                    ability.add(score * ((Double) author.get("times")) / totalTimes);
+                    ability.add(score * ((Integer) author.get("times")) / totalTimes);
                 langAbility.put((Integer) author.get("author_id"), ability);
             }
             langAbilityMapper.insertAbilityByProject(langs, langAbility);

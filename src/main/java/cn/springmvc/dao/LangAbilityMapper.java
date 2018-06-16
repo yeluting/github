@@ -20,4 +20,6 @@ public interface LangAbilityMapper {
     void insertLangAbility(@Param("author_Id") int author_id, @Param("langAbility") Map<String, Double> langAbility);
 
     void insertAbilityByProject(@Param("langs") List<String> langs, @Param("langAbility") Map<Integer, List<Double>> langAbility);
+
+    ArrayList<Map<String, Object>> selectLangParser();
 }

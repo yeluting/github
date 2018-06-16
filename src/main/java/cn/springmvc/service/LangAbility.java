@@ -19,7 +19,7 @@ public class LangAbility {
 
     private Map<String, String> LangParser;
 
-    public void calculate(){
+    public void calculate(int max_thread){
         loadParser();
         ArrayList<Integer> projects = langAbilityMapper.selectProjectId_Filter1();
         for(int project : projects){
@@ -45,8 +45,8 @@ public class LangAbility {
                     ability.add(score * ((Integer) author.get("times")) / totalTimes);
                 langAbility.put((Integer) author.get("author_id"), ability);
             }
-            langAbilityMapper.insertAbilityByProject(langs, langAbility);
-            break;
+            while(Thread.activeCount() >= max_thread);
+            new Thread(new LangAbilityDB(langAbilityMapper, langs, langAbility)).start();
         }
     }
 
@@ -83,5 +83,23 @@ public class LangAbility {
         langAbilityMapper.insertAbilityByProject(langs, langAbility);
     }
 
+}
 
+class LangAbilityDB implements Runnable{
+
+    private LangAbilityMapper langAbilityMapper;
+
+    private List<String> langs;
+
+    private Map<Integer, List<Double>> langAbility;
+
+    public LangAbilityDB(LangAbilityMapper lam, List<String> langs, Map<Integer, List<Double>> langAbility){
+        langAbilityMapper = lam;
+        this.langs = langs;
+        this.langAbility = langAbility;
+    }
+
+    public void run() {
+        langAbilityMapper.insertAbilityByProject(langs, langAbility);
+    }
 }

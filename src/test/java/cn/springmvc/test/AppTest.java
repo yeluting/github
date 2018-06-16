@@ -36,9 +36,9 @@ public class AppTest
 
     @Test
     public void test(){
-        langAbility.calculate();
-//        cooperation.calculate(10000, 20);
-//        organization.calculate(10000, 20);
+        langAbility.calculate(7);
+//        cooperation.calculate(5000, 7);
+//        organization.calculate(5000, 7);
 //        projectAnalysis.getProjectCommitsFilter1();
 //        gen.generate();
 //        System.out.println("Test is available.");

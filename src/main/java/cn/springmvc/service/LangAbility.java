@@ -35,4 +35,5 @@ public class LangAbility {
         langAbilityMapper.insertLangAbility(-1, test);
     }
 
+
 }

@@ -22,19 +22,21 @@
         WHERE project_id = #{project_Id,jdbcType=INTEGER}
     </select>
 
-    <insert id="insertLangAbility">
+    <insert id="insertLangAbility" parameterType="java.util.Map">
         INSERT INTO LangAbility
-        <foreach collection="langAbility" open="(" close=")" separator="," index="key" item="val">
-            #{key}
+        (author_id,
+        <foreach collection="langAbility" close=")" separator="," index="key" item="val">
+            #{key,jdbcType=VARCHAR}
         </foreach>
         VALUES
-        <foreach collection="langAbility" open="(" close=")" separator="," index="key" item="val">
-            #{val}
+        (#{auhor_Id,jdbcType=INTEGER},
+        <foreach collection="langAbility" close=")" separator="," index="key" item="val">
+            #{val,jdbcType=DOUBLE}
         </foreach>
         ON DUPLICATE KEY
         UPDATE
         <foreach collection="langAbility" separator="," index="key" item="val">
-            #{key} = #{key} + VALUES(#{key})
+            #{key,jdbcType=VARCHAR} = #{key,jdbcType=VARCHAR} + VALUES(#{key,jdbcType=VARCHAR})
         </foreach>
     </insert>
 

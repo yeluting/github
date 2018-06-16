@@ -47,7 +47,7 @@
             ${item}
         </foreach>
         VALUES
-        <foreach collection="langAbility" open="(" close=")" separator="," index="author_id" item="ability">
+        <foreach collection="langAbility" separator="," index="author_id" item="ability">
             (#{author_id,jdbcType=INTEGER},
             <foreach collection="ability" close=")" separator="," index="index" item="item">
                 #{item,jdbcType=DOUBLE}

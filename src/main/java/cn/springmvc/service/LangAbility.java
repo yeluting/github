@@ -22,6 +22,8 @@ public class LangAbility {
     public void calculate(int max_thread){
         loadParser();
         ArrayList<Integer> projects = langAbilityMapper.selectProjectId_Filter1();
+        int size = projects.size();
+        int finish = 0;
         for(int project : projects){
             int watchNum = 0;
             ArrayList<Integer> wc = langAbilityMapper.getWatchNum(project);
@@ -30,6 +32,7 @@ public class LangAbility {
             if(watchNum == 0) continue;
             ArrayList<Map<String, Object>> authorTimes = langAbilityMapper.selectAuthorTime(project);
             ArrayList<Map<String, Object>> langPercent = langAbilityMapper.selectLangPercent(project);
+            if(authorTimes.size() == 0 || langPercent.size() == 0)continue;
             List<String> langs = new ArrayList<String>();
             List<Double> std_score = new ArrayList<Double>();
             for(Map<String, Object> lp : langPercent){
@@ -47,6 +50,8 @@ public class LangAbility {
             }
             while(Thread.activeCount() >= max_thread);
             new Thread(new LangAbilityDB(langAbilityMapper, langs, langAbility)).start();
+            finish++;
+            if(finish >= 300000)System.out.printf("%d/%d\n", finish, size);
         }
     }
 

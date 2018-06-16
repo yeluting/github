@@ -22,10 +22,16 @@ public class LangAbility {
         ArrayList<Map<String, Object>> authorTimes = langAbilityMapper.selectAuthorTime(test_project);
         ArrayList<Map<String, Object>> langPercent = langAbilityMapper.selectLangPercent(test_project);
         ArrayList<Integer> wc = langAbilityMapper.getWatchNum(test_project);
-        if(wc.size() != 0)System.out.printf("size: %d\n", wc.size());
+        if(wc.size() != 0)System.out.printf("size: %d\n", wc.get(0));
         else System.out.println("ERROR");
-        System.out.printf("%d, %d\n", authorTimes.get(0).get("author_id"), authorTimes.get(0).get("times"));
-        System.out.printf("%s, %f\n", langPercent.get(0).get("language"), authorTimes.get(0).get("percent"));
+        Map<String, Object> t = authorTimes.get(0);
+        int author_id = (Integer) t.get("author_id");
+        int times = (Integer) t.get("times");
+        System.out.printf("%d, %d\n", author_id, times);
+        Map<String, Object> langs = langPercent.get(0);
+        String lang = (String) langs.get("language");
+        Double percent = (Double) langs.get("percent");
+        System.out.printf("%s, %f\n", lang, percent);
     }
 
 }

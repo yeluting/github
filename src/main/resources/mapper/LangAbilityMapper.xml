@@ -13,7 +13,7 @@
     </select>
 
     <select id="selectLangPercent" parameterType="java.lang.Integer" resultType="java.util.Map">
-        SELECT language, percent FROM project_language_filter1
+        SELECT language, percent FROM project_languages_filter1
         WHERE project_id = #{project_Id,jdbcType=INTEGER}
     </select>
 

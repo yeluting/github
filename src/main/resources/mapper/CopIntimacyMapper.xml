@@ -5,7 +5,6 @@
     <select id="getUserId" resultType="java.lang.Integer">
         SELECT DISTINCT(userA)
         FROM Relation
-        LIMIT 1000
     </select>
 
     <select id="getTeamProejct" parameterType="java.lang.Integer" resultType="java.util.Map">

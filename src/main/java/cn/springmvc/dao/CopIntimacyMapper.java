@@ -10,7 +10,7 @@ public interface CopIntimacyMapper {
 
     LinkedList<Integer> getUserId();
 
-    List<Map<String, Integer>> getTeamProejct(List<Integer> users);
+    List<Map<String, Object>> getTeamProejct(List<Integer> users);
 
     void updateCop(@Param("val") Integer value, List<Integer> pids);
 }

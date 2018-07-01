@@ -20,15 +20,17 @@ public class CopIntimacy {
             List<Integer> userlist = new ArrayList<Integer>();
             for(int i = 0; i < batchsize && !users.isEmpty(); i++)
                 userlist.add(users.poll());
-            List<Map<String, Integer>> values = copIntimacyMapper.getTeamProejct(userlist);
-            for(Map<String, Integer> value : values){
-                List<Integer> pl = updateValues.get(value.get("pros"));
+            List<Map<String, Object>> values = copIntimacyMapper.getTeamProejct(userlist);
+            for(Map<String, Object> value : values){
+                int v = (Integer) value.get("pros");
+                int u = (Integer) value.get("userA");
+                List<Integer> pl = updateValues.get(v);
                 if(pl == null){
                     pl = new ArrayList<Integer>();
-                    pl.add(value.get("userA"));
-                    updateValues.put(value.get("pros"), pl);
+                    pl.add(u);
+                    updateValues.put(v, pl);
                 }else{
-                    pl.add(value.get("userA"));
+                    pl.add(u);
                 }
             }
         }

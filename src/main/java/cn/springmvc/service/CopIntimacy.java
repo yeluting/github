@@ -13,20 +13,20 @@ public class CopIntimacy {
     private CopIntimacyMapper copIntimacyMapper;
 
     public void calculate(int batchsize){
-        Map<Integer, List<Integer>> updateValues = new HashMap<Integer, List<Integer>>();
+        Map<Long, List<Long>> updateValues = new HashMap<Long, List<Long>>();
         LinkedList<Integer> users = copIntimacyMapper.getUserId();
         System.out.printf("Get %d users.\n", users.size());
         while(!users.isEmpty()){
             List<Integer> userlist = new ArrayList<Integer>();
             for(int i = 0; i < batchsize && !users.isEmpty(); i++)
                 userlist.add(users.poll());
-            List<Map<String, Integer>> values = copIntimacyMapper.getTeamProejct(userlist);
-            for(Map<String, Integer> value : values){
-                int v = value.get("pros");
-                int u = value.get("userA");
-                List<Integer> pl = updateValues.get(v);
+            List<Map<String, Long>> values = copIntimacyMapper.getTeamProejct(userlist);
+            for(Map<String, Long> value : values){
+                Long v = value.get("pros");
+                Long u = value.get("userA");
+                List<Long> pl = updateValues.get(v);
                 if(pl == null){
-                    pl = new ArrayList<Integer>();
+                    pl = new ArrayList<Long>();
                     pl.add(u);
                     updateValues.put(v, pl);
                 }else{
@@ -35,9 +35,9 @@ public class CopIntimacy {
             }
             break;
         }
-        for(Map.Entry<Integer, List<Integer>> value : updateValues.entrySet()){
+        for(Map.Entry<Long, List<Long>> value : updateValues.entrySet()){
             System.out.printf("%02d: ", value.getKey());
-            for(Integer v : value.getValue())
+            for(Long v : value.getValue())
                 System.out.printf("%d, ", v);
             System.out.println();
         }

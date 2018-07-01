@@ -8,5 +8,5 @@ public interface CopIntimacyMapper {
 
     LinkedList<Integer> getUserId();
 
-    List<Map<String, Integer>> getTeamProejct(List<Integer> users);
+    List<Map<String, Long>> getTeamProejct(List<Integer> users);
 }

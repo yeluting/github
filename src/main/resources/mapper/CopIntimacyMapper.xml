@@ -5,9 +5,10 @@
     <select id="getUserId" resultType="java.lang.Integer">
         SELECT DISTINCT(userA)
         FROM Relation
+        LIMIT 20
     </select>
 
-    <select id="getTeamProejct" parameterType="java.lang.Integer" resultType="java.util.Map">
+    <select id="getTeamProejct" parameterType="java.lang.Long" resultType="java.util.Map">
         SELECT project_committer.committer_id AS userA, count(*) AS pros
         FROM filter1_project_id INNER JOIN project_committer
         ON filter1_project_id.project_id = project_committer.project_id

@@ -13,31 +13,29 @@ public class CopIntimacy {
     private CopIntimacyMapper copIntimacyMapper;
 
     public void calculate(int batchsize){
-        Map<Long, List<Long>> updateValues = new HashMap<Long, List<Long>>();
+        Map<Integer, List<Integer>> updateValues = new HashMap<Integer, List<Integer>>();
         LinkedList<Integer> users = copIntimacyMapper.getUserId();
         System.out.printf("Get %d users.\n", users.size());
         while(!users.isEmpty()){
             List<Integer> userlist = new ArrayList<Integer>();
             for(int i = 0; i < batchsize && !users.isEmpty(); i++)
                 userlist.add(users.poll());
-            List<Map<String, Long>> values = copIntimacyMapper.getTeamProejct(userlist);
-            for(Map<String, Long> value : values){
-                Long v = value.get("pros");
-                Long u = value.get("userA");
-                List<Long> pl = updateValues.get(v);
+            List<Map<String, Integer>> values = copIntimacyMapper.getTeamProejct(userlist);
+            for(Map<String, Integer> value : values){
+                List<Integer> pl = updateValues.get(value.get("pros"));
                 if(pl == null){
-                    pl = new ArrayList<Long>();
-                    pl.add(u);
-                    updateValues.put(v, pl);
+                    pl = new ArrayList<Integer>();
+                    pl.add(value.get("userA"));
+                    updateValues.put(value.get("pros"), pl);
                 }else{
-                    pl.add(u);
+                    pl.add(value.get("userA"));
                 }
             }
             break;
         }
-        for(Map.Entry<Long, List<Long>> value : updateValues.entrySet()){
+        for(Map.Entry<Integer, List<Integer>> value : updateValues.entrySet()){
             System.out.printf("%02d: ", value.getKey());
-            for(Long v : value.getValue())
+            for(Integer v : value.getValue())
                 System.out.printf("%d, ", v);
             System.out.println();
         }

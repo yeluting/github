@@ -12,5 +12,5 @@ public interface CopIntimacyMapper {
 
     List<Map<String, Object>> getTeamProejct(List<Integer> users);
 
-    void updateCop(@Param("val") Integer value, List<Integer> pids);
+    void updateCop(@Param("val") Integer value, @Param("projects") List<Integer> pids);
 }

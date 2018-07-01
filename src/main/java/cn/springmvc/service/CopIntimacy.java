@@ -22,7 +22,7 @@ public class CopIntimacy {
                 userlist.add(users.poll());
             List<Map<String, Object>> values = copIntimacyMapper.getTeamProejct(userlist);
             for(Map<String, Object> value : values){
-                int v = (Integer) value.get("pros");
+                int v = ((Long) value.get("pros")).intValue();
                 int u = (Integer) value.get("userA");
                 List<Integer> pl = updateValues.get(v);
                 if(pl == null){

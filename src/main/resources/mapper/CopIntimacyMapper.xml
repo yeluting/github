@@ -8,7 +8,7 @@
         LIMIT 1000
     </select>
 
-    <select id="getTeamProejct" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+    <select id="getTeamProejct" parameterType="java.lang.Integer" resultType="java.lang.Map">
         SELECT project_committer.committer_id AS userA, count(*) AS pros
         FROM filter1_project_id INNER JOIN project_committer
         ON filter1_project_id.project_id = project_committer.project_id
@@ -24,7 +24,7 @@
         UPDATE Relation
         SET copCost = cop / #{val,jdbcType=INTEGER}
         WHERE
-        <foreach collection="list" item="item" index="index" separator="OR">
+        <foreach collection="projects" item="item" index="index" separator="OR">
             userA = #{item}
         </foreach>
     </update>

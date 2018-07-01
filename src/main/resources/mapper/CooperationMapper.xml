@@ -5,6 +5,7 @@
     <select id="selectProjectId_Filter1" resultType="java.lang.Integer">
         SELECT DISTINCT(project_id)
         FROM project_languages_filter1
+
     </select>
 
     <select id="selectMembersByProjectId" parameterType="java.lang.Integer" resultType="java.lang.Integer">

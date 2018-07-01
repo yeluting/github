@@ -5,7 +5,7 @@
     <select id="getUserId" resultType="java.lang.Integer">
         SELECT DISTINCT(userA)
         FROM Relation
-        LIMIT 20
+        LIMIT 1000
     </select>
 
     <select id="getTeamProejct" parameterType="java.lang.Integer" resultType="java.util.Map">
@@ -19,5 +19,14 @@
         AND filter1_project_id.members > 1
         GROUP BY project_committer.committer_id
     </select>
+
+    <update id="updateCop" parameterType="java.lang.Integer">
+        UPDATE Relation
+        SET copCost = cop / #{val,jdbcType=INTEGER}
+        WHERE
+        <foreach collection="list" item="item" index="index" separator="OR">
+            userA = #{item}
+        </foreach>
+    </update>
 
 </mapper>

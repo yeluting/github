@@ -31,15 +31,15 @@ public class CopIntimacy {
                     pl.add(value.get("userA"));
                 }
             }
-            break;
-        }
-        for(Map.Entry<Integer, List<Integer>> value : updateValues.entrySet()){
-            System.out.printf("%02d: ", value.getKey());
-            for(Integer v : value.getValue())
-                System.out.printf("%d, ", v);
-            System.out.println();
         }
         System.out.println("Start Update.");
+        System.out.printf("size : %d\n", updateValues.size());
+        int size = updateValues.size();
+        for(Map.Entry<Integer, List<Integer>> value : updateValues.entrySet()){
+            copIntimacyMapper.updateCop(value.getKey(), value.getValue());
+            size --;
+            if(size % 10 == 0)System.out.println(size);
+        }
     }
 
 }

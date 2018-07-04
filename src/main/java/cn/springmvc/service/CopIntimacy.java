@@ -4,6 +4,7 @@ import cn.springmvc.dao.CopIntimacyMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.lang.reflect.Array;
 import java.util.*;
 
 @Service
@@ -13,7 +14,7 @@ public class CopIntimacy {
     private CopIntimacyMapper copIntimacyMapper;
 
     public void calculate(int batchsize){
-        Map<Integer, List<Integer>> updateValues = new HashMap<Integer, List<Integer>>();
+        Map<Integer, LinkedList<Integer>> updateValues = new HashMap<Integer, LinkedList<Integer>>();
         LinkedList<Integer> users = copIntimacyMapper.getUserId();
         System.out.printf("Get %d users.\n", users.size());
         while(!users.isEmpty()){
@@ -24,9 +25,9 @@ public class CopIntimacy {
             for(Map<String, Object> value : values){
                 int v = ((Long) value.get("pros")).intValue();
                 int u = (Integer) value.get("userA");
-                List<Integer> pl = updateValues.get(v);
+                LinkedList<Integer> pl = updateValues.get(v);
                 if(pl == null){
-                    pl = new ArrayList<Integer>();
+                    pl = new LinkedList<Integer>();
                     pl.add(u);
                     updateValues.put(v, pl);
                 }else{
@@ -37,10 +38,21 @@ public class CopIntimacy {
         System.out.println("Start Update.");
         System.out.printf("size : %d\n", updateValues.size());
         int size = updateValues.size();
-        for(Map.Entry<Integer, List<Integer>> value : updateValues.entrySet()){
-            copIntimacyMapper.updateCop(value.getKey(), value.getValue());
+        int s = size;
+        for(Map.Entry<Integer, LinkedList<Integer>> value : updateValues.entrySet()){
+            LinkedList<Integer> v = value.getValue();
+            int ss = v.size();
+            while(true) {
+                List<Integer> tmp = new ArrayList<Integer>();
+                for (int i = 0; i < 10 && !v.isEmpty(); i++) {
+                    tmp.add(v.poll());
+                }
+                if(tmp.size() == 0)break;
+                copIntimacyMapper.updateCop(value.getKey(), tmp);
+                if(v.isEmpty()) break;
+                System.out.printf("%d/%d : %d/%d\n", size, s, v.size(), ss);
+            }
             size --;
-            if(size % 10 == 0)System.out.println(size);
         }
     }
 

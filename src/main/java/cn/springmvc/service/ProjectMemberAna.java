@@ -4,6 +4,7 @@ import cn.springmvc.dao.ProjectMemberAnaMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -27,11 +28,13 @@ public class ProjectMemberAna {
         }
         System.out.printf("Size : %f\n", size);
         List<Map<String, Object>> output = new ArrayList<Map<String, Object>>();
+        DecimalFormat df = new DecimalFormat("0.000");
         for(Map.Entry<Integer, Integer> mem : memMap.entrySet()){
             Map<String, Object> tmp = new HashMap<String, Object>();
             tmp.put("member", mem.getKey());
             tmp.put("count", mem.getValue());
-            tmp.put("percent", (mem.getValue() / size));
+            double percent = Double.parseDouble(df.format(mem.getValue() / size));
+            tmp.put("percent", percent);
             output.add(tmp);
         }
         System.out.println("Start inserting");

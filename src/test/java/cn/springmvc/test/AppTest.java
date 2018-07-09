@@ -18,11 +18,11 @@ public class AppTest
 {
 
     @Autowired
-    private ProjectMemberAna projectMemberAna;
+    private LangAbilityAna langAbilityAna;
 
     @Test
     public void test(){
-        projectMemberAna.calculate();
+        langAbilityAna.calculate();
     }
 
 

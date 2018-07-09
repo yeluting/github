@@ -18,8 +18,8 @@ public class ProjectMemberAna {
     public void calculate(){
         double size = 0.0;
         Map<Integer, Integer> memMap = new HashMap<Integer, Integer>();
-        List<Integer> memByPrj = projectMemberAnaMapper.getMemOfPrj();
-        for(int count : memByPrj){
+        ArrayList<Integer> memByPrj = projectMemberAnaMapper.getMemOfPrj();
+        for(Integer count : memByPrj){
             size ++;
             Integer time = memMap.get(count);
             if(time == null) memMap.put(count, 1);

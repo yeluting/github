@@ -10,7 +10,7 @@
     <insert id="saveMemPercent" parameterType="java.util.Map">
         INSERT INTO project_dis VALUES
         <foreach collection="list" item="item" index="index" separator=",">
-            (#{item.member,jdbcType=INTEGER},#{item.count,jdbcType=INTEGER}.#{item.percent,jdbcType=DOUBLE})
+            (#{item.member,jdbcType=INTEGER},#{item.count,jdbcType=INTEGER},#{item.percent,jdbcType=DOUBLE})
         </foreach>
     </insert>
 

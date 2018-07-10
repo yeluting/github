@@ -53,7 +53,7 @@ public class LangAbilityAna {
         System.out.println("Finish Calculating");
         List<Map<String, Object>> outputList = new ArrayList<Map<String, Object>>();
         for(Map.Entry<String, Map<String, Object>> t : output.entrySet()) {
-            t.getValue().put(mapKeys[2], (Integer)(t.getValue().get(mapKeys[2])) / (Double)(t.getValue().get(mapKeys[1])));
+            t.getValue().put(mapKeys[2], (Double)(t.getValue().get(mapKeys[2])) / (Integer)(t.getValue().get(mapKeys[1])));
             outputList.add(t.getValue());
         }
         System.out.println("Start inserting");

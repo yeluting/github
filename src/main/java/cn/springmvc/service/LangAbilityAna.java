@@ -65,4 +65,18 @@ public class LangAbilityAna {
         langAbilityAnaMapper.saveLangAnalysis(outputList);
     }
 
+    public void countSmall(double value){
+        ArrayList<String> languages = langAbilityAnaMapper.selectLang();
+        Map<String, Integer> output = new HashMap<String, Integer>();
+        for(String lang : languages) {
+            output.put(lang, langAbilityAnaMapper.getCount(lang, value));
+            break;
+        }
+        System.out.println("Finish Calculating");
+        for(String lang : languages) {
+            langAbilityAnaMapper.updateCount(lang, value);
+            break;
+        }
+    }
+
 }

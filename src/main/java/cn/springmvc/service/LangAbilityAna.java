@@ -15,7 +15,7 @@ public class LangAbilityAna {
     @Autowired
     private LangAbilityAnaMapper langAbilityAnaMapper;
 
-    public void calculate(){
+    public void calculate(int limit){
         String[] mapKeys = {"lang", "count", "avg", "min", "max"};
         ArrayList<String> languages = langAbilityAnaMapper.selectLang();
         Map<String, Map<String, Object>> output = new HashMap();
@@ -29,21 +29,21 @@ public class LangAbilityAna {
             output.put(lang, tmp);
         }
         System.out.println("Finish Selecting");
-        for(int offset = 0, limit = 10000; ; offset += limit) {
+        for(int offset = 0; ; offset += limit) {
             ArrayList<Map<String, Object>> langAbilities = langAbilityAnaMapper.selectLangAbility(offset, limit);
             System.out.printf("offset:%d limit:%d size:%d\n", offset, limit, langAbilities.size());
             if(langAbilities.size() == 0) break;
             for (Map<String, Object> langAbility : langAbilities) {
                 for (String lang : languages) {
-                    double abilty = (Double) (langAbility.get(lang));
-                    if (Double.compare(abilty, 0.0) == 0) {
+                    double ability = (Double) (langAbility.get(lang));
+                    if (ability != 0) {
                         Map<String, Object> tmp = output.get(lang);
                         tmp.put(mapKeys[1], ((Integer) (tmp.get(mapKeys[1]))) + 1);
-                        tmp.put(mapKeys[2], ((Double) (tmp.get(mapKeys[2]))) + abilty);
+                        tmp.put(mapKeys[2], ((Double) (tmp.get(mapKeys[2]))) + ability);
                         double min = (Double) (tmp.get(mapKeys[3]));
                         double max = (Double) (tmp.get(mapKeys[4]));
-                        if (abilty < min) tmp.put(mapKeys[3], abilty);
-                        if (abilty > max) tmp.put(mapKeys[4], abilty);
+                        if (ability < min) tmp.put(mapKeys[3], ability);
+                        if (ability > max) tmp.put(mapKeys[4], ability);
                         output.put(lang, tmp);
                     }
                 }
@@ -53,8 +53,14 @@ public class LangAbilityAna {
         System.out.println("Finish Calculating");
         List<Map<String, Object>> outputList = new ArrayList<Map<String, Object>>();
         for(Map.Entry<String, Map<String, Object>> t : output.entrySet()) {
-            t.getValue().put(mapKeys[2], (Double)(t.getValue().get(mapKeys[2])) / (Integer)(t.getValue().get(mapKeys[1])));
-            outputList.add(t.getValue());
+            if ((Integer) (t.getValue().get(mapKeys[1])) == 0){
+                t.getValue().put(mapKeys[3], 0.0);
+                t.getValue().put(mapKeys[4], 0.0);
+                outputList.add(t.getValue());
+            }else {
+                t.getValue().put(mapKeys[2], (Double) (t.getValue().get(mapKeys[2])) / (Integer) (t.getValue().get(mapKeys[1])));
+                outputList.add(t.getValue());
+            }
         }
         System.out.println("Start inserting");
         langAbilityAnaMapper.saveLangAnalysis(outputList);

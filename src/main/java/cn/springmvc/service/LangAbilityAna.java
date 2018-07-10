@@ -48,7 +48,6 @@ public class LangAbilityAna {
                     }
                 }
             }
-            break;
         }
         System.out.println("Finish Calculating");
         List<Map<String, Object>> outputList = new ArrayList<Map<String, Object>>();

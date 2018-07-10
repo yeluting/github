@@ -7,7 +7,7 @@
     </select>
 
     <select id="selectLangAbility" resultType="java.util.Map">
-        SELECT * FROM LangAbility
+        SELECT * FROM LangAbility LIMIT #{lim,jdbcType=INTEGER} OFFSET #{off,jdbcType=INTEGER}
     </select>
 
     <select id="saveLangAnalysis" parameterType="java.util.Map">

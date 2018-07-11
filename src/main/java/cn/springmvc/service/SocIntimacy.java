@@ -23,7 +23,7 @@ public class SocIntimacy {
                 userlist.add(users.poll());
             List<Map<String, Object>> values = socIntimacyMapper.getOrgs(userlist);
             for(Map<String, Object> value : values){
-                int v = ((Long) value.get("orgs")).intValue();
+                int v = ((Double) value.get("orgs")).intValue();
                 int u = (Integer) value.get("userA");
                 LinkedList<Integer> pl = updateValues.get(v);
                 if(pl != null){
@@ -41,6 +41,10 @@ public class SocIntimacy {
         int size = updateValues.size();
         int s = size;
         for(Map.Entry<Integer, LinkedList<Integer>> value : updateValues.entrySet()){
+            if(value.getKey() == 0){
+                size --;
+                continue;
+            }
             LinkedList<Integer> v = value.getValue();
             int ss = v.size();
             while(true) {

@@ -22,7 +22,7 @@ public class AppTest
 
     @Test
     public void test(){
-        langAbilityAna.countSmall(0.1);
+        langAbilityAna.countSmall(0.1, 100000);
     }
 
 

@@ -17,14 +17,9 @@
         </foreach>
     </select>
 
-    <select id="getCount" resultType="java.lang.Integer">
-        SELECT COUNT(*) FROM LangAbility
-        WHERE ${lang} &lt;= #{val,jdbcType=DOUBLE}
-    </select>
-
-    <update id="updateCount" parameterType="java.lang.Object">
+    <update id="updateCount" parameterType="java.util.Map">
         UPDATE LangAbility_dis
-        SET smallAbility = #{val,jdbcType=DOUBLE}
+        SET smallAbility = #{val,jdbcType=INTEGER}
         WHERE language = #{lang,jdbcType=VARCHAR}
     </update>
 </mapper>

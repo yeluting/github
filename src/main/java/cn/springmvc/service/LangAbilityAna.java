@@ -65,15 +65,27 @@ public class LangAbilityAna {
         langAbilityAnaMapper.saveLangAnalysis(outputList);
     }
 
-    public void countSmall(double value){
+    public void countSmall(double value, int limit){
         ArrayList<String> languages = langAbilityAnaMapper.selectLang();
-        Map<String, Integer> output = new HashMap<String, Integer>();
-        for(String lang : languages) {
-            output.put(lang, langAbilityAnaMapper.getCount(lang, value));
+        Map<String, Integer> output = new HashMap();
+        for(String lang : languages) output.put(lang, 0);
+        System.out.println("Finish Selecting");
+        for(int offset = 0; ; offset += limit) {
+            ArrayList<Map<String, Object>> langAbilities = langAbilityAnaMapper.selectLangAbility(offset, limit);
+            System.out.printf("offset:%d limit:%d size:%d\n", offset, limit, langAbilities.size());
+            if(langAbilities.size() == 0) break;
+            for (Map<String, Object> langAbility : langAbilities) {
+                for (String lang : languages) {
+                    double ability = (Double) (langAbility.get(lang));
+                    if (ability > 0 && ability < value) {
+                        output.put(lang, output.get(lang) + 1);
+                    }
+                }
+            }
         }
         System.out.println("Finish Calculating");
-        for(String lang : languages) {
-            langAbilityAnaMapper.updateCount(lang, value);
+        for(Map.Entry<String, Integer> lang : output.entrySet()){
+            langAbilityAnaMapper.updateCount(lang.getKey(), lang.getValue());
         }
     }
 

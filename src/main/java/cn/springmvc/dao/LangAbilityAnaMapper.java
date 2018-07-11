@@ -14,7 +14,5 @@ public interface LangAbilityAnaMapper {
 
     void saveLangAnalysis(List<Map<String, Object>> output);
 
-    int getCount(@Param("lang") String lang, @Param("val") double value);
-
-    void updateCount(@Param("lang") String lang, @Param("val") double value);
+    void updateCount(@Param("lang") String lang, @Param("val") int value);
 }

@@ -18,11 +18,11 @@ public class AppTest
 {
 
     @Autowired
-    private LangAbilityAna langAbilityAna;
+    private SocIntimacy socIntimacy;
 
     @Test
     public void test(){
-        langAbilityAna.countSmall(0.1, 100000);
+        socIntimacy.calculate(10);
     }
 
 

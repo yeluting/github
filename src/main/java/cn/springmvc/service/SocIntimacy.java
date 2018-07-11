@@ -4,6 +4,7 @@ import cn.springmvc.dao.SocIntimacyMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.*;
 
 @Service
@@ -12,18 +13,18 @@ public class SocIntimacy {
     @Autowired
     private SocIntimacyMapper socIntimacyMapper;
 
-    public void calculate(int batchsize){
+    public void calculate(int batchsize, int upd){
         Map<Integer, LinkedList<Integer>> updateValues = new HashMap<Integer, LinkedList<Integer>>();
         LinkedList<Integer> users = socIntimacyMapper.getUserId();
         System.out.printf("Get %d users.\n", users.size());
-        double si = users.size();
+        int si = users.size();
         while(!users.isEmpty()){
             List<Integer> userlist = new ArrayList<Integer>();
             for(int i = 0; i < batchsize && !users.isEmpty(); i++)
                 userlist.add(users.poll());
             List<Map<String, Object>> values = socIntimacyMapper.getOrgs(userlist);
             for(Map<String, Object> value : values){
-                int v = ((Double) value.get("orgs")).intValue();
+                int v = ((BigDecimal) value.get("orgs")).intValue();
                 int u = (Integer) value.get("userA");
                 LinkedList<Integer> pl = updateValues.get(v);
                 if(pl != null){
@@ -34,22 +35,18 @@ public class SocIntimacy {
                     updateValues.put(v, pl);
                 }
             }
-            System.out.println(users.size() / si);
+            System.out.printf("%d %d\n", users.size() / si);
         }
         System.out.println("Start Update.");
         System.out.printf("size : %d\n", updateValues.size());
         int size = updateValues.size();
         int s = size;
         for(Map.Entry<Integer, LinkedList<Integer>> value : updateValues.entrySet()){
-            if(value.getKey() == 0){
-                size --;
-                continue;
-            }
             LinkedList<Integer> v = value.getValue();
             int ss = v.size();
             while(true) {
                 List<Integer> tmp = new ArrayList<Integer>();
-                for (int i = 0; i < 10 && !v.isEmpty(); i++) {
+                for (int i = 0; i < upd && !v.isEmpty(); i++) {
                     tmp.add(v.poll());
                 }
                 if(tmp.size() == 0)break;

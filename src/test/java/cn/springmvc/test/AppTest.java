@@ -18,11 +18,11 @@ public class AppTest
 {
 
     @Autowired
-    private SocIntimacy socIntimacy;
+    private Intimacy intimacy;
 
     @Test
     public void test(){
-        socIntimacy.calculate(10, 1);
+        intimacy.calculate(10);
     }
 
 

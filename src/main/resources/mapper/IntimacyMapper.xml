@@ -18,7 +18,7 @@
 
     <update id="updateIntimacy" parameterType="java.lang.Object">
         UPDATE Relation
-        SET Intimacy = #{val,jdbcType=DOUBLE}
+        SET folCost = #{val,jdbcType=DOUBLE}
         WHERE userA = #{userA,jdbcType=INTEGER} AND userB = #{userB,jdbcType=INTEGER}
     </update>
 

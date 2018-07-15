@@ -23,13 +23,15 @@ public class Intimacy {
             List<Integer> userlist = new ArrayList<Integer>();
             for(int i = 0; i < batchsize && !users.isEmpty(); i++)
                 userlist.add(users.poll());
+            if(userlist.size() == 0)break;
             List<Map<String, Object>> values = intimacyMapper.getAllRelation(userlist);
+            if(values == null) continue;
             for(Map<String, Object> value : values){
                 int userA = (Integer) value.get("userA");
                 int userB = (Integer) value.get("userB");
                 double cop = (Double) value.get("copCost");
-                double org = (Double) value.get("orgCost");
-                int fol = (Integer) value.get("fol");
+                double org = value.get("orgCost") == null ? 0 : (Double) value.get("orgCost");
+                int fol = value.get("fol") == null ? 0 : (Integer) value.get("fol");
                 double intimacy = coeff[0] * cop + (1 - coeff[0]) * (coeff[1] * org + (1 - coeff[1]) * fol);
                 intimacyMapper.updateIntimacy(userA, userB, intimacy);
             }

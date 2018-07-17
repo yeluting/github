@@ -22,7 +22,7 @@ public class AppTest
 
     @Test
     public void test(){
-        intimacy.calculate(10);
+        intimacy.calculate(1000, 10);
     }
 
 

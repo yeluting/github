@@ -4,6 +4,7 @@ import cn.springmvc.dao.IntimacyMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.*;
 
 @Service
@@ -15,28 +16,14 @@ public class Intimacy {
     final private double MAXDIS = 100;
     final private double[] coeff = {0.7, 0.5};
 
-    public void calculate(int batchsize){
-        LinkedList<Integer> users = intimacyMapper.getUserId();
-        System.out.printf("Get %d users.\n", users.size());
-        int si = users.size();
-        while(!users.isEmpty()) {
-            List<Integer> userlist = new ArrayList<Integer>();
-            for(int i = 0; i < batchsize && !users.isEmpty(); i++)
-                userlist.add(users.poll());
-            if(userlist.size() == 0)break;
-            List<Map<String, Object>> values = intimacyMapper.getAllRelation(userlist);
-            if(values == null) continue;
-            for(Map<String, Object> value : values){
-                int userA = (Integer) value.get("userA");
-                int userB = (Integer) value.get("userB");
-                double cop = (Double) value.get("copCost");
-                double org = value.get("orgCost") == null ? 0 : (Double) value.get("orgCost");
-                int fol = value.get("fol") == null ? 0 : (Integer) value.get("fol");
-                double intimacy = coeff[0] * cop + (1 - coeff[0]) * (coeff[1] * org + (1 - coeff[1]) * fol);
-                intimacyMapper.updateIntimacy(userA, userB, intimacy);
-            }
-            System.out.printf("%d / %d\n", users.size(), si);
+    public void calculate(int limit, int MAXTHREAD){
+        int t_init = Thread.activeCount();
+        int size = ((BigDecimal) intimacyMapper.getSize()).intValue();
+        for(int offset = 0; offset <= size; offset += limit){
+            while(Thread.activeCount() >= t_init + MAXTHREAD);
+            new Thread(new updateThread(limit, offset, intimacyMapper)).run();
         }
+        while(Thread.activeCount() != t_init);
     }
 
     public void calculateTeam(){
@@ -104,6 +91,24 @@ public class Intimacy {
         return minWeight;
     }
 
+}
 
+class updateThread implements Runnable{
+
+    private int limit;
+    private int offset;
+    private IntimacyMapper intimacyMapper;
+
+    public updateThread(int limit, int offset, IntimacyMapper intimacyMapper){
+        this.limit = limit;
+        this.offset = offset;
+        this.intimacyMapper = intimacyMapper;
+    }
+
+    public void run(){
+        System.out.printf("From %d to %d START.", offset, limit + offset);
+        intimacyMapper.updateIntimacy(limit, offset);
+        System.out.printf("From %d to %d END.", offset, limit + offset);
+    }
 
 }

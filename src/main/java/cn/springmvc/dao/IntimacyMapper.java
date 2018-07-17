@@ -8,11 +8,9 @@ import java.util.Map;
 
 public interface IntimacyMapper {
 
-    LinkedList<Integer> getUserId();
+    Object getSize();
 
-    List<Map<String, Object>> getAllRelation(List<Integer> users);
-
-    void updateIntimacy(@Param("userA") int userA, @Param("userB") int userB, @Param("val") double value);
+    void updateIntimacy(@Param("limit") int limit, @Param("offset") int offset);
 
     LinkedList<Integer> getProjectId();
 

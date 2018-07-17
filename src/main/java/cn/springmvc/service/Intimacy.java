@@ -16,12 +16,13 @@ public class Intimacy {
     final private double MAXDIS = 100;
     final private double[] coeff = {0.7, 0.5};
 
-    public void calculate(int limit, int MAXTHREAD){
+    public void calculate(int batchsize, int MAXTHREAD){
         int t_init = Thread.activeCount();
-        int size = ((BigDecimal) intimacyMapper.getSize()).intValue();
-        for(int offset = 0; offset <= size; offset += limit){
+        ArrayList<Integer> users = intimacyMapper.getSize();
+        for(int i = 0; i < users.size(); i += batchsize + 1){
+            int end = i + batchsize >= users.size() ? users.size() : i + batchsize;
             while(Thread.activeCount() >= t_init + MAXTHREAD);
-            new Thread(new updateThread(limit, offset, intimacyMapper)).run();
+            new Thread(new updateThread(users.get(i), users.get(end), intimacyMapper)).run();
         }
         while(Thread.activeCount() != t_init);
     }
@@ -95,20 +96,20 @@ public class Intimacy {
 
 class updateThread implements Runnable{
 
-    private int limit;
-    private int offset;
+    private int userA;
+    private int userB;
     private IntimacyMapper intimacyMapper;
 
-    public updateThread(int limit, int offset, IntimacyMapper intimacyMapper){
-        this.limit = limit;
-        this.offset = offset;
+    public updateThread(int userA, int userB, IntimacyMapper intimacyMapper){
+        this.userA = userA;
+        this.userB = userB;
         this.intimacyMapper = intimacyMapper;
     }
 
     public void run(){
-        System.out.printf("From %d to %d START.", offset, limit + offset);
-        intimacyMapper.updateIntimacy(limit, offset);
-        System.out.printf("From %d to %d END.", offset, limit + offset);
+        System.out.printf("From %d to %d START.", userA, userB);
+        intimacyMapper.updateIntimacy(userA, userB);
+        System.out.printf("From %d to %d END.", userA, userB);
     }
 
 }

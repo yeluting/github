@@ -2,15 +2,16 @@ package cn.springmvc.dao;
 
 import org.apache.ibatis.annotations.Param;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
 public interface IntimacyMapper {
 
-    Object getSize();
+    ArrayList<Integer> getSize();
 
-    void updateIntimacy(@Param("limit") int limit, @Param("offset") int offset);
+    void updateIntimacy(@Param("value1") int value1, @Param("value2") int value2);
 
     LinkedList<Integer> getProjectId();
 

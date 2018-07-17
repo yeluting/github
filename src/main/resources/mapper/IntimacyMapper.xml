@@ -3,12 +3,12 @@
 <mapper namespace="cn.springmvc.dao.IntimacyMapper">
 
     <select id="getsize" resultType="java.lang.Object">
-        SELECT COUNT(*) FROM Relation LIMIT 100000;
+        SELECT distinct(userA) FROM Relation LIMIT 1000;
     </select>
 
     <select id="updateIntimacy" parameterType="java.lang.Integer">
         UPDATE Relation SET folCost = 0.7*copCost + 0.15*orgCost + 0.15*fol
-        LIMIT #{limit,jdbcType=INTEGER} OFFSET #{offset,jdbcType=INTEGER}
+        WHERE userA BETWEEN #{value1,jdbcType=INTEGER} AND #{value2,jdbcType=INTEGER}
     </select>
 
     <select id="getProjectId" resultType="java.lang.Integer">

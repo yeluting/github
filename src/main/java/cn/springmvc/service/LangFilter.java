@@ -34,7 +34,7 @@ public class LangFilter {
         }
         double[] pr = new double[N];
         for(i = 0; i < pr.length; i++) pr[i] = 1.0 / N;
-        int MAXSTEP = 100;
+        int MAXSTEP = 1000000;
         double delta = 0.00001;
         double alpha = 0.85;
         double bias = (1 - alpha) / N;
@@ -44,10 +44,10 @@ public class LangFilter {
             for(int j = 0; j < N; j++){
                 double current = 0.0;
                 for(int k = 0; k < N; k++)
-                    current += (graph[i][j] == 0) ? 0 : pr[j] / out[j];
+                    current += (graph[i][j] == 0) ? 0 : pr[k] / out[k];
                 current = alpha * current + bias;
-                change += Math.abs(current - pr[i]);
-                pr[i] = current;
+                change += Math.abs(current - pr[j]);
+                pr[j] = current;
             }
             if(change <= delta) flag = true;
             System.out.printf("INTERATION NO.%02d\n", i + 1);

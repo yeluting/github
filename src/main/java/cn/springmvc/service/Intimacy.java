@@ -22,7 +22,7 @@ public class Intimacy {
         for(int i = 0; i < users.size(); i += batchsize + 1){
             int end = i + batchsize >= users.size() - 1 ? users.size() - 1 : i + batchsize;
             while(Thread.activeCount() >= t_init + MAXTHREAD);
-            new Thread(new updateThread(users.get(i), users.get(end), intimacyMapper)).run();
+            new Thread(new updateThread(users.get(i), users.get(end), intimacyMapper)).start();
         }
         while(Thread.activeCount() != t_init);
     }

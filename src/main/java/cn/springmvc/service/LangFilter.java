@@ -26,7 +26,7 @@ public class LangFilter {
             langToIndex.put((String) lp.get("language"), i);
             graph[i++] = new int[langParser.size()];
         }
-        int total = loadGraph(graph, langToIndex);
+        loadGraph(graph, langToIndex);
         int[] out = new int[N];
         for(i = 0; i < N; i++){
             out[i] = 0;
@@ -34,7 +34,7 @@ public class LangFilter {
         }
         double[] pr = new double[N];
         for(i = 0; i < pr.length; i++) pr[i] = 1.0 / N;
-        int MAXSTEP = 1000000;
+        int MAXSTEP = 100;
         double delta = 0.00001;
         double alpha = 0.85;
         double bias = (1 - alpha) / N;
@@ -44,18 +44,24 @@ public class LangFilter {
             for(int j = 0; j < N; j++){
                 double current = 0.0;
                 for(int k = 0; k < N; k++)
-                    current += (graph[j][k] == 0) ? 0 : (pr[k] * graph[j][k]) / (out[k] * total);
+                    current += (graph[j][k] == 0) ? 0 : pr[k] / out[k];
                 current = alpha * current + bias;
                 change += Math.abs(current - pr[j]);
                 pr[j] = current;
             }
-            if(change <= delta) flag = true;
+            if(change <= delta){
+                flag = true;
+                break;
+            }
             System.out.printf("INTERATION NO.%02d\n", i + 1);
         }
         if(flag) System.out.printf("Finished in %d iterations.\n", i);
         else System.out.printf("Finished out of %d iterations.\n", MAXSTEP);
-        for(Map.Entry<String, Integer> entry : langToIndex.entrySet())
-            System.out.printf("%s %f\n", entry.getKey(), pr[entry.getValue()]);
+        for(Map.Entry<String, Integer> entry : langToIndex.entrySet()) {
+            int sum = 0;
+            for(i = 0; i < N; i++) sum += graph[entry.getValue()][i];
+            System.out.printf("%s %f,%d\n", entry.getKey(), pr[entry.getValue()], sum);
+        }
     }
 
     public int loadGraph(int[][] graph, Map<String, Integer> langToIndex){

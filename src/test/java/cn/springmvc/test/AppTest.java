@@ -20,9 +20,12 @@ public class AppTest
     @Autowired
     private Intimacy intimacy;
 
+    @Autowired
+    private LangFilter langFilter;
+
     @Test
-    public void test(){
-        intimacy.calculate(10, 10);
+    public void test() {
+        langFilter.PageRank();
     }
 
 

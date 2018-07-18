@@ -26,7 +26,7 @@ public class LangFilter {
             langToIndex.put((String) lp.get("language"), i);
             graph[i++] = new int[langParser.size()];
         }
-        loadGraph(graph, langToIndex);
+        int total = loadGraph(graph, langToIndex);
         int[] out = new int[N];
         for(i = 0; i < N; i++){
             out[i] = 0;
@@ -44,7 +44,7 @@ public class LangFilter {
             for(int j = 0; j < N; j++){
                 double current = 0.0;
                 for(int k = 0; k < N; k++)
-                    current += (graph[i][j] == 0) ? 0 : pr[k] / out[k];
+                    current += (graph[i][j] == 0) ? 0 : (pr[k] * graph[i][j]) / (out[k] * total);
                 current = alpha * current + bias;
                 change += Math.abs(current - pr[j]);
                 pr[j] = current;
@@ -58,7 +58,7 @@ public class LangFilter {
             System.out.printf("%s %f\n", entry.getKey(), pr[entry.getValue()]);
     }
 
-    public void loadGraph(int[][] graph, Map<String, Integer> langToIndex){
+    public int loadGraph(int[][] graph, Map<String, Integer> langToIndex){
         ArrayList<Integer> pids = langFilterMapper.getProjectId();
         for(int pid : pids){
             ArrayList<String> langs = langFilterMapper.getLangs(pid);
@@ -69,6 +69,7 @@ public class LangFilter {
                 }
             }
         }
+        return pids.size();
     }
 
 }

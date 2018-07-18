@@ -18,11 +18,11 @@ public class AppTest
 {
 
     @Autowired
-    private LangFilter langFilter;
+    private Intimacy intimacy;
 
     @Test
     public void test(){
-        langFilter.PageRank();
+        intimacy.calculate(10, 10);
     }
 
 

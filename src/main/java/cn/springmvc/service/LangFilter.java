@@ -44,7 +44,7 @@ public class LangFilter {
             for(int j = 0; j < N; j++){
                 double current = 0.0;
                 for(int k = 0; k < N; k++)
-                    current += (graph[i][j] == 0) ? 0 : (pr[k] * graph[i][j]) / (out[k] * total);
+                    current += (graph[j][k] == 0) ? 0 : (pr[k] * graph[j][k]) / (out[k] * total);
                 current = alpha * current + bias;
                 change += Math.abs(current - pr[j]);
                 pr[j] = current;

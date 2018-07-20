@@ -3,9 +3,8 @@
 <mapper namespace="cn.springmvc.dao.CooperationMapper">
 
     <select id="selectProjectId_Filter1" resultType="java.lang.Integer">
-        SELECT DISTINCT(project_id)
-        FROM project_languages_filter1
-
+        SELECT DISTINCT(id)
+        FROM projects_3
     </select>
 
     <select id="selectMembersByProjectId" parameterType="java.lang.Integer" resultType="java.lang.Integer">
@@ -14,7 +13,7 @@
     </select>
 
     <insert id="insertCooperationBatch" parameterType="java.util.Map">
-        INSERT INTO Cooperation VALUES
+        INSERT INTO Relation2(userA, userB, cop) VALUES
         <foreach collection="list" item="item" index="index" separator=",">
             (#{item.userA},#{item.userB},#{item.cop})
         </foreach>

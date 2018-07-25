@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.springmvc.dao.TeamRecordMapper">
+
+    <select id="getProjectId" parameterType="java.lang.String" resultType="java.lang.Integer">
+        SELECT project_id FROM ${table}
+        WHERE members &lt; 50
+    </select>
+
+    <select id="getCommitter" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+        SELECT committer_id FROM project_committer
+        WHERE project_id = #{project_id,jdbcType=INTEGER}
+    </select>
+
+    <insert id="insertTeams" parameterType="java.util.Map">
+        INSERT INTO TeamRecord VALUES
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{item.prject_id,jdbcType=INTEGER},#{item.members,jdbcType=VARCHAR},#{item.team,jdbcType=INTEGER})
+        </foreach>
+    </insert>
+
+    <insert id="insertMembers" parameterType="java.util.Map">
+        INSERT INTO TeamReordAnalysis(member_id, teamMemberSum, teamMember) VALUES
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{item.member_id,jdbcType=INTEGER},#{item.teamMemberSum,jdbcType=INTEGER},#{item.teamMember,jdbcType=VARCHAR})
+        </foreach>
+    </insert>
+
+</mapper>

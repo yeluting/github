@@ -26,9 +26,12 @@ public class AppTest
     @Autowired
     private Cooperation cooperation;
 
+    @Autowired TeamRecord teamRecord;
+
     @Test
     public void test() {
-        cooperation.calculate(10000, 1);
+//        cooperation.calculate(10000, 1);
+        teamRecord.insert(1);
     }
 
 

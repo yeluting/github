@@ -53,7 +53,6 @@ public class TeamRecord {
                 teamrecords = new ArrayList<Map<String, Object>>();
                 memberteams = new ArrayList<Map<String, Object>>();
             }
-            break;
         }
         if(!teamrecords.isEmpty()){
             TeamRecordInsertDB teamRecordInsertDB_member = new TeamRecordInsertDB(memberteams, teamRecordMapper, 0);

@@ -23,9 +23,12 @@ public class AppTest
     @Autowired
     private LangFilter langFilter;
 
+    @Autowired
+    private Cooperation cooperation;
+
     @Test
     public void test() {
-        langFilter.PageRank();
+        cooperation.calculate(10000, 1);
     }
 
 

@@ -20,6 +20,7 @@ public class Cooperation {
 
     public void calculate(int size, int max_thread){
         int count = 0;
+        int t = Thread.activeCount();
         relation = new HashMap<Integer, Map<Integer, Integer>>();
         ArrayList<Integer> projects = cooperationMapper.selectProjectId_Filter1();
         for(int p = 0; p < projects.size(); p++){
@@ -66,7 +67,7 @@ public class Cooperation {
                         output.add(tmp);
                         csize++;
                         if(csize >= size) {
-                            while(Thread.activeCount() >= max_thread);
+                            while(Thread.activeCount() >= max_thread + t);
                             new Thread(new CooperationDB(output, this.cooperationMapper)).start();
                             csize = 0;
                             output.clear();

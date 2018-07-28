@@ -93,12 +93,12 @@ public class LangAbility {
         int i = 0;
         for(Map<String, Object> lang : langs){
             String LField = (String) lang.get("LField");
+            System.out.printf("%d/%d %s\n", ++i, langs.size(), LField);
             double[] minmax = langAbilityMapper.getMinMax(LField);
             double dif = minmax[1] - minmax[0];
             if(dif == 0 && minmax[0] == 0) continue;
             else if(dif == 0) dif = 1;
             langAbilityMapper.norm(LField, minmax[0], dif);
-            System.out.printf("%d/%d\n", ++i, langs.size());
             break;
         }
     }

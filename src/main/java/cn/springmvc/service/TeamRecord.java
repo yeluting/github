@@ -15,7 +15,7 @@ public class TeamRecord {
     @Autowired
     private TeamRecordMapper teamRecordMapper;
 
-    final private String[] heads = {"project_id", "members", "team", "member_id", "teamMemberSum", "teamMember"};
+    final private String[] heads = {"project_id", "members", "team", "member_id", "project_id", "teamMemberSum", "teamMember"};
 
     public void insert(int max_thread){
         ArrayList<Integer> pids = teamRecordMapper.getProjectId("filter1_project_id");
@@ -36,14 +36,15 @@ public class TeamRecord {
             for(int committer : committers) {
                 Map<String, Object> memberteam = new HashMap<String, Object>();
                 memberteam.put(heads[3], committer);
-                memberteam.put(heads[4], committers.size());
-                memberteam.put(heads[5], members);
+                memberteam.put(heads[4], pid);
+                memberteam.put(heads[5], committers.size());
+                memberteam.put(heads[6], members);
                 memberteams.add(memberteam);
             }
             i++;
             total++;
             if(i >= size){
-                System.out.printf("%d / %d : %d, %d\n", total, size, teamrecords.size(), memberteams.size());
+                System.out.printf("%d / %d : %d, %d\n", total, pids.size(), teamrecords.size(), memberteams.size());
                 TeamRecordInsertDB teamRecordInsertDB_member = new TeamRecordInsertDB(memberteams, teamRecordMapper, 0);
                 TeamRecordInsertDB teamRecordInsertDB_team = new TeamRecordInsertDB(teamrecords, teamRecordMapper, 1);
                 while(Thread.activeCount() >= max_thread * 2+ init_thread);

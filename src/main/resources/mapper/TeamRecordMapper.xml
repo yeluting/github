@@ -20,9 +20,9 @@
     </insert>
 
     <insert id="insertMembers" parameterType="java.util.Map">
-        INSERT INTO TeamRecordAnalysis(member_id, teamMemberSum, teamMember) VALUES
+        INSERT INTO TeamRecordAnalysis(member_id, project_id,teamMemberSum, teamMember) VALUES
         <foreach collection="list" item="item" index="index" separator=",">
-            (#{item.member_id,jdbcType=INTEGER},#{item.teamMemberSum,jdbcType=INTEGER},#{item.teamMember,jdbcType=VARCHAR})
+            (#{item.member_id,jdbcType=INTEGER},#{item.project_id,jdbcType=INTEGER},#{item.teamMemberSum,jdbcType=INTEGER},#{item.teamMember,jdbcType=VARCHAR})
         </foreach>
     </insert>
 

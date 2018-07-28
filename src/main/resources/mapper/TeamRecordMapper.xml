@@ -39,7 +39,7 @@
 
     <select id="getLangAbility" resultType="java.lang.Double">
         SELECT <foreach collection="langs" item="item" index="index" separator=",">item</foreach>
-        FROM LangAbility WHERE author_id = #{author_id,jdbcType=INTEGER}
+        FROM LangAbility_norm WHERE author_id = #{author_id,jdbcType=INTEGER}
     </select>
 
     <update id="updateGrowDiff">

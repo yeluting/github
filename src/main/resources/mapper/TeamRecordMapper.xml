@@ -26,4 +26,25 @@
         </foreach>
     </insert>
 
+    <select id="getTeamRecord" resultType="java.util.Map">
+        SELECT project_id, memebrs FROM TeamRecord
+        WHERE team = 1
+    </select>
+
+    <select id="getProjectLang" parameterType="java.lang.Integer" resultType="java.lang.String">
+        SELECT LField FROM languages INNER JOIN
+        (SELECT * FROM project_languages_filter1 WHERE project_id = #{project_id,jdbcType=INTEGER}) tt
+        ON tt.language = languages.language;
+    </select>
+
+    <select id="getLangAbility" resultType="java.lang.Double">
+        SELECT <foreach collection="langs" item="item" index="index" separator=",">item</foreach>
+        FROM LangAbility WHERE author_id = #{author_id,jdbcType=INTEGER}
+    </select>
+
+    <update id="updateGrowDiff">
+        UPDATE TeamRecord SET grow = #{grow,jdbcType=DOUBLE}, dif = #{diff,jdbcType=DOUBLE}
+        WHERE member_id = #{member_id}
+    </update>
+
 </mapper>

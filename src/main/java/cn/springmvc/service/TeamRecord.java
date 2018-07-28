@@ -4,10 +4,7 @@ import cn.springmvc.dao.TeamRecordMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class TeamRecord {
@@ -64,6 +61,68 @@ public class TeamRecord {
         }
         while(Thread.activeCount() != init_thread);
         return;
+    }
+
+    public void calculateAbility(){
+        List<Map<String, Object>> teamRecords = teamRecordMapper.getTeamRecord();
+        for(Map<String, Object> teamRecord : teamRecords){
+            int project_id = (Integer) teamRecord.get("project_id");
+            String[] memberString = ((String) teamRecord.get("members")).split("&");
+            int[] members = new int[memberString.length];
+            for(int i = 0; i < memberString.length; i++) members[i] = Integer.parseInt(memberString[i]);
+            List<String> langs = teamRecordMapper.getProjectLang(project_id);
+            double[][] LangAbility = new double[members.length][langs.size()];
+            for(int i = 0; i < members.length; i++)
+                LangAbility[i] = teamRecordMapper.getLangAbility(members[i], langs);
+            double[] growSpace = new double[members.length];
+            double[] abilityDiff = new double[members.length];
+            getGrowSpace(LangAbility, growSpace);
+            getAbilityDiff(LangAbility, abilityDiff);
+            for(int i = 0; i < members.length; i++)
+                teamRecordMapper.updateGrowDiff(members[i], growSpace[i], abilityDiff[i]);
+            break;
+        }
+    }
+
+    public void getGrowSpace(double[][] LangAbility, double[] growSpace){
+        int n = LangAbility.length;
+        int m = LangAbility[0].length;
+        double[] TeamAbility = new double[m];
+        for(int i = 0; i < m; i++){
+            TeamAbility[i] = 1;
+            double tmp = 1;
+            for(int j = 0; j < n; j++) tmp *= (1 - LangAbility[j][i]);
+            TeamAbility[i] -= tmp;
+        }
+        for(int i = 0; i < n; i++){
+            growSpace[i] = 0;
+            for(int j = 0; j < m; j++) growSpace[i] += (TeamAbility[j] - LangAbility[i][j]) * LangAbility[i][j];
+            growSpace[i] /= m;
+        }
+    }
+
+    public void getAbilityDiff(double[][] LangAbility, double[] abilityDiff){
+        int n = LangAbility.length;
+        double[][] memberDiff = new double[n][n];
+        for(int i = 0; i < n; i++){
+            memberDiff[i][i] = 0;
+            for(int j = i + 1; j < n; j++){
+                double tmp = diff(LangAbility[i], LangAbility[j]);
+                memberDiff[i][j] = tmp;
+                memberDiff[j][i] = tmp;
+            }
+        }
+        for(int i = 0; i < n; i++){
+            abilityDiff[i] = 0;
+            for(int j = 0; j < n; j++) abilityDiff[i] += memberDiff[i][j];
+            abilityDiff[i] /= (n - 1);
+        }
+    }
+
+    public double diff(double[] abilityA, double[] abilityB){
+        double sum = 0;
+        for(int i = 0; i < abilityA.length; i++) sum += Math.pow(abilityA[i] - abilityB[i], 2);
+        return Math.sqrt(sum);
     }
 
 }

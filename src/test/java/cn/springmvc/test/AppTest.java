@@ -32,7 +32,7 @@ public class AppTest
     @Autowired
     private LangAbility langAbility;
 
-
+    @Test
     public void test() {
 //        cooperation.calculate(10000, 1);
 //        teamRecord.insert(1);

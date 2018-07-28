@@ -64,4 +64,13 @@
         </foreach>
     </insert>
 
+    <select id="getMinMax" parameterType="java.lang.String" resultType="java.lang.Double">
+        SELECT min(${lang}), max(${lang}) FROM LangAbility_norm;
+    </select>
+
+    <update id="norm">
+        UPDATE LangAbility_norm SET
+        ${lang} = (${lang} - #{min,jdbcType=DOUBLE}) / #{dif,jdbcType=DOUBLE}
+    </update>
+
 </mapper>

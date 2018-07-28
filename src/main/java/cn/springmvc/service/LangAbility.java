@@ -88,6 +88,21 @@ public class LangAbility {
         langAbilityMapper.insertAbilityByProject(langs, langAbility);
     }
 
+    public void normalization(){
+        ArrayList<Map<String, Object>> langs = langAbilityMapper.selectLangParser();
+        int i = 0;
+        for(Map<String, Object> lang : langs){
+            String LField = (String) lang.get("LField");
+            double[] minmax = langAbilityMapper.getMinMax(LField);
+            double dif = minmax[1] - minmax[0];
+            if(dif == 0 && minmax[0] == 0) continue;
+            else if(dif == 0) dif = 1;
+            langAbilityMapper.norm(LField, minmax[0], dif);
+            System.out.printf("%d/%d\n", ++i, langs.size());
+            break;
+        }
+    }
+
 }
 
 class LangAbilityDB implements Runnable{

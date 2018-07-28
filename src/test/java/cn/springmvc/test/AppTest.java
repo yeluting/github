@@ -29,11 +29,15 @@ public class AppTest
     @Autowired
     private TeamRecord teamRecord;
 
+    @Autowired
+    private LangAbility langAbility;
+
 
     public void test() {
 //        cooperation.calculate(10000, 1);
 //        teamRecord.insert(1);
-        teamRecord.calculateAbility();
+//        teamRecord.calculateAbility();
+        langAbility.normalization();
     }
 
 

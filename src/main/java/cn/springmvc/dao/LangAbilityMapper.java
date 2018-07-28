@@ -22,4 +22,8 @@ public interface LangAbilityMapper {
     void insertAbilityByProject(@Param("langs") List<String> langs, @Param("langAbility") Map<Integer, List<Double>> langAbility);
 
     ArrayList<Map<String, Object>> selectLangParser();
+
+    double[] getMinMax(@Param("lang")  String lang);
+
+    void norm(@Param("lang") String lang, @Param("min") double min, @Param("dif") double dif);
 }

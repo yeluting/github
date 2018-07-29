@@ -14,4 +14,18 @@
         </foreach>
     </insert>
 
+    <select id="getProjects" resultType="java.lang.Integer">
+        SELECT project_id FROM filter1_project_id
+    </select>
+
+    <select id="getMembers" resultType="java.lang.Integer">
+        SELECT ${filed} FROM ${table}
+        WHERE project_id = #{project_id,jdbcType=INTEGER}
+    </select>
+    
+    <update id="updateResult" parameterType="java.lang.Integer">
+        UPDATE filter1_project_id SET lost = ${lost,jdbcType=INTEGER}
+        WHERE project_id = #{project_id,jdbcType=INTEGER}
+    </update>
+
 </mapper>

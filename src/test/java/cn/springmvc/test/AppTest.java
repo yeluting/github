@@ -32,12 +32,16 @@ public class AppTest
     @Autowired
     private LangAbility langAbility;
 
+    @Autowired
+    private ProjectMemberAna projectMemberAna;
+
     @Test
     public void test() {
 //        cooperation.calculate(10000, 1);
 //        teamRecord.insert(1);
-        teamRecord.calculateAbility();
+//        teamRecord.calculateAbility();
 //        langAbility.normalization();
+        projectMemberAna.countlost();
     }
 
 

@@ -5,10 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class ProjectMemberAna {
@@ -39,6 +36,17 @@ public class ProjectMemberAna {
         }
         System.out.println("Start inserting");
         projectMemberAnaMapper.saveMemPercent(output);
+    }
+
+    public void countlost(){
+        ArrayList<Integer> projects = projectMemberAnaMapper.getProjects();
+        for(int project_id : projects){
+            HashSet<Integer> committers = projectMemberAnaMapper.getMembers("project_committer", "committer_id", project_id);
+            HashSet<Integer> authors = projectMemberAnaMapper.getMembers("project_author", "author_id", project_id);
+            authors.retainAll(committers);
+            if(authors.size() == committers.size())continue;
+            else projectMemberAnaMapper.updateResult(project_id,committers.size() - authors.size());
+        }
     }
 
 }

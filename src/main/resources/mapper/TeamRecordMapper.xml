@@ -27,7 +27,7 @@
     </insert>
 
     <select id="getTeamRecord" resultType="java.util.Map">
-        SELECT project_id, memebrs FROM TeamRecord
+        SELECT project_id, members FROM TeamRecord
         WHERE team = 1
     </select>
 

@@ -71,6 +71,7 @@ public class TeamRecord {
             int[] members = new int[memberString.length];
             for(int i = 0; i < memberString.length; i++) members[i] = Integer.parseInt(memberString[i]);
             List<String> langs = teamRecordMapper.getProjectLang(project_id);
+            if(langs.size() == 0) continue;
             double[][] LangAbility = new double[members.length][langs.size()];
             for(int i = 0; i < members.length; i++)
                 LangAbility[i] = teamRecordMapper.getLangAbility(members[i], langs);
@@ -80,7 +81,6 @@ public class TeamRecord {
             getAbilityDiff(LangAbility, abilityDiff);
             for(int i = 0; i < members.length; i++)
                 teamRecordMapper.updateGrowDiff(members[i], project_id, growSpace[i], abilityDiff[i]);
-            break;
         }
     }
 

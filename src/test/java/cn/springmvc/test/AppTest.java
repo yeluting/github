@@ -36,8 +36,8 @@ public class AppTest
     public void test() {
 //        cooperation.calculate(10000, 1);
 //        teamRecord.insert(1);
-//        teamRecord.calculateAbility();
-        langAbility.normalization();
+        teamRecord.calculateAbility();
+//        langAbility.normalization();
     }
 
 

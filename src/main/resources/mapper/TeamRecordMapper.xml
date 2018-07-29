@@ -38,7 +38,7 @@
     </select>
 
     <select id="getLangAbility" resultType="java.lang.Double">
-        SELECT <foreach collection="langs" item="item" index="index" separator=",">item</foreach>
+        SELECT <foreach collection="langs" item="item" index="index" separator=",">${item}</foreach>
         FROM LangAbility_norm WHERE author_id = #{author_id,jdbcType=INTEGER}
     </select>
 

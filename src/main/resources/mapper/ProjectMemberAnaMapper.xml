@@ -19,7 +19,7 @@
     </select>
 
     <select id="getMembers" resultType="java.lang.Integer">
-        SELECT ${filed} FROM ${table}
+        SELECT ${field} FROM ${table}
         WHERE project_id = #{project_id,jdbcType=INTEGER}
     </select>
     

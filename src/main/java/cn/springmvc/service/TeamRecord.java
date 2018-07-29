@@ -79,7 +79,7 @@ public class TeamRecord {
             getGrowSpace(LangAbility, growSpace);
             getAbilityDiff(LangAbility, abilityDiff);
             for(int i = 0; i < members.length; i++)
-                teamRecordMapper.updateGrowDiff(members[i], growSpace[i], abilityDiff[i]);
+                teamRecordMapper.updateGrowDiff(members[i], project_id, growSpace[i], abilityDiff[i]);
             break;
         }
     }

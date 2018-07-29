@@ -43,8 +43,8 @@
     </select>
 
     <update id="updateGrowDiff">
-        UPDATE TeamRecord SET grow = #{grow,jdbcType=DOUBLE}, dif = #{diff,jdbcType=DOUBLE}
-        WHERE member_id = #{member_id}
+        UPDATE TeamRecordAnalysis SET grow = #{grow,jdbcType=DOUBLE}, dif = #{diff,jdbcType=DOUBLE}
+        WHERE member_id = #{member_id,jdbcType=INTEGER} AND project_id = #{project_id,jdbcType=INTEGER}
     </update>
 
 </mapper>

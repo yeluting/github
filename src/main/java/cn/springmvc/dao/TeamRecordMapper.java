@@ -22,6 +22,6 @@ public interface TeamRecordMapper {
 
     double[] getLangAbility(@Param("author_id") int author_id, @Param("langs") List<String> langs);
 
-    void updateGrowDiff(@Param("member_id") int member_id, @Param("grow") double grow, @Param("diff") double diff);
+    void updateGrowDiff(@Param("member_id") int member_id, @Param("project_id") int project_id, @Param("grow") double grow, @Param("diff") double diff);
 
 }

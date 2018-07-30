@@ -78,7 +78,7 @@
 
     <update id="norm">
         UPDATE LangAbility_norm SET
-        ${lang} = (${lang} - #{min,jdbcType=DOUBLE}) / #{dif,jdbcType=DOUBLE}
+        ${lang} = (${lang} - #{min,jdbcType=DOUBLE}) / #{dif,jdbcType=DOUBLE} + 0.5
     </update>
 
 </mapper>

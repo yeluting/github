@@ -98,7 +98,7 @@ public class LangAbility {
             double dif = langAbilityMapper.getMax(LField) - min;
             if(dif == 0 && min == 0) continue;
             else if(dif == 0) dif = 1;
-            langAbilityMapper.norm(LField, min, dif);
+            langAbilityMapper.norm(LField, langAbilityMapper.getAvg(LField), dif);
         }
     }
 

@@ -65,11 +65,15 @@
     </insert>
 
     <select id="getMin" parameterType="java.lang.String" resultType="java.lang.Double">
-        SELECT min(${lang}) FROM LangAbility_norm;
+        SELECT min(${lang}) FROM LangAbility;
     </select>
 
     <select id="getMax" parameterType="java.lang.String" resultType="java.lang.Double">
-        select max(${lang}) FROM LangAbility_norm;
+        select max(${lang}) FROM LangAbility;
+    </select>
+
+    <select id="getAvg" parameterType="java.lang.String" resultType="java.lang.Double">
+        select avg(${lang}) FROM LangAbility;
     </select>
 
     <update id="norm">

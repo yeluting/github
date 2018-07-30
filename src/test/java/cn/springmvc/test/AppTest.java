@@ -40,8 +40,8 @@ public class AppTest
 //        cooperation.calculate(10000, 1);
 //        teamRecord.insert(1);
 //        teamRecord.calculateAbility();
-//        langAbility.normalization();
-        projectMemberAna.countlost();
+        langAbility.normalization();
+//        projectMemberAna.countlost();
     }
 
 

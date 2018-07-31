@@ -23,11 +23,8 @@ public interface LangAbilityMapper {
 
     ArrayList<Map<String, Object>> selectLangParser();
 
-    Double getMin(@Param("lang") String lang);
+    List<Map<String, Object>> getMax();
 
-    Double getMax(@Param("lang") String lang);
+    void norm(@Param("max") List<Map<String, Object>> max);
 
-    Double getAvg(@Param("lang") String lang);
-
-    void norm(@Param("lang") String lang, @Param("min") double min, @Param("dif") double dif);
 }

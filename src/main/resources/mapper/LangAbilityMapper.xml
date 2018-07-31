@@ -64,21 +64,15 @@
         </foreach>
     </insert>
 
-    <select id="getMin" parameterType="java.lang.String" resultType="java.lang.Double">
-        SELECT min(${lang}) FROM LangAbility;
+    <select id="getMax" resultType="java.util.Map">
+        SELECT language, maxAbility FROM LangAbility_dis;
     </select>
 
-    <select id="getMax" parameterType="java.lang.String" resultType="java.lang.Double">
-        select max(${lang}) FROM LangAbility;
-    </select>
-
-    <select id="getAvg" parameterType="java.lang.String" resultType="java.lang.Double">
-        select avg(${lang}) FROM LangAbility;
-    </select>
-
-    <update id="norm">
-        UPDATE LangAbility_norm SET
-        ${lang} = (${lang} - #{min,jdbcType=DOUBLE}) / #{dif,jdbcType=DOUBLE} + 0.5
+    <update id="norm" parameterType="java.util.Map">
+        UPDATE LangAbility_norm SET 
+        <foreach collection="max" item="val" index="key" separator=",">
+          ${key} = log(10,${key}+1) / log(10,#{val,jdbcType=DOUBLE}+1)
+        </foreach>
     </update>
 
 </mapper>

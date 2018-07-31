@@ -25,6 +25,6 @@ public interface LangAbilityMapper {
 
     List<Map<String, Object>> getMax();
 
-    void norm(@Param("max") List<Map<String, Object>> max);
+    void norm(@Param("max") Map<String, Double> max);
 
 }

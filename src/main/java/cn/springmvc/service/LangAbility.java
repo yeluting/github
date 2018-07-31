@@ -89,7 +89,11 @@ public class LangAbility {
     }
 
     public void normalization(){
-        langAbilityMapper.norm(langAbilityMapper.getMax());
+        List<Map<String, Object>> max = langAbilityMapper.getMax();
+        Map<String, Double> param = new HashMap<String, Double>();
+        for(Map<String, Object> m : max)
+            param.put((String) m.get("language"), (Double) m.get("maxAbility"));
+        langAbilityMapper.norm(param);
     }
 
 }

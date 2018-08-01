@@ -25,6 +25,7 @@
 
     <select id="selectNormedLA" parameterType="java.lang.String" resultType="java.lang.Double">
         SELECT ${language} FROM LangAbility_norm
+        WHERE ${language} > 0
     </select>
 
     <insert id="insertNormedDis" parameterType="java.util.Map">

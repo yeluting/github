@@ -95,8 +95,11 @@ public class LangAbilityAna {
         for(String language : languages){
             ArrayList<Double> values = langAbilityAnaMapper.selectNormedLA(language);
             int[] dis = new int[10];
-            for(double v : values)
-                dis[v == 1 ? 9 : (int) (v * 10)]++;
+            for(double v : values) {
+                int vv = v == 1 ? 9 : (int) (v * 10);
+                if(vv >= 10) vv = 9;
+                dis[vv]++;
+            }
             l_dis.put(language, dis);
         }
         langAbilityAnaMapper.insertNormedDis(l_dis);

@@ -89,4 +89,17 @@ public class LangAbilityAna {
         }
     }
 
+    public void normed_dis(){
+        ArrayList<String> languages = langAbilityAnaMapper.selectLang();
+        Map<String, int[]> l_dis = new HashMap<String, int[]>();
+        for(String language : languages){
+            ArrayList<Double> values = langAbilityAnaMapper.selectNormedLA(language);
+            int[] dis = new int[10];
+            for(double v : values)
+                dis[v == 1 ? 9 : (int) (v * 10)]++;
+            l_dis.put(language, dis);
+        }
+        langAbilityAnaMapper.insertNormedDis(l_dis);
+    }
+
 }

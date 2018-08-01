@@ -1,5 +1,6 @@
 package cn.springmvc.test;
 
+import cn.springmvc.dao.LangAbilityAnaMapper;
 import cn.springmvc.service.*;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -35,13 +36,17 @@ public class AppTest
     @Autowired
     private ProjectMemberAna projectMemberAna;
 
+    @Autowired
+    private LangAbilityAna langAbilityAna;
+
     @Test
     public void test() {
 //        cooperation.calculate(10000, 1);
 //        teamRecord.insert(1);
 //        teamRecord.calculateAbility();
-        langAbility.normalization();
+//        langAbility.normalization();
 //        projectMemberAna.countlost();
+        langAbilityAna.normed_dis();
     }
 
 

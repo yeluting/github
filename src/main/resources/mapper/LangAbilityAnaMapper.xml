@@ -22,4 +22,16 @@
         SET smallAbility = #{val,jdbcType=INTEGER}
         WHERE language = #{lang,jdbcType=VARCHAR}
     </update>
+
+    <select id="selectNormedLA" parameterType="java.lang.String" resultType="java.lang.Double">
+        SELECT ${language} FROM LangAbility_norm
+    </select>
+
+    <insert id="insertNormedDis" parameterType="java.util.Map">
+        INSERT INTO LangAbility_norm_dis VALUES
+        <foreach collection="dis" index="key" item="value" separator=",">
+            (#{key,jdbcType=VARCHAR},<foreach collection="value" item="item" separator=",">#{item,jdbcType=INTEGER}</foreach>)
+        </foreach>
+    </insert>
+
 </mapper>

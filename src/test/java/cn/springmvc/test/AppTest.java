@@ -43,10 +43,10 @@ public class AppTest
     public void test() {
 //        cooperation.calculate(10000, 1);
 //        teamRecord.insert(1);
-//        teamRecord.calculateAbility();
+        teamRecord.calculateAbility();
 //        langAbility.normalization();
 //        projectMemberAna.countlost();
-        langAbilityAna.normed_dis();
+//        langAbilityAna.normed_dis();
     }
 
 

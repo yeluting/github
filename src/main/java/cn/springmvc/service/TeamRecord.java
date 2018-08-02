@@ -72,15 +72,28 @@ public class TeamRecord {
             for(int i = 0; i < memberString.length; i++) members[i] = Integer.parseInt(memberString[i]);
             List<String> langs = teamRecordMapper.getProjectLang(project_id);
             if(langs.size() == 0) continue;
-            double[][] LangAbility = new double[members.length][langs.size()];
-            for(int i = 0; i < members.length; i++)
-                LangAbility[i] = teamRecordMapper.getLangAbility(members[i], langs);
-            double[] growSpace = new double[members.length];
-            double[] abilityDiff = new double[members.length];
+            double[][] tmpLangAbility = new double[members.length][langs.size()];
+            int avaLength = members.length;
+            for(int i = 0; i < members.length; i++) {
+                tmpLangAbility[i] = teamRecordMapper.getLangAbility(members[i], langs);
+                if(tmpLangAbility[i].length == 0) avaLength--;
+            }
+            if(avaLength <= 1) continue;
+            int[] avaMembers = new int[avaLength];
+            double[][] LangAbility = new double[avaLength][langs.size()];
+            for(int i = 0, j = 0; i < members.length; i++){
+                if(tmpLangAbility[i].length == 0) continue;
+                else{
+                    LangAbility[j] = tmpLangAbility[i];
+                    avaMembers[j++] = members[i];
+                }
+            }
+            double[] growSpace = new double[avaLength];
+            double[] abilityDiff = new double[avaLength];
             getGrowSpace(LangAbility, growSpace);
             getAbilityDiff(LangAbility, abilityDiff);
-            for(int i = 0; i < members.length; i++)
-                teamRecordMapper.updateGrowDiff(members[i], project_id, growSpace[i], abilityDiff[i]);
+            for(int i = 0; i < avaLength; i++)
+                teamRecordMapper.updateGrowDiff(avaMembers[i], project_id, growSpace[i], abilityDiff[i]);
         }
     }
 

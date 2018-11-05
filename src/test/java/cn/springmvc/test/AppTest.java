@@ -1,6 +1,5 @@
 package cn.springmvc.test;
 
-import cn.springmvc.dao.LangAbilityAnaMapper;
 import cn.springmvc.service.*;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -19,34 +18,11 @@ public class AppTest
 {
 
     @Autowired
-    private Intimacy intimacy;
-
-    @Autowired
-    private LangFilter langFilter;
-
-    @Autowired
-    private Cooperation cooperation;
-
-    @Autowired
-    private TeamRecord teamRecord;
-
-    @Autowired
-    private LangAbility langAbility;
-
-    @Autowired
-    private ProjectMemberAna projectMemberAna;
-
-    @Autowired
-    private LangAbilityAna langAbilityAna;
+    private LangSuffix langSuffix;
 
     @Test
     public void test() {
-//        cooperation.calculate(10000, 1);
-//        teamRecord.insert(1);
-        teamRecord.calculateAbility();
-//        langAbility.normalization();
-//        projectMemberAna.countlost();
-//        langAbilityAna.normed_dis();
+        langSuffix.statLangSuffix();
     }
 
 

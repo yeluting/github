@@ -6,7 +6,7 @@
         SELECT language, tt.fileType AS fileType
         FROM project_languages_filter1,
         (SELECT project_id, fileType FROM commits_all limit #{limit,jdbcType=INTEGER} offset #{offset,jdbcType=INTEGER}) tt
-        WHERE project_languages_filter1.project_id = tt.project_id;
+        WHERE project_languages_filter1.project_id = tt.project_id AND tt.fileType IS NOT NULL;
     </select>
 
     <insert id="updateLangsuffix" parameterType="java.util.Map">

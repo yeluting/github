@@ -24,19 +24,15 @@ public class LangCompetence {
     public void multiThreadCalc(int threadCount, int limit){
         ArrayList<Integer> pids = lcm.getProjectID(limit);
         int total = pids.size();
-        int split = total / threadCount;
+        List<ArrayList<Integer>> pidList = new ArrayList<ArrayList<Integer>>();
+        for(int i = 0; i < threadCount; i++) pidList.add(new ArrayList<Integer>());
+        for(int i = 0; i < total;){
+            for(int j = 0; j < threadCount && i < total; j++, i++)
+                pidList.get(j).add(pids.get(i));
+        }
         Thread[] threads = new Thread[threadCount];
         for(int i = 0; i < threadCount; i++){
-            ArrayList<Integer> sub_pids = new ArrayList<Integer>();
-            for(int j = i * split;; j++){
-                sub_pids.add(pids.get(j));
-                if(i == threadCount - 1){
-                    if(j == total - 1) break;
-                }else{
-                    if(j == (i + 1) * split - 1) break;
-                }
-            }
-            threads[i] = new Thread(new LangCompetenceMultiThread(i, sub_pids, lcm));
+            threads[i] = new Thread(new LangCompetenceMultiThread(i, pidList.get(i), lcm));
         }
         long startTime = System.currentTimeMillis();
         int startCount = Thread.activeCount();

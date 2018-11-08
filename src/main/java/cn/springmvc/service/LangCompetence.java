@@ -31,9 +31,9 @@ public class LangCompetence {
             for(int j = i * split;; j++){
                 sub_pids.add(pids.get(j));
                 if(i == threadCount - 1){
-                    if(j == total) break;
+                    if(j == total - 1) break;
                 }else{
-                    if(j == (i + 1) * split) break;
+                    if(j == (i + 1) * split - 1) break;
                 }
             }
             threads[i] = new Thread(new LangCompetenceMultiThread(i, sub_pids, lcm));

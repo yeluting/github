@@ -11,16 +11,18 @@ import java.util.*;
 public class LangCompetence {
 
     @Autowired
-    private LangCompetenceMapper langCompetenceMapper;
+    private LangCompetenceMapper lcm;
+
+    public static int commit_count;
 
     final private int TABLE_NUM = 1;
     private Map<String, Map<String, Integer>> suffixMap;
     public int id;
     public ArrayList<Integer> project_ids;
-    public static int commit_count;
+    public LangCompetenceMapper langCompetenceMapper;
 
     public void multiThreadCalc(int threadCount, int limit){
-        ArrayList<Integer> pids = langCompetenceMapper.getProjectID(limit);
+        ArrayList<Integer> pids = lcm.getProjectID(limit);
         int total = pids.size();
         int split = total / threadCount;
         Thread[] threads = new Thread[threadCount];
@@ -144,18 +146,22 @@ public class LangCompetence {
 
 class LangCompetenceMultiThread implements Runnable{
 
+
+    private LangCompetenceMapper lcm;
     private ArrayList<Integer> project_ids;
     private int id;
 
-    public LangCompetenceMultiThread(int tid, ArrayList<Integer> pids){
+    public LangCompetenceMultiThread(int tid, ArrayList<Integer> pids, LangCompetenceMapper langCompetenceMapper){
         project_ids = pids;
         id = tid;
+        lcm = langCompetenceMapper;
     }
 
     public void run(){
         LangCompetence langCompetence = new LangCompetence();
         langCompetence.id = id;
         langCompetence.project_ids = project_ids;
+        langCompetence.langCompetenceMapper = lcm;
         langCompetence.calculate();
     }
 

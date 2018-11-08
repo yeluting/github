@@ -12,7 +12,7 @@
         LIMIT #{limit,jdbcType=INTEGER}
     </select>
 
-    <select id="getProjectID" resultType="java.lang.Integer">
+    <select id="getALLProjectID" resultType="java.lang.Integer">
         SELECT id FROM projects_3
     </select>
 

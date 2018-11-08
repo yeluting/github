@@ -11,7 +11,7 @@ public interface LangCompetenceMapper {
 
     ArrayList<Integer> getProjectID(@Param("limit") int limit);
 
-    ArrayList<Integer> getProjectID();
+    ArrayList<Integer> getALLProjectID();
 
     ArrayList<Integer> getCommits(@Param("pid") int project_id, @Param("tno") int table_no);
 

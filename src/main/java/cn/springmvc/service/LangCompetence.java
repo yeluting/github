@@ -36,7 +36,7 @@ public class LangCompetence {
                     if(j == (i + 1) * split) break;
                 }
             }
-            threads[i] = new Thread(new LangCompetenceMultiThread(i, null));
+            threads[i] = new Thread(new LangCompetenceMultiThread(i, null, lcm));
         }
         long startTime = System.currentTimeMillis();
         int startCount = Thread.activeCount();

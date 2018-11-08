@@ -22,7 +22,7 @@ public class AppTest
 
     @Test
     public void test() {
-        langCompetence.calculate();
+        langCompetence.multiThreadCalc(5, 1000);
     }
 
 

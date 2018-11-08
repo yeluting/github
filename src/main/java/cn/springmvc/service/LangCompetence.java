@@ -15,13 +15,46 @@ public class LangCompetence {
 
     final private int TABLE_NUM = 1;
     private Map<String, Map<String, Integer>> suffixMap;
+    public int id;
+    public ArrayList<Integer> project_ids;
+    public static int commit_count;
+
+    public void multiThreadCalc(int threadCount, int limit){
+        ArrayList<Integer> pids = langCompetenceMapper.getProjectID(limit);
+        int total = pids.size();
+        int split = total / threadCount;
+        Thread[] threads = new Thread[threadCount];
+        for(int i = 0; i < threadCount; i++){
+            ArrayList<Integer> sub_pids = new ArrayList<Integer>();
+            for(int j = i * split;; j++){
+                sub_pids.add(pids.indexOf(j));
+                if(i == threadCount - 1){
+                    if(j == total) break;
+                }else{
+                    if(j == (i + 1) * split) break;
+                }
+            }
+            threads[i] = new Thread(new LangCompetenceMultiThread(i, null));
+        }
+        long startTime = System.currentTimeMillis();
+        int startCount = Thread.activeCount();
+        for(int i = 0; i < threadCount; i++)
+            threads[i].start();
+        int endCount = Thread.activeCount();
+        while(endCount != startCount) endCount = Thread.activeCount();
+        long endTime=System.currentTimeMillis();
+        System.out.println("Used : " + (endTime - startTime) + "ms");
+        System.out.println("Calculated : " + commit_count + " commits");
+    }
+
+    public LangCompetence(){
+        loadSuffixMap();
+    }
 
     public void calculate(){
-        loadSuffixMap();
-        ArrayList<Integer> project_ids = langCompetenceMapper.getProjectID(1000);
         int i = 0;
         for(int project_id : project_ids){
-            System.out.printf("Project ID : %d %d/%d\n", project_id, ++i, project_ids.size());
+            System.out.printf("Thread:%d\tProject ID : %d %d/%d\n", id, project_id, ++i, project_ids.size());
             Map<Integer, Map<String, Integer>> LangContribution = new HashMap<Integer, Map<String, Integer>>();
             calcContribution(project_id, LangContribution);
             updateCompetence(LangContribution);
@@ -36,6 +69,7 @@ public class LangCompetence {
         ArrayList<Map<String, Object>> commitDetails = langCompetenceMapper.getCommitDetail(commit_ids);
         Set<String> suffixes = new HashSet<String>();
         for(Map<String, Object> commitDetail : commitDetails){
+            commit_count++;
             if(commitDetail.get("fileType") == null) continue;
             String[] fileTypes = ((String) commitDetail.get("fileType")).split("#");
             for(String suffix : fileTypes)
@@ -47,6 +81,7 @@ public class LangCompetence {
             int author_id = (Integer) commitDetail.get("author_id");
             String[] fileTypes = ((String) commitDetail.get("fileType")).split("#");
             String[] fileModify = ((String) commitDetail.get("fileModify")).split("#");
+            if(fileTypes.length != fileModify.length)continue;
             for(int i = 0; i < fileTypes.length; i++){
                 String lang = suffixLangMap.get(fileTypes[i]);
                 if(lang == null) {
@@ -106,6 +141,25 @@ public class LangCompetence {
     private void updateCompetence(Map<Integer, Map<String, Integer>> LangContributions){
         for(Map.Entry<Integer, Map<String, Integer>> LangContribution : LangContributions.entrySet())
             langCompetenceMapper.updateCompetenceByUser(LangContribution.getKey(), LangContribution.getValue());
+    }
+
+}
+
+class LangCompetenceMultiThread implements Runnable{
+
+    private ArrayList<Integer> project_ids;
+    private int id;
+
+    public LangCompetenceMultiThread(int tid, ArrayList<Integer> pids){
+        project_ids = pids;
+        id = tid;
+    }
+
+    public void run(){
+        LangCompetence langCompetence = new LangCompetence();
+        langCompetence.id = id;
+        langCompetence.project_ids = project_ids;
+        langCompetence.calculate();
     }
 
 }

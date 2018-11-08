@@ -47,11 +47,8 @@ public class LangCompetence {
         System.out.println("Calculated : " + commit_count + " commits");
     }
 
-    public LangCompetence(){
-        loadSuffixMap();
-    }
-
     public void calculate(){
+        loadSuffixMap();
         int i = 0;
         for(int project_id : project_ids){
             System.out.printf("Thread:%d\tProject ID : %d %d/%d\n", id, project_id, ++i, project_ids.size());

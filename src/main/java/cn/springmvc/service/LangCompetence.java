@@ -32,6 +32,7 @@ public class LangCompetence {
         String[] langs = langCompetenceMapper.getLang(project_id);
         ArrayList<Integer> commit_ids = new ArrayList<Integer>();
         loadCommits(project_id, commit_ids);
+        if(commit_ids.size() == 0) return;
         ArrayList<Map<String, Object>> commitDetails = langCompetenceMapper.getCommitDetail(commit_ids);
         Set<String> suffixes = new HashSet<String>();
         for(Map<String, Object> commitDetail : commitDetails){

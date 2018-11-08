@@ -18,11 +18,11 @@ public class AppTest
 {
 
     @Autowired
-    private LangSuffix langSuffix;
+    private LangCompetence langCompetence;
 
     @Test
     public void test() {
-        langSuffix.statLangSuffix();
+        langCompetence.calculate();
     }
 
 

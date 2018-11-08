@@ -29,7 +29,7 @@
     <select id="getCommitDetail" resultType="java.util.Map">
         SELECT author_id, fileType, fileModify FROM commits_all
         WHERE id IN
-        <foreach collection="commits" open="(" close=")" separator="," item="cid">#{cid,jdbvType=INTEGER}</foreach>
+        <foreach collection="commits" open="(" close=")" separator="," item="cid">#{cid,jdbcType=INTEGER}</foreach>
     </select>
 
     <insert id="saveMissed">

@@ -33,8 +33,8 @@
     </select>
 
     <insert id="saveMissed">
-        INSERT INTO mapMissed(project_id, suffix)
-        VALUES(#{pid,jdbcType=INTEGER},#{suffix,jdbcType=VARCHAR})
+        INSERT INTO mapMissed(project_id, suffix, freq)
+        VALUES(#{pid,jdbcType=INTEGER},#{suffix,jdbcType=VARCHAR}, 1)
         ON DUPLICATE KEY UPDATE
         freq = freq + 1
     </insert>
@@ -48,7 +48,7 @@
             #{val,jdbcType=INTEGER}
         </foreach>
         ON DUPLICATE KEY UPDATE
-        <foreach collection="langComp" close=")" separator="," index="key">
+        <foreach collection="langComp" separator="," index="key">
             ${key} = ${key} + VALUES(${key})
         </foreach>
     </insert>

@@ -19,7 +19,9 @@ public class LangCompetence {
     public void calculate(){
         loadSuffixMap();
         ArrayList<Integer> project_ids = langCompetenceMapper.getProjectID(1000);
+        int i = 0;
         for(int project_id : project_ids){
+            System.out.printf("Project ID : %d %d/%d\n", project_id, ++i, project_ids.size());
             Map<Integer, Map<String, Integer>> LangContribution = new HashMap<Integer, Map<String, Integer>>();
             calcContribution(project_id, LangContribution);
             updateCompetence(LangContribution);
@@ -33,12 +35,14 @@ public class LangCompetence {
         ArrayList<Map<String, Object>> commitDetails = langCompetenceMapper.getCommitDetail(commit_ids);
         Set<String> suffixes = new HashSet<String>();
         for(Map<String, Object> commitDetail : commitDetails){
+            if(commitDetail.get("fileType") == null) continue;
             String[] fileTypes = ((String) commitDetail.get("fileType")).split("#");
             for(String suffix : fileTypes)
                 if(!suffixes.contains(suffix)) suffixes.add(suffix);
         }
         Map<String, String> suffixLangMap = mapSuffix(suffixes, langs);
         for(Map<String, Object> commitDetail : commitDetails){
+            if(commitDetail.get("fileType") == null || commitDetail.get("fileModify") == null) continue;
             int author_id = (Integer) commitDetail.get("author_id");
             String[] fileTypes = ((String) commitDetail.get("fileType")).split("#");
             String[] fileModify = ((String) commitDetail.get("fileModify")).split("#");
@@ -52,9 +56,9 @@ public class LangCompetence {
                 int modify = Integer.parseInt(tmp[0]) + Integer.parseInt(tmp[1]);
                 if(!LangContribution.containsKey(author_id))
                     LangContribution.put(author_id, new HashMap<String, Integer>());
-                Map<String, Integer> secondMap = LangContribution.get(lang);
-                if(!secondMap.containsKey(author_id)) secondMap.put(lang, modify);
-                else secondMap.put(lang, secondMap.get(author_id) + modify);
+                Map<String, Integer> secondMap = LangContribution.get(author_id);
+                if(!secondMap.containsKey(lang)) secondMap.put(lang, modify);
+                else secondMap.put(lang, secondMap.get(lang) + modify);
             }
         }
     }

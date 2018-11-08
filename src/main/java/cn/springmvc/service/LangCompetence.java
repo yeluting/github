@@ -29,7 +29,7 @@ public class LangCompetence {
         for(int i = 0; i < threadCount; i++){
             ArrayList<Integer> sub_pids = new ArrayList<Integer>();
             for(int j = i * split;; j++){
-                sub_pids.add(pids.indexOf(j));
+                sub_pids.add(pids.get(j));
                 if(i == threadCount - 1){
                     if(j == total) break;
                 }else{

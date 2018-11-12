@@ -86,12 +86,16 @@ public class LangCompetence {
                     continue;
                 }
                 String[] tmp = fileModify[i].split(";");
-                int modify = Integer.parseInt(tmp[0]) + Integer.parseInt(tmp[1]);
-                if(!LangContribution.containsKey(author_id))
-                    LangContribution.put(author_id, new HashMap<String, Integer>());
-                Map<String, Integer> secondMap = LangContribution.get(author_id);
-                if(!secondMap.containsKey(lang)) secondMap.put(lang, modify);
-                else secondMap.put(lang, secondMap.get(lang) + modify);
+                try {
+                    int modify = Integer.parseInt(tmp[0]) + Integer.parseInt(tmp[1]);
+                    if (!LangContribution.containsKey(author_id))
+                        LangContribution.put(author_id, new HashMap<String, Integer>());
+                    Map<String, Integer> secondMap = LangContribution.get(author_id);
+                    if (!secondMap.containsKey(lang)) secondMap.put(lang, modify);
+                    else secondMap.put(lang, secondMap.get(lang) + modify);
+                } catch(Exception ex){
+                    ex.printStackTrace();
+                }
             }
         }
         if(!missed.isEmpty())langCompetenceMapper.saveMissed(project_id, missed);

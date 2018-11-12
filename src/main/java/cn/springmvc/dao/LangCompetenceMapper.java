@@ -19,7 +19,7 @@ public interface LangCompetenceMapper {
 
     ArrayList<Map<String, Object>> getCommitDetail(@Param("commits") ArrayList<Integer> commit_ids);
 
-    void saveMissed(@Param("pid") int project_id, @Param("suffix") String suffix);
+    void saveMissed(@Param("pid") int project_id, @Param("suffixes") ArrayList<String> suffixes);
 
     void updateCompetenceByUser(@Param("uid") int author_id, @Param("langComp") Map<String, Integer> langComp);
 

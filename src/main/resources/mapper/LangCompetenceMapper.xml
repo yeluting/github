@@ -36,7 +36,9 @@
 
     <insert id="saveMissed">
         INSERT INTO mapMissed(project_id, suffix, freq)
-        VALUES(#{pid,jdbcType=INTEGER},#{suffix,jdbcType=VARCHAR}, 1)
+        VALUES <foreach collection="suffixes" item="item" separator=",">
+        (#{pid,jdbcType=INTEGER},#{item,jdbcType=VARCHAR}, 1)
+        </foreach>
         ON DUPLICATE KEY UPDATE
         freq = freq + 1
     </insert>

@@ -72,6 +72,7 @@ public class LangCompetence {
                 if(!suffixes.contains(suffix)) suffixes.add(suffix);
         }
         Map<String, String> suffixLangMap = mapSuffix(suffixes, langs);
+        ArrayList<String> missed = new ArrayList<String>();
         for(Map<String, Object> commitDetail : commitDetails){
             if(commitDetail.get("fileType") == null || commitDetail.get("fileModify") == null) continue;
             int author_id = (Integer) commitDetail.get("author_id");
@@ -81,7 +82,7 @@ public class LangCompetence {
             for(int i = 0; i < fileTypes.length; i++){
                 String lang = suffixLangMap.get(fileTypes[i]);
                 if(lang == null) {
-                    langCompetenceMapper.saveMissed(project_id, fileTypes[i]);
+                    missed.add(fileTypes[i]);
                     continue;
                 }
                 String[] tmp = fileModify[i].split(";");
@@ -93,6 +94,7 @@ public class LangCompetence {
                 else secondMap.put(lang, secondMap.get(lang) + modify);
             }
         }
+        langCompetenceMapper.saveMissed(project_id, missed);
     }
 
     private void loadSuffixMap(){

@@ -94,7 +94,7 @@ public class LangCompetence {
                 else secondMap.put(lang, secondMap.get(lang) + modify);
             }
         }
-        langCompetenceMapper.saveMissed(project_id, missed);
+        if(!missed.isEmpty())langCompetenceMapper.saveMissed(project_id, missed);
     }
 
     private void loadSuffixMap(){

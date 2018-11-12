@@ -22,8 +22,10 @@
     </select>
 
     <select id="getLang" parameterType="java.lang.Integer" resultType="java.lang.String">
-        SELECT language FROM project_languages_filter1
-        WHERE project_id = #{pid,jdbcType=INTEGER}
+        select LField from languages,
+        (SELECT language FROM project_languages_filter1
+        WHERE project_id = #{pid,jdbcType=INTEGER}) tt
+        WHERE languages.language = tt.language;
     </select>
 
     <select id="getCommitDetail" resultType="java.util.Map">

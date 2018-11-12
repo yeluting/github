@@ -15,14 +15,15 @@ public class LangCompetence {
 
     public static int commit_count;
 
-    final private int TABLE_NUM = 1;
+    final private int TABLE_NUM = 6;
     private Map<String, Map<String, Integer>> suffixMap;
     public int id;
     public ArrayList<Integer> project_ids;
     public LangCompetenceMapper langCompetenceMapper;
 
     public void multiThreadCalc(int threadCount, int limit){
-        ArrayList<Integer> pids = lcm.getProjectID(limit);
+//        ArrayList<Integer> pids = lcm.getProjectID(limit);
+        ArrayList<Integer> pids = lcm.getALLProjectID();
         int total = pids.size();
         List<ArrayList<Integer>> pidList = new ArrayList<ArrayList<Integer>>();
         for(int i = 0; i < threadCount; i++) pidList.add(new ArrayList<Integer>());

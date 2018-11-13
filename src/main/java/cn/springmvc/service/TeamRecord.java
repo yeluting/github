@@ -64,6 +64,7 @@ public class TeamRecord {
     }
 
     public void calculateAbility(){
+        int total = 0;
         List<Map<String, Object>> teamRecords = teamRecordMapper.getTeamRecord();
         for(Map<String, Object> teamRecord : teamRecords){
             int project_id = (Integer) teamRecord.get("project_id");
@@ -75,8 +76,12 @@ public class TeamRecord {
             double[][] tmpLangAbility = new double[members.length][langs.size()];
             int avaLength = members.length;
             for(int i = 0; i < members.length; i++) {
-                tmpLangAbility[i] = teamRecordMapper.getLangAbility(members[i], langs);
-                if(tmpLangAbility[i].length == 0) avaLength--;
+                try {
+                    tmpLangAbility[i] = teamRecordMapper.getLangAbility(members[i], langs);
+                    if (tmpLangAbility[i].length == 0) avaLength--;
+                }catch (Exception ex){
+                    System.out.println(++total + " " + ex.toString());
+                }
             }
             if(avaLength <= 1) continue;
             int[] avaMembers = new int[avaLength];

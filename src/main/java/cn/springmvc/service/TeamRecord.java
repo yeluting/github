@@ -170,8 +170,12 @@ class TeamRecordInsertDB implements Runnable{
     }
 
     public void run(){
-        if(teamrecords == null) teamRecordMapper.insertMembers(memberteams);
-        else if(memberteams == null) teamRecordMapper.insertTeams(teamrecords);
+        try {
+            if (teamrecords == null) teamRecordMapper.insertMembers(memberteams);
+            else if (memberteams == null) teamRecordMapper.insertTeams(teamrecords);
+        } catch (Exception ex){
+            ex.printStackTrace();
+        }
     }
 
 }

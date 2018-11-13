@@ -4,6 +4,7 @@
 
     <select id="getProjectId" parameterType="java.lang.String" resultType="java.lang.Integer">
         SELECT id FROM ${table}
+        WHERE members &lt; 50
     </select>
 
     <select id="getCommitter" parameterType="java.lang.Integer" resultType="java.lang.Integer">

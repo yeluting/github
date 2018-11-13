@@ -27,7 +27,7 @@
     </insert>
 
     <select id="getTeamRecord" resultType="java.util.Map">
-        SELECT project_id, members FROM TeamRecord
+        SELECT project_id, members FROM TeamRecord_Comp
         WHERE team = 1
     </select>
 
@@ -39,11 +39,11 @@
 
     <select id="getLangAbility" resultType="java.lang.Double">
         SELECT <foreach collection="langs" item="item" index="index" separator=",">${item}</foreach>
-        FROM LangAbility_norm WHERE author_id = #{author_id,jdbcType=INTEGER}
+        FROM LangCompetence_norm WHERE author_id = #{author_id,jdbcType=INTEGER}
     </select>
 
     <update id="updateGrowDiff">
-        UPDATE TeamRecordAnalysis SET grow = #{grow,jdbcType=DOUBLE}, diff = #{diff,jdbcType=DOUBLE}
+        UPDATE TeamRecordAnalysis_Comp SET grow = #{grow,jdbcType=DOUBLE}, diff = #{diff,jdbcType=DOUBLE}
         WHERE member_id = #{member_id,jdbcType=INTEGER} AND project_id = #{project_id,jdbcType=INTEGER}
     </update>
 

@@ -18,11 +18,11 @@ public class AppTest
 {
 
     @Autowired
-    public LangAbilityAna langAbilityAna;
+    public LangAbility langAbility;
 
     @Test
     public void test() {
-        langAbilityAna.calculate(50000);
+        langAbility.normalization();
     }
 
 

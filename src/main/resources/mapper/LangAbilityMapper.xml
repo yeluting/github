@@ -65,11 +65,11 @@
     </insert>
 
     <select id="getMax" resultType="java.util.Map">
-        SELECT language, maxAbility FROM LangAbility_dis;
+        SELECT language, maxAbility FROM LangCompetence_dis;
     </select>
 
     <update id="norm" parameterType="java.util.Map">
-        UPDATE LangAbility_norm SET 
+        UPDATE LangCompetence_norm SET
         <foreach collection="max" item="val" index="key" separator=",">
           ${key} = log(10,${key}+1) / log(10,#{val,jdbcType=DOUBLE}+1)
         </foreach>

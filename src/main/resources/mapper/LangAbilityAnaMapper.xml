@@ -7,11 +7,11 @@
     </select>
 
     <select id="selectLangAbility" resultType="java.util.Map">
-        SELECT * FROM LangAbility LIMIT #{lim,jdbcType=INTEGER} OFFSET #{off,jdbcType=INTEGER}
+        SELECT * FROM LangCompetence LIMIT #{lim,jdbcType=INTEGER} OFFSET #{off,jdbcType=INTEGER}
     </select>
 
     <select id="saveLangAnalysis" parameterType="java.util.Map">
-        INSERT INTO LangAbility_dis VALUES
+        INSERT INTO LangCompetence_dis VALUES
         <foreach collection="list" item="item" index="index" separator=",">
             (#{item.lang,jdbcType=VARCHAR},#{item.count,jdbcType=INTEGER},#{item.avg,jdbcType=DOUBLE},#{item.min,jdbcType=DOUBLE},#{item.max,jdbcType=DOUBLE})
         </foreach>

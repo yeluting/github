@@ -18,11 +18,11 @@ public class AppTest
 {
 
     @Autowired
-    private LangCompetence langCompetence;
+    public LangAbilityAna langAbilityAna;
 
     @Test
     public void test() {
-        langCompetence.multiThreadCalc(16, 1000);
+        langAbilityAna.calculate(50000);
     }
 
 

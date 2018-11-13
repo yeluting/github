@@ -18,11 +18,11 @@ public class AppTest
 {
 
     @Autowired
-    public LangAbility langAbility;
+    public TeamRecord teamRecord;
 
     @Test
     public void test() {
-        langAbility.normalization();
+        teamRecord.insert(16);
     }
 
 

@@ -15,7 +15,7 @@ public class TeamRecord {
     final private String[] heads = {"project_id", "members", "team", "member_id", "project_id", "teamMemberSum", "teamMember"};
 
     public void insert(int max_thread){
-        ArrayList<Integer> pids = teamRecordMapper.getProjectId("filter1_project_id");
+        ArrayList<Integer> pids = teamRecordMapper.getProjectId("projects_3");
         int size = pids.size() / 1000;
         List<Map<String, Object>> teamrecords = new ArrayList<Map<String, Object>>();
         List<Map<String, Object>> memberteams = new ArrayList<Map<String, Object>>();

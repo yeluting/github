@@ -35,7 +35,7 @@ public class SocIntimacy {
                     updateValues.put(v, pl);
                 }
             }
-            System.out.printf("%d %d\n", users.size() / si);
+            System.out.printf("%d %d\n", users.size(), si);
         }
         System.out.println("Start Update.");
         System.out.printf("size : %d\n", updateValues.size());

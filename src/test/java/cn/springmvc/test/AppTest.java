@@ -20,9 +20,12 @@ public class AppTest
     @Autowired
     public TeamRecord teamRecord;
 
+    @Autowired SocIntimacy socIntimacy;
+
     @Test
     public void test() {
-        teamRecord.calculateIntimacy();
+//        teamRecord.calculateIntimacy();
+        socIntimacy.calculate(10000, 10000);
     }
 
 

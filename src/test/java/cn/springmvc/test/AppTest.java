@@ -25,7 +25,7 @@ public class AppTest
     @Test
     public void test() {
 //        teamRecord.calculateIntimacy();
-        socIntimacy.calculate(10000, 10000);
+        socIntimacy.calculate(100000, 10000);
     }
 
 

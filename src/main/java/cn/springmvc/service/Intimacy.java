@@ -27,38 +27,29 @@ public class Intimacy {
         while(Thread.activeCount() != t_init);
     }
 
-    public void calculateTeam(){
-        LinkedList<Integer> projects = intimacyMapper.getProjectId();
-        System.out.printf("Get %d projects.\n", projects.size());
-        int si = projects.size();
-        while(!projects.isEmpty()){
-            int project = projects.poll();
-            List<Integer> members = intimacyMapper.getMembersByPid(project);
-            double[][] p_int = new double[members.size()][members.size()];
-            for(int i = 0; i < members.size(); i++){
-                for(int j = 0; j < members.size(); j++){
-                    if(i == j) p_int[i][j] = 0.0;
-                    else{
-                        Double tmp = intimacyMapper.getPairIntimacy(members.get(i), members.get(j));
-                        if(tmp == null) p_int[i][j] = MAXDIS;
-                        else p_int[i][j] = tmp;
-                    }
+    public Map<Integer, Double> calculateTeam(int project){
+        List<Integer> members = intimacyMapper.getMembersByPid(project);
+        double[][] p_int = new double[members.size()][members.size()];
+        for(int i = 0; i < members.size(); i++){
+            for(int j = 0; j < members.size(); j++){
+                if(i == j) p_int[i][j] = 0.0;
+                else{
+                    Double tmp = intimacyMapper.getPairIntimacy(members.get(i), members.get(j));
+                    if(tmp == null) p_int[i][j] = MAXDIS;
+                    else p_int[i][j] = tmp;
                 }
             }
-            List<Map<String, Object>> values = new ArrayList<Map<String, Object>>();
-            for(int i = 0; i <  members.size(); i++){
-                for(int j = 0; j < members.size(); j++){
-                    if(i == j) continue;
-                    Map<String, Object> tmp = new HashMap<String, Object>();
-                    tmp.put("pid", project);
-                    tmp.put("userA", members.get(i));
-                    tmp.put("userB", members.get(j));
-                    tmp.put("value", shortestWeightedPath(i, j, p_int));
-                }
-            }
-            intimacyMapper.insertTeamIntimacy(values);
-            System.out.printf("%d / %d\n", projects.size(), si);
         }
+        Map<Integer, Double> values = new HashMap<Integer, Double>();
+        for(int i = 0; i <  members.size(); i++){
+            double tmp = 0.0;
+            for(int j = 0; j < members.size(); j++){
+                if(i == j) continue;
+                tmp += shortestWeightedPath(i, j, p_int);
+            }
+            values.put(members.get(i), tmp / (members.size() - 1));
+        }
+        return values;
     }
 
     //Copy From https://github.com/yeluting/kaggle/blob/master/src/main/java/cn/springmvc/service/CompetitorIntimacy.java

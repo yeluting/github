@@ -22,7 +22,7 @@
     </select>
 
     <select id="getPairIntimacy" parameterType="java.lang.Integer" resultType="java.lang.Double">
-        SELECT folCost FROM Relation
+        SELECT 1 - folCost FROM Relation
         WHERE userA = #{userA,jdbcType=INTEGER} AND userB = #{userB,jdbcType=INTEGER}
     </select>
 

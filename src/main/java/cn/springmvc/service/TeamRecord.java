@@ -16,6 +16,9 @@ public class TeamRecord {
     @Autowired
     private IntimacyMapper intimacyMapper;
 
+    @Autowired
+    private Intimacy intimacy;
+
     final private String[] heads = {"project_id", "members", "team", "member_id", "project_id", "teamMemberSum", "teamMember"};
 
     public void insert(int max_thread){
@@ -107,29 +110,13 @@ public class TeamRecord {
     }
 
     public void calculateIntimacy(){
-        List<Map<String, Object>> teamRecords = teamRecordMapper.getTeamRecordAnalysis();
-        for(Map<String, Object> teamRecord : teamRecords){
-            int member_id = (Integer) teamRecord.get("member_id");
-            int project_id = (Integer) teamRecord.get("project_id");
-            if(teamRecord.get("teamMember") == null) continue;
-            String[] members = ((String) teamRecord.get("teamMember")).split("&");
-            if(members.length == 1) continue;
-            int count = 0;
-            double totalIntimacy = 0.0;
-            for(String member : members){
-                try {
-                    int teammate = Integer.parseInt(member);
-                    if(teammate == member_id) continue;
-                    Double intimacy = intimacyMapper.getPairIntimacy(member_id, teammate);
-                    if(intimacy == null) continue;
-                    count++;
-                    totalIntimacy += intimacy;
-                }catch (Exception ex){
-                    System.out.println(ex.toString());
-                }
-            }
-            if(count == 0) continue;
-            teamRecordMapper.updateCost(member_id, project_id, totalIntimacy / count);
+        List<Integer> project_ids = teamRecordMapper.getTeamRecordAnalysisProject();
+        int i = 0;
+        for(int project_id : project_ids){
+            Map<Integer, Double> values = intimacy.calculateTeam(project_id);
+            for(Map.Entry<Integer, Double> value : values.entrySet())
+                teamRecordMapper.updateCost(project_id, value.getKey(), value.getValue());
+            System.out.printf("%d / %d\n", ++i, project_ids.size());
         }
     }
 

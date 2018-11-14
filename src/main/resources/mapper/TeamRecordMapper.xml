@@ -31,6 +31,10 @@
         WHERE team = 1
     </select>
 
+    <select id="getTeamRecordAnalysis" resultType="java.util.Map">
+        SELECT member_id, project_id, teamMember FROM TeamRecordAnalysis_Comp
+    </select>
+
     <select id="getProjectLang" parameterType="java.lang.Integer" resultType="java.lang.String">
         SELECT LField FROM languages INNER JOIN
         (SELECT * FROM project_languages_filter1 WHERE project_id = #{project_id,jdbcType=INTEGER}) tt
@@ -44,6 +48,11 @@
 
     <update id="updateGrowDiff">
         UPDATE TeamRecordAnalysis_Comp SET grow = #{grow,jdbcType=DOUBLE}, diff = #{diff,jdbcType=DOUBLE}
+        WHERE member_id = #{member_id,jdbcType=INTEGER} AND project_id = #{project_id,jdbcType=INTEGER}
+    </update>
+
+    <update id="updateCost">
+        UPDATE TeamRecordAnalysis_Comp SET cost = #{cost,jdbcType=DOUBLE}
         WHERE member_id = #{member_id,jdbcType=INTEGER} AND project_id = #{project_id,jdbcType=INTEGER}
     </update>
 

@@ -1,5 +1,6 @@
 package cn.springmvc.service;
 
+import cn.springmvc.dao.IntimacyMapper;
 import cn.springmvc.dao.TeamRecordMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,6 +12,9 @@ public class TeamRecord {
 
     @Autowired
     private TeamRecordMapper teamRecordMapper;
+
+    @Autowired
+    private IntimacyMapper intimacyMapper;
 
     final private String[] heads = {"project_id", "members", "team", "member_id", "project_id", "teamMemberSum", "teamMember"};
 
@@ -99,6 +103,33 @@ public class TeamRecord {
             getAbilityDiff(LangAbility, abilityDiff);
             for(int i = 0; i < avaLength; i++)
                 teamRecordMapper.updateGrowDiff(avaMembers[i], project_id, growSpace[i], abilityDiff[i]);
+        }
+    }
+
+    public void calculateIntimacy(){
+        List<Map<String, Object>> teamRecords = teamRecordMapper.getTeamRecordAnalysis();
+        for(Map<String, Object> teamRecord : teamRecords){
+            int member_id = (Integer) teamRecord.get("member_id");
+            int project_id = (Integer) teamRecord.get("project_id");
+            if(teamRecord.get("teamMember") == null) continue;
+            String[] members = ((String) teamRecord.get("teamMember")).split("&");
+            if(members.length == 1) continue;
+            int count = 0;
+            double totalIntimacy = 0.0;
+            for(String member : members){
+                try {
+                    int teammate = Integer.parseInt(member);
+                    if(teammate == member_id) continue;
+                    Double intimacy = intimacyMapper.getPairIntimacy(member_id, teammate);
+                    if(intimacy == null) continue;
+                    count++;
+                    totalIntimacy += intimacy;
+                }catch (Exception ex){
+                    System.out.println(ex.toString());
+                }
+            }
+            if(count == 0) continue;
+            teamRecordMapper.updateCost(member_id, project_id, totalIntimacy / count);
         }
     }
 

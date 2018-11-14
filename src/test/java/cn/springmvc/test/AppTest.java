@@ -22,7 +22,7 @@ public class AppTest
 
     @Test
     public void test() {
-        teamRecord.calculateAbility();
+        teamRecord.calculateIntimacy();
     }
 
 

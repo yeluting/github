@@ -13,9 +13,38 @@ public class SocIntimacy {
     @Autowired
     private SocIntimacyMapper socIntimacyMapper;
 
-    public void calculate(int batchsize, int upd){
-        Map<Integer, LinkedList<Integer>> updateValues = new HashMap<Integer, LinkedList<Integer>>();
+    public void calculate(int threads, int batchsize, int upd){
         LinkedList<Integer> users = socIntimacyMapper.getUserId();
+        List<LinkedList<Integer>> sub_users = new ArrayList<LinkedList<Integer>>();
+        for(int i = 0; i < threads; i++) sub_users.add(new LinkedList<Integer>());
+        for(int user : users){
+            for(int i = 0; i < threads; i++)
+                sub_users.get(i).add(user);
+        }
+        int init_thread = Thread.activeCount();
+        for(int i = 0; i < threads; i++)
+            new Thread(new SocIntimacyParallel(batchsize, upd, socIntimacyMapper, sub_users.get(i))).start();
+        while(Thread.activeCount() != init_thread);
+    }
+
+}
+
+class SocIntimacyParallel implements Runnable{
+
+    private LinkedList<Integer> users;
+    private int batchsize;
+    private int upd;
+    private SocIntimacyMapper socIntimacyMapper;
+
+    public SocIntimacyParallel(int bs, int u, SocIntimacyMapper smapper, LinkedList<Integer> us){
+        users = us;
+        batchsize = bs;
+        upd = u;
+        socIntimacyMapper = smapper;
+    }
+
+    public void run(){
+        Map<Integer, LinkedList<Integer>> updateValues = new HashMap<Integer, LinkedList<Integer>>();
         System.out.printf("Get %d users.\n", users.size());
         int si = users.size();
         while(!users.isEmpty()){

@@ -17,9 +17,9 @@ public class SocIntimacy {
         LinkedList<Integer> users = socIntimacyMapper.getUserId();
         List<LinkedList<Integer>> sub_users = new ArrayList<LinkedList<Integer>>();
         for(int i = 0; i < threads; i++) sub_users.add(new LinkedList<Integer>());
-        for(int user : users){
-            for(int i = 0; i < threads; i++)
-                sub_users.get(i).add(user);
+        for(int j = 0; j < users.size();){
+            for(int i = 0; i < threads && j < users.size(); i++, j++)
+                sub_users.get(i).add(users.get(j));
         }
         int init_thread = Thread.activeCount();
         for(int i = 0; i < threads; i++)

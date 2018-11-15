@@ -20,7 +20,7 @@ public interface TeamRecordMapper {
 
     List<String> getProjectLang(@Param("project_id") int project_id);
 
-    double[] getLangAbility(@Param("author_id") int author_id, @Param("langs") List<String> langs);
+    List<Map<String, Object>> getLangAbility(@Param("author_id") int author_id, @Param("langs") List<String> langs);
 
     void updateGrowDiff(@Param("member_id") int member_id, @Param("project_id") int project_id, @Param("grow") double grow, @Param("diff") double diff);
 

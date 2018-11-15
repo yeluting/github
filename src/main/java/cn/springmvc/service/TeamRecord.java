@@ -84,8 +84,15 @@ public class TeamRecord {
             int avaLength = members.length;
             for(int i = 0; i < members.length; i++) {
                 try {
-                    tmpLangAbility[i] = teamRecordMapper.getLangAbility(members[i], langs);
-                    if (tmpLangAbility[i].length == 0) avaLength--;
+                    List<Map<String, Object>> tmp = teamRecordMapper.getLangAbility(members[i], langs);
+                    if(tmp.size() != 1) {
+                        avaLength--;
+                        tmpLangAbility[i] = new double[0];
+                    }else{
+                        tmpLangAbility[i] = new double[langs.size()];
+                        for(int j = 0; j < langs.size(); j++)
+                            tmpLangAbility[i][j] = (Double) tmp.get(0).get(langs.get(j));
+                    }
                 }catch (Exception ex){
                     System.out.println(++total + " " + ex.toString());
                 }

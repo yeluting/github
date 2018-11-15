@@ -41,7 +41,7 @@
         ON tt.language = languages.language;
     </select>
 
-    <select id="getLangAbility" resultType="java.lang.Double">
+    <select id="getLangAbility" resultType="java.util.Map">
         SELECT <foreach collection="langs" item="item" index="index" separator=",">${item}</foreach>
         FROM LangCompetence_norm WHERE author_id = #{author_id,jdbcType=INTEGER}
     </select>

@@ -3,7 +3,7 @@
 <mapper namespace="cn.springmvc.dao.IntimacyMapper">
 
     <select id="getSize" resultType="java.lang.Integer">
-        SELECT distinct(userA) FROM Relation LIMIT 1000
+        SELECT distinct(userA) FROM Relation
     </select>
 
     <select id="updateIntimacy" parameterType="java.lang.Integer">

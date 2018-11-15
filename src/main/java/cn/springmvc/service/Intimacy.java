@@ -98,9 +98,9 @@ class updateThread implements Runnable{
     }
 
     public void run(){
-        System.out.printf("From %d to %d START.", userA, userB);
+        System.out.printf("From %d to %d START.\n", userA, userB);
         intimacyMapper.updateIntimacy(userA, userB);
-        System.out.printf("From %d to %d END.", userA, userB);
+        System.out.printf("From %d to %d END.\n", userA, userB);
     }
 
 }

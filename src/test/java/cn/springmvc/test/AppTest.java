@@ -30,7 +30,7 @@ public class AppTest
     public void test() {
 //        teamRecord.calculateIntimacy();
 //        socIntimacy.calculate(16,100000, 10000);
-        intimacy.calculate(10000, 16);
+//        intimacy.calculate(10000, 16);
 //        teamRecord.calculateAbility();
     }
 

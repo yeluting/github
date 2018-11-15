@@ -116,15 +116,18 @@ public class TeamRecord {
         }
     }
 
-    public void calculateIntimacy(){
+    public void calculateIntimacy(int threads){
         List<Integer> project_ids = teamRecordMapper.getTeamRecordAnalysisProject();
-        int i = 0;
-        for(int project_id : project_ids){
-            Map<Integer, Double> values = intimacy.calculateTeam(project_id);
-            for(Map.Entry<Integer, Double> value : values.entrySet())
-                teamRecordMapper.updateCost(project_id, value.getKey(), value.getValue());
-            System.out.printf("%d / %d\n", ++i, project_ids.size());
+        List<List<Integer>> sub_pids = new ArrayList<List<Integer>>();
+        for(int i = 0; i < threads; i++) sub_pids.add(new ArrayList<Integer>());
+        for(int i = 0; i < project_ids.size();){
+            for(int j = 0; j < threads && i < project_ids.size(); i++, j++)
+                sub_pids.get(j).add(project_ids.get(i));
         }
+        int init_threads = Thread.activeCount();
+        for(int i = 0; i < threads; i++)
+            new Thread(new TeamIntimacyDB(i + 1, sub_pids.get(i), teamRecordMapper, intimacy)).start();
+        while(Thread.activeCount() != init_threads);
     }
 
     public void getGrowSpace(double[][] LangAbility, double[] growSpace){
@@ -205,6 +208,32 @@ class TeamRecordInsertDB implements Runnable{
             else if (memberteams == null) teamRecordMapper.insertTeams(teamrecords);
         } catch (Exception ex){
             ex.printStackTrace();
+        }
+    }
+
+}
+
+class TeamIntimacyDB implements Runnable{
+
+    private int id;
+    private TeamRecordMapper teamRecordMapper;
+    private Intimacy intimacy;
+    private List<Integer> project_ids;
+
+    public TeamIntimacyDB(int id, List<Integer> pids, TeamRecordMapper tm, Intimacy it){
+        this.id = id;
+        project_ids = pids;
+        teamRecordMapper = tm;
+        intimacy = it;
+    }
+
+    public void run(){
+        int i = 0;
+        for(int project_id : project_ids){
+            Map<Integer, Double> values = intimacy.calculateTeam(project_id);
+            for(Map.Entry<Integer, Double> value : values.entrySet())
+                teamRecordMapper.updateCost(project_id, value.getKey(), value.getValue());
+            System.out.printf("thread:%d\t%d / %d\n", id, ++i, project_ids.size());
         }
     }
 

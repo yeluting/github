@@ -9,20 +9,13 @@
 
     <select id="getOrgs" parameterType="java.lang.Integer" resultType="java.util.Map">
         SELECT userA, sum(org) AS orgs FROM Relation
-        WHERE
-        <foreach collection="list" item="item" index="index" separator="OR" open="(" close=")">
-            userA = #{item}
-        </foreach>
-        GROUP BY userA
+        WHERE userA = #{uid,jdbcType=INTEGER}
     </select>
 
     <update id="updateOrg" parameterType="java.lang.Integer">
         UPDATE Relation
         SET orgCost = org / #{val,jdbcType=INTEGER}
-        WHERE
-        <foreach collection="users" item="item" index="index" separator="OR">
-            userA = #{item}
-        </foreach>
+        WHERE userA = #{uid,jdbcType=INTEGER}
     </update>
 
 </mapper>

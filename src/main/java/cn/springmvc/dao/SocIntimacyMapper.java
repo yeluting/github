@@ -11,9 +11,9 @@ public interface SocIntimacyMapper {
 
     LinkedList<Integer> getUserId();
 
-    List<Map<String, Object>> getOrgs(List<Integer> users);
+    List<Map<String, Object>> getOrgs(@Param("uid") int user);
 
-    void updateOrg(@Param("val") Integer value, @Param("users") List<Integer> users);
+    void updateOrg(@Param("val") Integer value, @Param("uid") int user);
 
 
 }

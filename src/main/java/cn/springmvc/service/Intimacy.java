@@ -28,6 +28,7 @@ public class Intimacy {
 
     public Map<Integer, Double> calculateTeam(int project){
         List<Integer> members = intimacyMapper.getMembersByPid(project);
+        if(members.size() >= 20) return null;
         if(members.size() <= 1) return new HashMap<Integer, Double>();
         double[][] p_int = new double[members.size()][members.size()];
         for(int i = 0; i < members.size(); i++){

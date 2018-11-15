@@ -231,6 +231,10 @@ class TeamIntimacyDB implements Runnable{
         int i = 0;
         for(int project_id : project_ids){
             Map<Integer, Double> values = intimacy.calculateTeam(project_id);
+            if(values == null){
+                i++;
+                continue;
+            }
             for(Map.Entry<Integer, Double> value : values.entrySet())
                 teamRecordMapper.updateCost(project_id, value.getKey(), value.getValue());
             System.out.printf("thread:%d\t%d / %d\n", id, ++i, project_ids.size());

@@ -43,12 +43,7 @@ public class Intimacy {
         }
         Map<Integer, Double> values = new HashMap<Integer, Double>();
         for(int i = 0; i <  members.size(); i++){
-            double tmp = 0.0;
-            for(int j = 0; j < members.size(); j++){
-                if(i == j) continue;
-                tmp += shortestWeightedPath(i, j, p_int);
-            }
-            values.put(members.get(i), tmp / (members.size() - 1));
+            values.put(members.get(i), Dijkstra(i, p_int) / (members.size() - 1));
         }
         return values;
     }
@@ -82,6 +77,42 @@ public class Intimacy {
             }
         }
         return minWeight;
+    }
+
+    private double Dijkstra(int start, double[][] weights){
+        double[] result = new double[weights[start].length];
+        Set<Integer> S = new HashSet<Integer>();
+        Set<Integer> U = new HashSet<Integer>();
+        for(int i = 0; i < weights[start].length; i++) {
+            result[i] = weights[start][i];
+            if(i == start) S.add(i);
+            else U.add(i);
+        }
+        while(!U.isEmpty()){
+            int minIndex = -1;
+            double minValue = MAXDIS;
+            for(int index : U){
+                if(result[index] < minValue){
+                    minValue = result[index];
+                    minIndex = index;
+                }
+            }
+            if(minIndex == -1){
+                for(int index : U)
+                    result[index] = 1;
+                break;
+            }else{
+                U.remove(minIndex);
+                S.add(minIndex);
+                for(int index : U){
+                    double tmp = result[minIndex] + weights[minIndex][index];
+                    if(tmp < result[index]) result[index] = tmp;
+                }
+            }
+        }
+        double tmp = 0.0;
+        for(int i = 0; i < result.length; i++) tmp += result[i];
+        return tmp;
     }
 
 }

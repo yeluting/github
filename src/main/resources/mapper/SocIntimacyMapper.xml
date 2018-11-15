@@ -18,4 +18,10 @@
         WHERE userA = #{uid,jdbcType=INTEGER}
     </update>
 
+    <update id="updateOrg0" parameterType="java.lang.Integer">
+        UPDATE Relation
+        SET orgCost = 0
+        WHERE userA = #{uid,jdbcType=INTEGER}
+    </update>
+
 </mapper>

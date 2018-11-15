@@ -15,5 +15,6 @@ public interface SocIntimacyMapper {
 
     void updateOrg(@Param("val") Integer value, @Param("uid") int user);
 
+    void updateOrg0(@Param("uid") int user);
 
 }

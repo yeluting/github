@@ -71,7 +71,10 @@ class SocIntimacyParallel implements Runnable{
             int ss = v.size();
             int i = 0;
             for(int vv : v){
-                socIntimacyMapper.updateOrg(value.getKey(), vv);
+                if(value.getKey() == 0)
+                    socIntimacyMapper.updateOrg0(vv);
+                else
+                    socIntimacyMapper.updateOrg(value.getKey(), vv);
                 System.out.printf("%d/%d\n", ++i, ss);
             }
         }

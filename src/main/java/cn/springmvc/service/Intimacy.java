@@ -14,7 +14,6 @@ public class Intimacy {
     private IntimacyMapper intimacyMapper;
 
     final private double MAXDIS = 100;
-    final private double[] coeff = {0.7, 0.5};
 
     public void calculate(int batchsize, int MAXTHREAD){
         int t_init = Thread.activeCount();

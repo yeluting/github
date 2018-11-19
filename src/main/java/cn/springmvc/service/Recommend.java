@@ -58,6 +58,7 @@ public class Recommend {
             if(!chosenLang.contains(skills[maxSkillIndex]))
                 chosenLang.add(skills[maxSkillIndex]);
             team[i + 1] = maxUserId;
+            rSetByLangs.get(skills[maxSkillIndex]).remove(maxUserId);
             System.out.printf("Teammate %d : %d %s\n", i + 1, maxUserId, skills[maxSkillIndex]);
         }
         return teamSuccessRate.getTeamDetail(team, totalMember, chosenLang);

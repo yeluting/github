@@ -18,8 +18,10 @@ public class Recommend {
     @Autowired
     private TeamSuccessRate teamSuccessRate;
 
+    private boolean flag = false;
+
     public String recommend(int userId, String platform, int[] memberNeeded, String[] skills){
-        dataPreLoad.loadData();
+        if(!flag) dataPreLoad.loadData();
         System.out.println("Data Loaded\n");
         return recommendWeb(userId, platform, memberNeeded, skills).toString();
     }
@@ -63,7 +65,7 @@ public class Recommend {
             chosen.add(maxUserId);
             System.out.printf("Teammate %d : %d %s\n", i + 1, maxUserId, skills[maxSkillIndex]);
         }
-        return teamSuccessRate.getTeamDetail(team, totalMember, chosenLang);
+        return teamSuccessRate.getTeamDetail(team, totalMember + 1, chosenLang);
     }
 
 }

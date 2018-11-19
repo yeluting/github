@@ -31,6 +31,7 @@ public class Recommend {
         team[0] = userId;
         Map<String, Set<Integer>> rSetByLangs = recommendSet.RSetByLangs(userId, skills);
         Set<String> chosenLang = new HashSet<String>();
+        Set<Integer> chosen = new HashSet<Integer>();
         for(int i = 0; i < totalMember; i++){
             double maxSuccessRate = -1;
             int maxSkillIndex = -1;
@@ -44,6 +45,7 @@ public class Recommend {
                 }
                 Set<Integer> rSet = rSetByLangs.get(skills[j]);
                 for(int developer : rSet){
+                    if(chosen.contains(developer)) continue;
                     team[i + 1] = developer;
                     double tmpSuccessRate = teamSuccessRate.getTeamSuccessRate(team, i + 2, chosenLang);
                     if(tmpSuccessRate > maxSuccessRate){
@@ -58,7 +60,7 @@ public class Recommend {
             if(!chosenLang.contains(skills[maxSkillIndex]))
                 chosenLang.add(skills[maxSkillIndex]);
             team[i + 1] = maxUserId;
-            rSetByLangs.get(skills[maxSkillIndex]).remove(maxUserId);
+            chosen.add(maxUserId);
             System.out.printf("Teammate %d : %d %s\n", i + 1, maxUserId, skills[maxSkillIndex]);
         }
         return teamSuccessRate.getTeamDetail(team, totalMember, chosenLang);

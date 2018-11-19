@@ -16,23 +16,14 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
  */
 public class AppTest
 {
-
     @Autowired
-    public TeamRecord teamRecord;
-
-    @Autowired
-    public SocIntimacy socIntimacy;
-
-    @Autowired
-    public Intimacy intimacy;
+    private Recommend recommend;
 
     @Test
     public void test() {
-        teamRecord.calculateIntimacy(16);
-//        socIntimacy.calculate(16,100000, 10000);
-//        intimacy.calculate(10000, 16);
-//        teamRecord.calculateAbility();
+        int[] memberNeeded = {2,1,2};
+        String[] skills = {"javascript", "shell", "ruby"};
+        System.out.println(recommend.recommend(2, "github", memberNeeded, skills));
     }
-
 
 }

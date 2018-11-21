@@ -18,10 +18,23 @@ public class Recommend {
     @Autowired
     private TeamSuccessRate teamSuccessRate;
 
+    private int SetID = 1;
+    private int RecType = 0;
     private boolean flag = false;
 
+    public void setRecType(int Type){
+        RecType = Type % 4;
+    }
+
+    public void setSetID(int id){
+        SetID = id;
+    }
+
     public String recommend(int userId, String platform, int[] memberNeeded, String[] skills){
-        if(!flag) dataPreLoad.loadData();
+        if(!flag) {
+            dataPreLoad.loadData();
+            flag = true;
+        }
         System.out.println("Data Loaded\n");
         return recommendWeb(userId, platform, memberNeeded, skills).toString();
     }
@@ -49,7 +62,14 @@ public class Recommend {
                 for(int developer : rSet){
                     if(chosen.contains(developer)) continue;
                     team[i + 1] = developer;
-                    double tmpSuccessRate = teamSuccessRate.getTeamSuccessRate(team, i + 2, chosenLang);
+                    double tmpSuccessRate = 0.0;
+                    switch(RecType){
+                        case 0: tmpSuccessRate = teamSuccessRate.getTeamSuccessRate(team, i + 2, chosenLang); break;
+                        case 1: tmpSuccessRate = teamSuccessRate.getTeamSuccessRate_Closeness(team, i + 2, chosenLang); break;
+                        case 2: tmpSuccessRate = teamSuccessRate.getTeamSuccessRate_Diff(team, i + 2, chosenLang); break;
+                        case 3: tmpSuccessRate = teamSuccessRate.getTeamSuccessRate_Grow(team, i + 2, chosenLang); break;
+                        default: tmpSuccessRate = teamSuccessRate.getTeamSuccessRate(team, i + 2, chosenLang);
+                    }
                     if(tmpSuccessRate > maxSuccessRate){
                         maxSuccessRate = tmpSuccessRate;
                         maxSkillIndex = j;

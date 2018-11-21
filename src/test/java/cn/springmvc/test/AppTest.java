@@ -19,11 +19,17 @@ public class AppTest
     @Autowired
     private Recommend recommend;
 
+    @Autowired
+    private LangGroup langGroup;
+
     @Test
     public void test() {
-        int[] memberNeeded = {2,1,2};
-        String[] skills = {"javascript", "shell", "ruby"};
-        System.out.println(recommend.recommend(2, "github", memberNeeded, skills));
+//        recommend.setSetID(1);
+//        recommend.setRecType(0);
+//        int[] memberNeeded = {2,1,2};
+//        String[] skills = {"javascript", "shell", "ruby"};
+//        System.out.println(recommend.recommend(2, "github", memberNeeded, skills));
+        langGroup.group(4);
     }
 
 }

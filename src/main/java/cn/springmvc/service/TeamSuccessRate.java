@@ -40,6 +40,40 @@ public class TeamSuccessRate {
         return successRate;
     }
 
+    public double getTeamSuccessRate_Closeness(int[] team, int teamSize, Set<String> chosenLang){
+        double[] memberCost = new double[teamSize];
+        intimacy.calculateTeam(team, teamSize, memberCost);
+        double successRate = 0.0;
+        for(int i = 0; i < teamSize; i++){
+            successRate += addCoef[0] * (1 - memberCost[i]);
+        }
+        return successRate;
+    }
+
+    public double getTeamSuccessRate_Diff(int[] team, int teamSize, Set<String> chosenLang){
+        double[][] memberCompetence = new double[teamSize][chosenLang.size()];
+        loadCompetence(team, teamSize, chosenLang, memberCompetence);
+        double[] memberDiff = new double[teamSize];
+        teamRecord.getAbilityDiff(memberCompetence, memberDiff);
+        double successRate = 0.0;
+        for(int i = 0; i < teamSize; i++){
+            successRate += addCoef[1] * (1 - memberDiff[i]);
+        }
+        return successRate;
+    }
+
+    public double getTeamSuccessRate_Grow(int[] team, int teamSize, Set<String> chosenLang){
+        double[][] memberCompetence = new double[teamSize][chosenLang.size()];
+        loadCompetence(team, teamSize, chosenLang, memberCompetence);
+        double[] memberGrow = new double[teamSize];
+        teamRecord.getGrowSpace(memberCompetence, memberGrow);
+        double successRate = 0.0;
+        for(int i = 0; i < teamSize; i++){
+            successRate += addCoef[2] * memberGrow[i];
+        }
+        return successRate;
+    }
+
     private void loadCompetence(int[] team, int teamSize, Set<String> langs, double[][] memberCompetence){
         for(int i = 0; i < teamSize; i++){
             double[] wholeComp = DataPreLoad.Competence.get(team[i]);

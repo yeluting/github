@@ -96,7 +96,7 @@ public class Recommend {
                         case 3: tmpSuccessRate = teamSuccessRate.getTeamSuccessRate_Grow(team, i + 2, chosenLang); break;
                         default: tmpSuccessRate = teamSuccessRate.getTeamSuccessRate(team, i + 2, chosenLang);
                     }
-                    if(tmpSuccessRate > maxSuccessRate){
+                    if(tmpSuccessRate > maxSuccessRate && tmpSuccessRate < Double.MAX_VALUE){
                         maxSuccessRate = tmpSuccessRate;
                         maxSkillIndex = j;
                         maxUserId = developer;

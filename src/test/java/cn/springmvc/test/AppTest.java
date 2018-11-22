@@ -30,8 +30,8 @@ public class AppTest
         recommend.loadExpDataSet();
         int i = 0;
         for(int userId : recommend.users) {
-            System.out.printf("%d/%d\n", ++i, recommend.users.size());
             recommend.recommend(userId, "github", recommend.memberNeeded, recommend.skills);
+            System.out.printf("%d/%d\n", ++i, recommend.users.size());
         }
     }
 

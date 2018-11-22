@@ -59,8 +59,8 @@ public class Recommend {
         if(!flag) {
             dataPreLoad.loadData();
             flag = true;
+            System.out.println("Data Loaded\n");
         }
-        System.out.println("Data Loaded\n");
         return recommendWeb(userId, platform, memberNeeded, skills).toString();
     }
 
@@ -109,7 +109,7 @@ public class Recommend {
                 chosenLang.add(skills[maxSkillIndex]);
             team[i + 1] = maxUserId;
             chosen.add(maxUserId);
-            memberString += String.format(",%d", maxUserId);
+            memberString += String.format("&%d", maxUserId);
         }
         JSONObject teamDetail = teamSuccessRate.getTeamDetail(team, totalMember + 1, chosenLang);
         JSONObject beRecommended = teamDetail.getJSONObject(String.format("%d", userId));

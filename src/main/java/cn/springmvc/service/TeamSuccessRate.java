@@ -98,6 +98,7 @@ public class TeamSuccessRate {
         String[] teamMemberStr = new String[teamSize];
         double successRate = 0.0;
         for(int i = 0; i < teamSize; i++){
+            System.out.println(memberCost[i]+","+memberDiff[i]+","+memberGrow[i]);
             JSONObject memberJson = new JSONObject();
             String memberId = String.format("%d", team[i]);
             double[] coef = DataPreLoad.Coefficient.get(team[i]);
@@ -117,6 +118,7 @@ public class TeamSuccessRate {
             teamMemberStr[i] = memberId;
         }
         resultJson.put("members", teamMemberStr);
+        System.out.println(successRate / teamSize);
         resultJson.put("willingness", successRate / teamSize);
         return resultJson;
     }

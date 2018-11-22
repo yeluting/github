@@ -25,16 +25,20 @@ public class AppTest
     @Test
     public void test() {
         recommend.setSetID(1);
-        recommend.setDisID(1);
-        recommend.setRecType(0);
-        recommend.loadExpDataSet();
-        int[] tmp = new int[recommend.memberNeeded.length];
-        for(int i = 0; i < tmp.length; i++) tmp[i] = recommend.memberNeeded[i];
-        int i = 0;
-        for(int userId : recommend.users) {
-            recommend.recommend(userId, "github", recommend.memberNeeded, recommend.skills);
-            System.out.printf("%d/%d\n", ++i, recommend.users.size());
-            for(int j = 0; j < tmp.length; j++) recommend.memberNeeded[j] = tmp[j];
+        for(int disId = 5; disId <= 8; disId++){
+            recommend.setDisID(disId);
+            recommend.loadExpDataSet();
+            for(int recType = 0; recType < 4; recType++) {
+                recommend.setRecType(recType);
+                int[] tmp = new int[recommend.memberNeeded.length];
+                for (int i = 0; i < tmp.length; i++) tmp[i] = recommend.memberNeeded[i];
+                int i = 0;
+                for (int userId : recommend.users) {
+                    recommend.recommend(userId, "github", recommend.memberNeeded, recommend.skills);
+                    System.out.printf("SET%d DIS%d RecType%d : %d/%d\n", 1, disId, recType, ++i, recommend.users.size());
+                    for (int j = 0; j < tmp.length; j++) recommend.memberNeeded[j] = tmp[j];
+                }
+            }
         }
     }
 

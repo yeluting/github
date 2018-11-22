@@ -15,7 +15,7 @@
 
     <select id="loadSkills" resultType="java.util.Map" parameterType="java.lang.Integer">
         SELECT * FROM SetDis
-        WHERE set_id = #{setId,jdbcType=INTEGER} AND dis_id = #{dis_id,jdbcType=INTEGER}
+        WHERE set_id = #{setId,jdbcType=INTEGER} AND dis_id = #{disId,jdbcType=INTEGER}
     </select>
 
 </mapper>

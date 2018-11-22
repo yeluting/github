@@ -118,7 +118,6 @@ public class TeamSuccessRate {
             teamMemberStr[i] = memberId;
         }
         resultJson.put("members", teamMemberStr);
-        System.out.println(successRate / teamSize);
         resultJson.put("willingness", successRate / teamSize);
         return resultJson;
     }

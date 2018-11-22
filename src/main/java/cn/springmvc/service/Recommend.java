@@ -111,7 +111,6 @@ public class Recommend {
             chosen.add(maxUserId);
             memberString += String.format("&%d", maxUserId);
         }
-        for(int i = 0; i < team.length; i++) System.out.println(team[i]);
         JSONObject teamDetail = teamSuccessRate.getTeamDetail(team, totalMember + 1, chosenLang);
         JSONObject beRecommended = teamDetail.getJSONObject(String.format("%d", userId));
         recommendMapper.saveRecResult(SetID, DisID, RecType, userId, memberString,

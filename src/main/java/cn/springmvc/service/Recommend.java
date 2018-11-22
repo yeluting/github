@@ -96,7 +96,7 @@ public class Recommend {
                         case 3: tmpSuccessRate = teamSuccessRate.getTeamSuccessRate_Grow(team, i + 2, chosenLang); break;
                         default: tmpSuccessRate = teamSuccessRate.getTeamSuccessRate(team, i + 2, chosenLang);
                     }
-                    if(tmpSuccessRate > maxSuccessRate && tmpSuccessRate < Double.MAX_VALUE){
+                    if(tmpSuccessRate > maxSuccessRate){
                         maxSuccessRate = tmpSuccessRate;
                         maxSkillIndex = j;
                         maxUserId = developer;
@@ -110,6 +110,7 @@ public class Recommend {
             team[i + 1] = maxUserId;
             chosen.add(maxUserId);
             memberString += String.format("&%d", maxUserId);
+            System.out.println(maxSuccessRate);
         }
         JSONObject teamDetail = teamSuccessRate.getTeamDetail(team, totalMember + 1, chosenLang);
         JSONObject beRecommended = teamDetail.getJSONObject(String.format("%d", userId));

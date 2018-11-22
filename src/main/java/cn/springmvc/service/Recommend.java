@@ -1,5 +1,6 @@
 package cn.springmvc.service;
 
+import cn.springmvc.dao.RecommendMapper;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,7 +19,11 @@ public class Recommend {
     @Autowired
     private TeamSuccessRate teamSuccessRate;
 
+    @Autowired
+    private RecommendMapper recommendMapper;
+
     private int SetID = 1;
+    private int DisID = 1;
     private int RecType = 0;
     private boolean flag = false;
 
@@ -28,6 +33,22 @@ public class Recommend {
 
     public void setSetID(int id){
         SetID = id;
+    }
+
+    public void setDisID(int id){
+        DisID = id;
+    }
+
+    public void loadExpDataSet(List<Integer> users, String[] skills, int[] memberNeeded){
+        users = recommendMapper.loadUsers(SetID);
+        Map<String, Object> tmp = recommendMapper.loadSkills(SetID, DisID).get(0);
+        int size = (Integer) tmp.get("langSize");
+        skills = new String[size];
+        memberNeeded = new int[size];
+        for(int i = 1; i <= size; i++){
+            skills[i - 1] = (String) tmp.get(String.format("L%d", i));
+            memberNeeded[i - 1] = (Integer) tmp.get(String.format("L%d_num", i));
+        }
     }
 
     public String recommend(int userId, String platform, int[] memberNeeded, String[] skills){
@@ -47,6 +68,7 @@ public class Recommend {
         Map<String, Set<Integer>> rSetByLangs = recommendSet.RSetByLangs(userId, skills);
         Set<String> chosenLang = new HashSet<String>();
         Set<Integer> chosen = new HashSet<Integer>();
+        String memberString = String.format("%d", userId);
         for(int i = 0; i < totalMember; i++){
             double maxSuccessRate = -1;
             int maxSkillIndex = -1;
@@ -83,9 +105,14 @@ public class Recommend {
                 chosenLang.add(skills[maxSkillIndex]);
             team[i + 1] = maxUserId;
             chosen.add(maxUserId);
-            System.out.printf("Teammate %d : %d %s\n", i + 1, maxUserId, skills[maxSkillIndex]);
+            memberString += String.format(",%d", maxUserId);
         }
-        return teamSuccessRate.getTeamDetail(team, totalMember + 1, chosenLang);
+        JSONObject teamDetail = teamSuccessRate.getTeamDetail(team, totalMember + 1, chosenLang);
+        JSONObject beRecommended = teamDetail.getJSONObject(String.format("%d", userId));
+        recommendMapper.saveRecResult(SetID, DisID, RecType, userId, memberString,
+                beRecommended.getDouble("closeness"), beRecommended.getDouble("diff"),
+                beRecommended.getDouble("grow"), teamDetail.getDouble("willingness"));
+        return teamDetail;
     }
 
 }

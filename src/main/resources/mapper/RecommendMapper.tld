@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.springmvc.dao.RecommendMapper">
+
+    <insert id="saveRecResult">
+        INSERT INTO RecResult_Set#{setId,jdbcType=INTEGER}_Dis#{disId,jdbcType=INTEGER}
+        VALUES(#{userId,jdbcType=INTEGER}, #{recType,jdbcType=INTEGER}, #{members,jdbcType=VARCHAR},
+               #{cost,jdbcType=DOUBLE},#{diff,jdbcType=DOUBLE},#{grow,jdbcType=DOUBLE},
+               #{TSR,jdbcType=DOUBLE})
+    </insert>
+
+    <select id="loadUsers" resultType="java.lang.Integer" parameterType="java.lang.Integer">
+        SELECT user_id FROM RecSet#{setId,jdbcType=INTEGER}_id
+    </select>
+
+    <select id="loadSkills" resultType="java.util.Map" parameterType="java.lang.Integer">
+        SELECT * FROM SetDis
+        WHERE set_id = #{setId,jdbcType=INTEGER} AND dis_id = #{dis_id,jdbcType=INTEGER}
+    </select>
+
+</mapper>

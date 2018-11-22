@@ -27,6 +27,10 @@ public class Recommend {
     private int RecType = 0;
     private boolean flag = false;
 
+    public List<Integer> users = new ArrayList<Integer>();
+    public String[] skills = new String[4];
+    public int[] memberNeeded = new int[4];
+
     public void setRecType(int Type){
         RecType = Type % 4;
     }
@@ -39,7 +43,7 @@ public class Recommend {
         DisID = id;
     }
 
-    public void loadExpDataSet(List<Integer> users, String[] skills, int[] memberNeeded){
+    public void loadExpDataSet(){
         users = recommendMapper.loadUsers(SetID);
         Map<String, Object> tmp = recommendMapper.loadSkills(SetID, DisID).get(0);
         int size = (Integer) tmp.get("langSize");

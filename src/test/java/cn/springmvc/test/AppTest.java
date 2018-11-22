@@ -27,14 +27,11 @@ public class AppTest
         recommend.setSetID(1);
         recommend.setDisID(1);
         recommend.setRecType(0);
-        List<Integer> users = new ArrayList<Integer>();
-        String[] skills = new String[4];
-        int[] memberNeeded = new int[4];
-        recommend.loadExpDataSet(users, skills, memberNeeded);
+        recommend.loadExpDataSet();
         int i = 0;
-        for(int userId : users) {
-            System.out.printf("%d/%d\n", ++i, users.size());
-            recommend.recommend(userId, "github", memberNeeded, skills);
+        for(int userId : recommend.users) {
+            System.out.printf("%d/%d\n", ++i, recommend.users.size());
+            recommend.recommend(userId, "github", recommend.memberNeeded, recommend.skills);
         }
     }
 

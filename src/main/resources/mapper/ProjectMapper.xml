@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="cn.springmvc.dao.ProjectMapper">
-  <resultMap id="BaseResultMap" type="cn.springmvc.model.Project">
+<mapper namespace="cn.springmvcGithub.dao.ProjectMapper">
+  <resultMap id="BaseResultMap" type="cn.springmvcGithub.model.Project">
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="url" jdbcType="VARCHAR" property="url" />
     <result column="owner_id" jdbcType="INTEGER" property="ownerId" />
@@ -27,7 +27,7 @@
     delete from projects
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="cn.springmvc.model.Project">
+  <insert id="insert" parameterType="cn.springmvcGithub.model.Project">
     insert into projects (id, url, owner_id, 
       name, description, language, 
       created_at, forked_from, deleted, 
@@ -37,7 +37,7 @@
       #{createdAt,jdbcType=TIMESTAMP}, #{forkedFrom,jdbcType=INTEGER}, #{deleted,jdbcType=BIT}, 
       #{updatedAt,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="cn.springmvc.model.Project">
+  <insert id="insertSelective" parameterType="cn.springmvcGithub.model.Project">
     insert into projects
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -104,7 +104,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="cn.springmvc.model.Project">
+  <update id="updateByPrimaryKeySelective" parameterType="cn.springmvcGithub.model.Project">
     update projects
     <set>
       <if test="url != null">
@@ -137,7 +137,7 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="cn.springmvc.model.Project">
+  <update id="updateByPrimaryKey" parameterType="cn.springmvcGithub.model.Project">
     update projects
     set url = #{url,jdbcType=VARCHAR},
       owner_id = #{ownerId,jdbcType=INTEGER},

@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="cn.springmvc.dao.ProjectCommitMapper">
-  <resultMap id="BaseResultMap" type="cn.springmvc.model.ProjectCommit">
+<mapper namespace="cn.springmvcGithub.dao.ProjectCommitMapper">
+  <resultMap id="BaseResultMap" type="cn.springmvcGithub.model.ProjectCommit">
     <result column="project_id" jdbcType="INTEGER" property="projectId" />
     <result column="commit_id" jdbcType="INTEGER" property="commitId" />
   </resultMap>
-  <insert id="insert" parameterType="cn.springmvc.model.ProjectCommit">
+  <insert id="insert" parameterType="cn.springmvcGithub.model.ProjectCommit">
     insert into project_commits (project_id, commit_id)
     values (#{projectId,jdbcType=INTEGER}, #{commitId,jdbcType=INTEGER})
   </insert>
-  <insert id="insertSelective" parameterType="cn.springmvc.model.ProjectCommit">
+  <insert id="insertSelective" parameterType="cn.springmvcGithub.model.ProjectCommit">
     insert into project_commits
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="projectId != null">

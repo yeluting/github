@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="cn.springmvc.dao.ProjectLanguageMapper">
-  <resultMap id="BaseResultMap" type="cn.springmvc.model.ProjectLanguage">
+<mapper namespace="cn.springmvcGithub.dao.ProjectLanguageMapper">
+  <resultMap id="BaseResultMap" type="cn.springmvcGithub.model.ProjectLanguage">
     <result column="project_id" jdbcType="INTEGER" property="projectId" />
     <result column="language" jdbcType="VARCHAR" property="language" />
     <result column="bytes" jdbcType="INTEGER" property="bytes" />
     <result column="created_at" jdbcType="TIMESTAMP" property="createdAt" />
   </resultMap>
-  <insert id="insert" parameterType="cn.springmvc.model.ProjectLanguage">
+  <insert id="insert" parameterType="cn.springmvcGithub.model.ProjectLanguage">
     insert into project_languages (project_id, language, bytes, 
       created_at)
     values (#{projectId,jdbcType=INTEGER}, #{language,jdbcType=VARCHAR}, #{bytes,jdbcType=INTEGER}, 
       #{createdAt,jdbcType=TIMESTAMP})
   </insert>
-  <insert id="insertSelective" parameterType="cn.springmvc.model.ProjectLanguage">
+  <insert id="insertSelective" parameterType="cn.springmvcGithub.model.ProjectLanguage">
     insert into project_languages
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="projectId != null">
@@ -71,12 +71,12 @@
     </foreach>
   </update>
 
-  <update id="updateLanguagePercent" parameterType="cn.springmvc.model.ProjectLanguage">
+  <update id="updateLanguagePercent" parameterType="cn.springmvcGithub.model.ProjectLanguage">
       UPDATE project_languages_percent SET percent = #{item.percent}
       WHERE project_id = #{item.projectId} and language = #{item.language}
   </update>
 
-  <insert id="insertProjectLanguageFilter1" parameterType="cn.springmvc.model.ProjectLanguage">
+  <insert id="insertProjectLanguageFilter1" parameterType="cn.springmvcGithub.model.ProjectLanguage">
     insert into project_languages_filter1 (project_id, language, bytes, created_at,percent)
     values
     <foreach collection="list" item="item" index="index" separator=",">

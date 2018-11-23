@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="cn.springmvc.dao.UserMapper">
-  <resultMap id="BaseResultMap" type="cn.springmvc.model.User">
+<mapper namespace="cn.springmvcGithub.dao.UserMapper">
+  <resultMap id="BaseResultMap" type="cn.springmvcGithub.model.User">
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="login" jdbcType="VARCHAR" property="login" />
     <result column="company" jdbcType="VARCHAR" property="company" />
@@ -30,7 +30,7 @@
     delete from users
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="cn.springmvc.model.User">
+  <insert id="insert" parameterType="cn.springmvcGithub.model.User">
     insert into users (id, login, company, 
       created_at, type, fake, 
       deleted, longs, lat, country_code, 
@@ -42,7 +42,7 @@
       #{state,jdbcType=VARCHAR}, #{city,jdbcType=VARCHAR}, #{location,jdbcType=VARCHAR}
       )
   </insert>
-  <insert id="insertSelective" parameterType="cn.springmvc.model.User">
+  <insert id="insertSelective" parameterType="cn.springmvcGithub.model.User">
     insert into users
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -127,7 +127,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="cn.springmvc.model.User">
+  <update id="updateByPrimaryKeySelective" parameterType="cn.springmvcGithub.model.User">
     update users
     <set>
       <if test="login != null">
@@ -169,7 +169,7 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="cn.springmvc.model.User">
+  <update id="updateByPrimaryKey" parameterType="cn.springmvcGithub.model.User">
     update users
     set login = #{login,jdbcType=VARCHAR},
       company = #{company,jdbcType=VARCHAR},

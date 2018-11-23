@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="cn.springmvc.dao.CommitMapper">
-  <resultMap id="BaseResultMap" type="cn.springmvc.model.Commit">
+<mapper namespace="cn.springmvcGithub.dao.CommitMapper">
+  <resultMap id="BaseResultMap" type="cn.springmvcGithub.model.Commit">
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="sha" jdbcType="VARCHAR" property="sha" />
     <result column="author_id" jdbcType="INTEGER" property="authorId" />
@@ -22,7 +22,7 @@
     delete from commits
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="cn.springmvc.model.Commit">
+  <insert id="insert" parameterType="cn.springmvcGithub.model.Commit">
     insert into commits (id, sha, author_id, 
       committer_id, project_id, created_at
       )
@@ -30,7 +30,7 @@
       #{committerId,jdbcType=INTEGER}, #{projectId,jdbcType=INTEGER}, #{createdAt,jdbcType=TIMESTAMP}
       )
   </insert>
-  <insert id="insertSelective" parameterType="cn.springmvc.model.Commit">
+  <insert id="insertSelective" parameterType="cn.springmvcGithub.model.Commit">
     insert into commits
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -73,7 +73,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="cn.springmvc.model.Commit">
+  <update id="updateByPrimaryKeySelective" parameterType="cn.springmvcGithub.model.Commit">
     update commits
     <set>
       <if test="sha != null">
@@ -94,7 +94,7 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="cn.springmvc.model.Commit">
+  <update id="updateByPrimaryKey" parameterType="cn.springmvcGithub.model.Commit">
     update commits
     set sha = #{sha,jdbcType=VARCHAR},
       author_id = #{authorId,jdbcType=INTEGER},

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="cn.springmvc.dao.ProjectMemberMapper">
-  <resultMap id="BaseResultMap" type="cn.springmvc.model.ProjectMember">
+<mapper namespace="cn.springmvcGithub.dao.ProjectMemberMapper">
+  <resultMap id="BaseResultMap" type="cn.springmvcGithub.model.ProjectMember">
     <id column="repo_id" jdbcType="INTEGER" property="repoId" />
     <id column="user_id" jdbcType="INTEGER" property="userId" />
     <result column="created_at" jdbcType="TIMESTAMP" property="createdAt" />
@@ -10,25 +10,25 @@
   <sql id="Base_Column_List">
     repo_id, user_id, created_at, ext_ref_id
   </sql>
-  <select id="selectByPrimaryKey" parameterType="cn.springmvc.model.ProjectMemberKey" resultMap="BaseResultMap">
+  <select id="selectByPrimaryKey" parameterType="cn.springmvcGithub.model.ProjectMemberKey" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from project_members
     where repo_id = #{repoId,jdbcType=INTEGER}
       and user_id = #{userId,jdbcType=INTEGER}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="cn.springmvc.model.ProjectMemberKey">
+  <delete id="deleteByPrimaryKey" parameterType="cn.springmvcGithub.model.ProjectMemberKey">
     delete from project_members
     where repo_id = #{repoId,jdbcType=INTEGER}
       and user_id = #{userId,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="cn.springmvc.model.ProjectMember">
+  <insert id="insert" parameterType="cn.springmvcGithub.model.ProjectMember">
     insert into project_members (repo_id, user_id, created_at, 
       ext_ref_id)
     values (#{repoId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{createdAt,jdbcType=TIMESTAMP}, 
       #{extRefId,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="cn.springmvc.model.ProjectMember">
+  <insert id="insertSelective" parameterType="cn.springmvcGithub.model.ProjectMember">
     insert into project_members
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="repoId != null">
@@ -59,7 +59,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="cn.springmvc.model.ProjectMember">
+  <update id="updateByPrimaryKeySelective" parameterType="cn.springmvcGithub.model.ProjectMember">
     update project_members
     <set>
       <if test="createdAt != null">
@@ -72,7 +72,7 @@
     where repo_id = #{repoId,jdbcType=INTEGER}
       and user_id = #{userId,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="cn.springmvc.model.ProjectMember">
+  <update id="updateByPrimaryKey" parameterType="cn.springmvcGithub.model.ProjectMember">
     update project_members
     set created_at = #{createdAt,jdbcType=TIMESTAMP},
       ext_ref_id = #{extRefId,jdbcType=VARCHAR}
@@ -84,7 +84,7 @@
     select DISTINCT project_id FROM project_languages_filter1
   </select>
 
-  <select id="getProjectMemberBatch" resultType="cn.springmvc.model.ProjectMember">
+  <select id="getProjectMemberBatch" resultType="cn.springmvcGithub.model.ProjectMember">
     select repo_id as repoId, user_id as userId, created_at as createdAt, ext_ref_id as extRefId  FROM project_members
     where repo_id IN
     <foreach item = "item" index = "index" collection="list" open="(" separator="," close=")">
@@ -92,7 +92,7 @@
     </foreach>
   </select>
 
-  <insert id="insertProjectMemberFilter1" parameterType="cn.springmvc.model.ProjectMember">
+  <insert id="insertProjectMemberFilter1" parameterType="cn.springmvcGithub.model.ProjectMember">
     insert into project_members_filter1 (repo_id, user_id, created_at, ext_ref_id)
     values <foreach collection="list" item="item" index="index" separator=",">
       (#{item.repoId}, #{item.userId}, #{item.createdAt},#{item.extRefId})

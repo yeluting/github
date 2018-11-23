@@ -14,6 +14,7 @@ public class LangFilter {
     @Autowired
     private LangFilterMapper langFilterMapper;
 
+    //边缘语言过滤
     public void PageRank(){
         ArrayList<Map<String, Object>> langParser = langFilterMapper.loadLangParser();
         int N = langParser.size();

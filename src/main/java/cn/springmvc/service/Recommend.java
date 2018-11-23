@@ -43,6 +43,7 @@ public class Recommend {
         DisID = id;
     }
 
+    //实验配置：加载项目以及项目语言配比
     public void loadExpDataSet(){
         users = recommendMapper.loadUsers(SetID);
         Map<String, Object> tmp = recommendMapper.loadSkills(SetID, DisID).get(0);
@@ -55,15 +56,17 @@ public class Recommend {
         }
     }
 
+    //预加载
     public String recommend(int userId, String platform, int[] memberNeeded, String[] skills){
         if(!flag) {
             dataPreLoad.loadData();
             flag = true;
-            System.out.println("Data Loaded\n");
+            //System.out.println("Data Loaded\n");
         }
         return recommendWeb(userId, platform, memberNeeded, skills).toString();
     }
 
+    //提供给web
     public JSONObject recommendWeb(int userId, String platform, int[] memberNeeded, String[] skills){
         int totalMember = 0;
         for(int memberN : memberNeeded) totalMember += memberN;

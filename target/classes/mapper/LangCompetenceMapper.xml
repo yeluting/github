@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.springmvc.dao.LangCompetenceMapper">
+
+    <select id="loadSuffixMap" resultType="java.util.Map">
+        SELECT language, suffix, freq FROM
+        LangSuffixFreq_Filter2
+    </select>
+
+    <select id="getProjectID" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+        SELECT id FROM projects_3
+        LIMIT #{limit,jdbcType=INTEGER}
+    </select>
+
+    <select id="getALLProjectID" resultType="java.lang.Integer">
+        SELECT id FROM projects_3
+    </select>
+
+    <select id="getCommits" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+        SELECT commit_id FROM project3_commits_${tno}
+        WHERE project_id = #{pid,jdbcType=INTEGER}
+    </select>
+
+    <select id="getLang" parameterType="java.lang.Integer" resultType="java.lang.String">
+        select LField from languages,
+        (SELECT language FROM project_languages_filter1
+        WHERE project_id = #{pid,jdbcType=INTEGER}) tt
+        WHERE languages.language = tt.language;
+    </select>
+
+    <select id="getCommitDetail" resultType="java.util.Map">
+        SELECT author_id, fileType, fileModify FROM commits_all
+        WHERE id IN
+        <foreach collection="commits" open="(" close=")" separator="," item="cid">#{cid,jdbcType=INTEGER}</foreach>
+    </select>
+
+    <insert id="saveMissed">
+        INSERT INTO mapMissed(project_id, suffix, freq)
+        VALUES <foreach collection="suffixes" item="item" separator=",">
+        (#{pid,jdbcType=INTEGER},#{item,jdbcType=VARCHAR}, 1)
+        </foreach>
+        ON DUPLICATE KEY UPDATE
+        freq = freq + 1
+    </insert>
+
+    <insert id="updateCompetenceByUser">
+        INSERT INTO LangCompetence(author_id,
+        <foreach collection="langComp" close=")" separator="," index="key">
+            ${key}
+        </foreach> VALUES(#{uid,jdbcType=INTEGER},
+        <foreach collection="langComp" close=")" separator="," item="val">
+            #{val,jdbcType=INTEGER}
+        </foreach>
+        ON DUPLICATE KEY UPDATE
+        <foreach collection="langComp" separator="," index="key">
+            ${key} = ${key} + VALUES(${key})
+        </foreach>
+    </insert>
+
+</mapper>

@@ -43,6 +43,7 @@ class SocIntimacyParallel implements Runnable{
         socIntimacyMapper = smapper;
     }
 
+    //计算社交关系下的亲密度
     public void run(){
         Map<Integer, LinkedList<Integer>> updateValues = new HashMap<Integer, LinkedList<Integer>>();
         System.out.printf("Get %d users.\n", users.size());

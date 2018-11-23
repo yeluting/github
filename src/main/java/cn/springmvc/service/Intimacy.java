@@ -15,6 +15,7 @@ public class Intimacy {
 
     final private double MAXDIS = 100;
 
+    //计算两个开发者间的亲密度：社交关系和协作关系
     public void calculate(int batchsize, int MAXTHREAD){
         int t_init = Thread.activeCount();
         ArrayList<Integer> users = intimacyMapper.getSize();
@@ -26,6 +27,7 @@ public class Intimacy {
         while(Thread.activeCount() != t_init);
     }
 
+    //计算一个项目中，开发者与团队其他成员间的亲密度
     public Map<Integer, Double> calculateTeam(int project){
         List<Integer> members = intimacyMapper.getMembersByPid(project);
         if(members.size() <= 1) return new HashMap<Integer, Double>();
@@ -47,6 +49,7 @@ public class Intimacy {
         return values;
     }
 
+    //计算一个团队中开发者与团队其他成员间的亲密度
     public void calculateTeam(int[] team, int teamSize, double[] memberCost){
         double[][] p_int = new double[teamSize][teamSize];
         for(int i = 0; i < teamSize; i++){

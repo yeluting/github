@@ -18,6 +18,7 @@ public class Cooperation {
 
     private Map<Integer, Map<Integer, Integer>> relation;
 
+    //计算开发者间的协作次数
     public void calculate(int size, int max_thread){
         int count = 0;
         int t = Thread.activeCount();

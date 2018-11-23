@@ -19,6 +19,7 @@ public class TeamRecord {
     @Autowired
     private Intimacy intimacy;
 
+    //计算偏好的组队记录
     final private String[] heads = {"project_id", "members", "team", "member_id", "project_id", "teamMemberSum", "teamMember"};
 
     public void insert(int max_thread){
@@ -130,6 +131,7 @@ public class TeamRecord {
         while(Thread.activeCount() != init_threads);
     }
 
+    //能力成长
     public void getGrowSpace(double[][] LangAbility, double[] growSpace){
         int n = LangAbility.length;
         int m = LangAbility[0].length;
@@ -147,6 +149,7 @@ public class TeamRecord {
         }
     }
 
+    //能力差异
     public void getAbilityDiff(double[][] LangAbility, double[] abilityDiff){
         int n = LangAbility.length;
         double[][] memberDiff = new double[n][n];

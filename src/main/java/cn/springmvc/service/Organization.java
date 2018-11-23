@@ -18,6 +18,7 @@ public class Organization {
 
     private Map<Integer, Map<Integer, Integer>> relation;
 
+    //组织关系
     public void calculate(int size, int max_thread){
         int count = 0;
         relation = new HashMap<Integer, Map<Integer, Integer>>();

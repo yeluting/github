@@ -14,11 +14,17 @@ public class DataPreLoad {
     @Autowired
     private DataPreLoadMapper dataPreLoadMapper;
 
+    //语言的映射，数据库列名c++
     public static Map<String, String> LangMap = new HashMap<String, String>();
+    //语言与数字id对应
     public static Map<String, Integer> LangIndexMap = new HashMap<String, Integer>();
+    //开发者能力
     public static Map<Integer, double[]> Competence = new HashMap<Integer, double[]>();
+    //偏好
     public static Map<Integer, double[]> Coefficient = new HashMap<Integer, double[]>();
+    //亲密度
     public static Map<Integer, Map<Integer, Double>> IntimacyMap = new HashMap<Integer, Map<Integer, Double>>();
+
 
     public void loadData(){
         List<Map<String, Object>> LangList = dataPreLoadMapper.loadLanguage();

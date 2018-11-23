@@ -13,6 +13,7 @@ public class ProjectMemberAna {
     @Autowired
     private ProjectMemberAnaMapper projectMemberAnaMapper;
 
+    //组队人数统计
     public void calculate(){
         double size = 0.0;
         Map<Integer, Integer> memMap = new HashMap<Integer, Integer>();

@@ -57,6 +57,7 @@ public class LangCompetence {
         }
     }
 
+    //得到项目贡献矩阵
     private void calcContribution(int project_id, Map<Integer, Map<String, Integer>> LangContribution){
         String[] langs = langCompetenceMapper.getLang(project_id);
         ArrayList<Integer> commit_ids = new ArrayList<Integer>();
@@ -101,6 +102,7 @@ public class LangCompetence {
         if(!missed.isEmpty())langCompetenceMapper.saveMissed(project_id, missed);
     }
 
+    //读取后缀名与语言映射
     private void loadSuffixMap(){
         suffixMap = new HashMap<String, Map<String, Integer>>();
         ArrayList<Map<String, Object>> mappers = langCompetenceMapper.loadSuffixMap();
@@ -115,6 +117,7 @@ public class LangCompetence {
         }
     }
 
+    //将后缀名映射为语言
     private Map<String, String> mapSuffix(Set<String> suffixes, String[] langs){
         Map<String, String> result = new HashMap<String, String>();
         for(String suffix : suffixes){

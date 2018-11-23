@@ -7,14 +7,15 @@
     </select>
 
     <select id="getCommitsFilter1" resultType="cn.springmvc.model.Commit">
-        select * FROM commits
+        select id, sha, author_id as authorId, committer_id as committerId, project_id as projectId, created_at as createdAt
+        FROM commits
         where project_id IN
         <foreach item = "item" index = "index" collection="list" open="(" separator="," close=")">
             #{item}
         </foreach>
     </select>
 
-    <insert id="insertProjectMemberFilter1" parameterType="cn.springmvc.model.Commit">
+    <insert id="insertProjectCommitFilter1" parameterType="cn.springmvc.model.Commit">
         insert into commits_filter1 (id, sha, author_id, committer_id,project_id,created_at)
         values <foreach collection="list" item="item" index="index" separator=",">
         (#{item.id}, #{item.sha}, #{item.authorId},#{item.committerId},#{item.projectId},#{item.createdAt})

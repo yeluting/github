@@ -13,6 +13,7 @@ public class CopIntimacy {
     @Autowired
     private CopIntimacyMapper copIntimacyMapper;
 
+    //计算开发者协作关系下的亲密度
     public void calculate(int batchsize){
         Map<Integer, LinkedList<Integer>> updateValues = new HashMap<Integer, LinkedList<Integer>>();
         LinkedList<Integer> users = copIntimacyMapper.getUserId();

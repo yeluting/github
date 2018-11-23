@@ -19,6 +19,7 @@ public class LangAbility {
 
     private Map<String, String> LangParser;
 
+    //按项目的语言占比计算用户的能力
     public void calculate(int max_thread){
         loadParser();
         ArrayList<Integer> projects = langAbilityMapper.selectProjectId_Filter1();
@@ -55,6 +56,7 @@ public class LangAbility {
         }
     }
 
+    //语言映射
     private void loadParser(){
         List<Map<String, Object>> parser = langAbilityMapper.selectLangParser();
         LangParser = new HashMap<String, String>();

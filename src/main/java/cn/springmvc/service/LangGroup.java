@@ -16,6 +16,7 @@ public class LangGroup {
     @Autowired
     private LangGroupMapper langGroupMapper;
 
+
     public void group(int limit){
         ArrayList<Map<String, Object>> langParser = langFilterMapper.loadLangParser();
         Map<String, String> langP = new HashMap<String, String>();

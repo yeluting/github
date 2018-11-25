@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.springmvcGithub.dao.OrganizationMemberMapper">
+  <resultMap id="BaseResultMap" type="cn.springmvcGithub.model.OrganizationMember">
+    <id column="org_id" jdbcType="INTEGER" property="orgId" />
+    <id column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="created_at" jdbcType="TIMESTAMP" property="createdAt" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    org_id, user_id, created_at
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="cn.springmvcGithub.model.OrganizationMemberKey" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from organization_members
+    where org_id = #{orgId,jdbcType=INTEGER}
+      and user_id = #{userId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="cn.springmvcGithub.model.OrganizationMemberKey">
+    delete from organization_members
+    where org_id = #{orgId,jdbcType=INTEGER}
+      and user_id = #{userId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="cn.springmvcGithub.model.OrganizationMember">
+    insert into organization_members (org_id, user_id, created_at
+      )
+    values (#{orgId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{createdAt,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="cn.springmvcGithub.model.OrganizationMember">
+    insert into organization_members
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="orgId != null">
+        org_id,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="createdAt != null">
+        created_at,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="orgId != null">
+        #{orgId,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="createdAt != null">
+        #{createdAt,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.springmvcGithub.model.OrganizationMember">
+    update organization_members
+    <set>
+      <if test="createdAt != null">
+        created_at = #{createdAt,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where org_id = #{orgId,jdbcType=INTEGER}
+      and user_id = #{userId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.springmvcGithub.model.OrganizationMember">
+    update organization_members
+    set created_at = #{createdAt,jdbcType=TIMESTAMP}
+    where org_id = #{orgId,jdbcType=INTEGER}
+      and user_id = #{userId,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.springmvcGithub.dao.LangAbilityAnaMapper">
+
+    <select id="selectLang" resultType="java.lang.String">
+        SELECT LField FROM languages
+    </select>
+
+    <select id="selectLangAbility" resultType="java.util.Map">
+        SELECT * FROM LangCompetence LIMIT #{lim,jdbcType=INTEGER} OFFSET #{off,jdbcType=INTEGER}
+    </select>
+
+    <select id="saveLangAnalysis" parameterType="java.util.Map">
+        INSERT INTO LangCompetence_dis VALUES
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{item.lang,jdbcType=VARCHAR},#{item.count,jdbcType=INTEGER},#{item.avg,jdbcType=DOUBLE},#{item.min,jdbcType=DOUBLE},#{item.max,jdbcType=DOUBLE})
+        </foreach>
+    </select>
+
+    <update id="updateCount" parameterType="java.util.Map">
+        UPDATE LangAbility_dis
+        SET smallAbility = #{val,jdbcType=INTEGER}
+        WHERE language = #{lang,jdbcType=VARCHAR}
+    </update>
+
+    <select id="selectNormedLA" parameterType="java.lang.String" resultType="java.lang.Double">
+        SELECT ${language} FROM LangAbility_norm
+        WHERE ${language} > 0
+    </select>
+
+    <insert id="insertNormedDis" parameterType="java.util.Map">
+        INSERT INTO LangAbility_norm_dis VALUES
+        <foreach collection="dis" index="key" item="value" separator=",">
+            (#{key,jdbcType=VARCHAR},<foreach collection="value" item="item" separator=",">#{item,jdbcType=INTEGER}</foreach>)
+        </foreach>
+    </insert>
+
+</mapper>

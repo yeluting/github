@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.springmvcGithub.dao.ProjectLanguageMapper">
+  <resultMap id="BaseResultMap" type="cn.springmvcGithub.model.ProjectLanguage">
+    <result column="project_id" jdbcType="INTEGER" property="projectId" />
+    <result column="language" jdbcType="VARCHAR" property="language" />
+    <result column="bytes" jdbcType="INTEGER" property="bytes" />
+    <result column="created_at" jdbcType="TIMESTAMP" property="createdAt" />
+  </resultMap>
+  <insert id="insert" parameterType="cn.springmvcGithub.model.ProjectLanguage">
+    insert into project_languages (project_id, language, bytes, 
+      created_at)
+    values (#{projectId,jdbcType=INTEGER}, #{language,jdbcType=VARCHAR}, #{bytes,jdbcType=INTEGER}, 
+      #{createdAt,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.springmvcGithub.model.ProjectLanguage">
+    insert into project_languages
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="projectId != null">
+        project_id,
+      </if>
+      <if test="language != null">
+        language,
+      </if>
+      <if test="bytes != null">
+        bytes,
+      </if>
+      <if test="createdAt != null">
+        created_at,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="projectId != null">
+        #{projectId,jdbcType=INTEGER},
+      </if>
+      <if test="language != null">
+        #{language,jdbcType=VARCHAR},
+      </if>
+      <if test="bytes != null">
+        #{bytes,jdbcType=INTEGER},
+      </if>
+      <if test="createdAt != null">
+        #{createdAt,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="getLangsByProject" parameterType="java.lang.Integer" resultType="java.util.Map">
+    SELECT language, bytes FROM project_languages
+    WHERE project_id = #{project_id,jdbcType=INTEGER}
+  </select>
+
+  <select id="getAllProjectIds" resultType="java.lang.Integer">
+    SELECT DISTINCT project_id FROM project_languages_percent
+  </select>
+
+  <select id="getProjectIdsFilter1" resultType="java.lang.Integer">
+    SELECT id FROM projects_1
+  </select>
+
+  <select id="getProjectLanBatch" resultType="java.lang.String">
+    select concat(project_id,'==',group_CONCAT(language SEPARATOR '%%'),'==',group_CONCAT(bytes SEPARATOR '%%'),'==',created_at) FROM project_languages_percent
+    where project_id IN
+    <foreach item = "item" index = "index" collection="list" open="(" separator="," close=")">
+      #{item}
+    </foreach> group by project_id
+  </select>
+
+  <update id="updateLanguagePercentBatch" parameterType="java.util.ArrayList">
+    <foreach collection="list" item="item" index="index" separator=";">
+    UPDATE project_languages_percent SET percent = #{item.percent} WHERE project_id = #{item.projectId} and language = #{item.language}
+    </foreach>
+  </update>
+
+  <update id="updateLanguagePercent" parameterType="cn.springmvcGithub.model.ProjectLanguage">
+      UPDATE project_languages_percent SET percent = #{item.percent}
+      WHERE project_id = #{item.projectId} and language = #{item.language}
+  </update>
+
+  <insert id="insertProjectLanguageFilter1" parameterType="cn.springmvcGithub.model.ProjectLanguage">
+    insert into project_languages_filter1 (project_id, language, bytes, created_at,percent)
+    values
+    <foreach collection="list" item="item" index="index" separator=",">
+    (#{item.projectId}, #{item.language}, #{item.bytes},#{item.createdAt},#{item.percent})
+    </foreach>
+  </insert>
+
+  <select id="getLanguagePercentTotal" resultType="java.util.HashMap">
+    SELECT project_id as projectId,sum(percent) as total FROM project_languages_filter1 group by project_id
+  </select>
+
+
+  <delete id="deleteProjectWOLan" parameterType="int">
+    delete from project_languages_filter1 where project_id=#{projectId}
+  </delete>
+</mapper>

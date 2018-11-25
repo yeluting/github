@@ -70,6 +70,22 @@ public class Intimacy {
             memberCost[i] = Dijkstra(i, p_int) / (teamSize - 1);
     }
 
+    public void calculateTeam2(int[] team, int teamSize, double[] memberCost){
+        double[][] p_int = new double[teamSize][teamSize];
+        for(int i = 0; i < teamSize; i++){
+            for(int j = 0; j < teamSize; j++){
+                if(i == j) p_int[i][j] = 0.0;
+                else{
+                    Double tmp = intimacyMapper.getPairIntimacy(team[i], team[j]);
+                    if(tmp == null) p_int[i][j] = 1;
+                    else p_int[i][j] = tmp;
+                }
+            }
+        }
+        for(int i = 0; i < teamSize; i++)
+            memberCost[i] = Dijkstra(i, p_int) / (teamSize - 1);
+    }
+
     //Copy From https://github.com/yeluting/kaggle/blob/master/src/main/java/cn/springmvc/service/CompetitorIntimacy.java
     //Line 135
     //广度优先计算start-->end的最短加权路径，权值为方阵表示

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.springmvcGithub.dao.IntimacyMapper">
+
+    <select id="getSize" resultType="java.lang.Integer">
+        SELECT distinct(userA) FROM Relation
+    </select>
+
+    <select id="updateIntimacy" parameterType="java.lang.Integer">
+        UPDATE Relation SET folCost = 0.7*copCost + 0.15*orgCost + 0.15*fol
+        WHERE userA BETWEEN #{value1,jdbcType=INTEGER} AND #{value2,jdbcType=INTEGER}
+    </select>
+
+    <select id="getProjectId" resultType="java.lang.Integer">
+        SELECT DISTINCT(project_id)
+        FROM project_languages_filter1
+    </select>
+
+    <select id="getMembersByPid" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+        SELECT committer_id FROM project_committer
+        WHERE project_id = #{project_id,jdbcType=INTEGER}
+    </select>
+
+    <select id="getPairIntimacy" parameterType="java.lang.Integer" resultType="java.lang.Double">
+        SELECT 1 - folCost FROM Relation
+        WHERE userA = #{userA,jdbcType=INTEGER} AND userB = #{userB,jdbcType=INTEGER}
+    </select>
+
+    <insert id="insertTeamIntimacy" parameterType="java.util.Map">
+        INSERT INTO TeamIntimacy VALUES
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{pid,jdbcType=INTEGER},#{userA,jdbcType=INTEGER},#{userB,jdbcType=INTEGER},#{value,jdbcType=DOUBLE})
+        </foreach>
+    </insert>
+
+</mapper>

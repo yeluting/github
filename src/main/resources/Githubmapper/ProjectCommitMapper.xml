@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.springmvcGithub.dao.ProjectCommitMapper">
+  <resultMap id="BaseResultMap" type="cn.springmvcGithub.model.ProjectCommit">
+    <result column="project_id" jdbcType="INTEGER" property="projectId" />
+    <result column="commit_id" jdbcType="INTEGER" property="commitId" />
+  </resultMap>
+  <insert id="insert" parameterType="cn.springmvcGithub.model.ProjectCommit">
+    insert into project_commits (project_id, commit_id)
+    values (#{projectId,jdbcType=INTEGER}, #{commitId,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.springmvcGithub.model.ProjectCommit">
+    insert into project_commits
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="projectId != null">
+        project_id,
+      </if>
+      <if test="commitId != null">
+        commit_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="projectId != null">
+        #{projectId,jdbcType=INTEGER},
+      </if>
+      <if test="commitId != null">
+        #{commitId,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="getProjectCommitsByUser" parameterType="java.lang.Integer" resultType="java.util.Map">
+    SELECT userProject.project_id project_id, userProject.commitNums, count(*) commitTotal
+    FROM
+    (SELECT project_id, count(*) commitNums 
+    FROM project_commits
+    WHERE commit_id in (
+      SELECT id FROM commits
+      WHERE committer_id = #{user_id,jdbcType=INTEGER}
+    ) GROUP BY project_id) userProject RIGHT JOIN project_commits
+    ON project_commits.project_id = userProject.project_id
+    GROUP BY project_commits.project_id
+    ORDER BY project_commits.project_id ASC
+  </select>
+</mapper>

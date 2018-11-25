@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.springmvcGithub.dao.LanguageMapper">
+  <resultMap id="BaseResultMap" type="cn.springmvcGithub.model.Language">
+    <id column="language" jdbcType="VARCHAR" property="language" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from languages
+    where language = #{language,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="cn.springmvcGithub.model.Language">
+    insert into languages (language)
+    values (#{language,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.springmvcGithub.model.Language">
+    insert into languages
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="language != null">
+        language,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="language != null">
+        #{language,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="getLangs" resultType="java.lang.String">
+    SELECT * FROM languages;
+  </select>
+</mapper>

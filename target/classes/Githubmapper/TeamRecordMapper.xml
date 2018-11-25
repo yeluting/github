@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.springmvcGithub.dao.TeamRecordMapper">
+
+    <select id="getProjectId" parameterType="java.lang.String" resultType="java.lang.Integer">
+        SELECT id FROM ${table}
+        WHERE members &lt; 50
+    </select>
+
+    <select id="getCommitter" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+        SELECT committer_id FROM project_committer
+        WHERE project_id = #{project_id,jdbcType=INTEGER}
+    </select>
+
+    <insert id="insertTeams" parameterType="java.util.Map">
+        INSERT INTO TeamRecord_Comp VALUES
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{item.project_id,jdbcType=INTEGER},#{item.members,jdbcType=VARCHAR},#{item.team,jdbcType=INTEGER})
+        </foreach>
+    </insert>
+
+    <insert id="insertMembers" parameterType="java.util.Map">
+        INSERT INTO TeamRecordAnalysis_Comp(member_id, project_id,teamMemberSum, teamMember) VALUES
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{item.member_id,jdbcType=INTEGER},#{item.project_id,jdbcType=INTEGER},#{item.teamMemberSum,jdbcType=INTEGER},#{item.teamMember,jdbcType=VARCHAR})
+        </foreach>
+    </insert>
+
+    <select id="getTeamRecord" resultType="java.util.Map">
+        SELECT project_id, members FROM TeamRecord_Comp
+        WHERE team = 1
+    </select>
+
+    <select id="getTeamRecordAnalysisProject" resultType="java.lang.Integer">
+        SELECT distinct(project_id) FROM TeamRecordAnalysis_Comp
+    </select>
+
+    <select id="getProjectLang" parameterType="java.lang.Integer" resultType="java.lang.String">
+        SELECT LField FROM languages INNER JOIN
+        (SELECT * FROM project_languages_filter1 WHERE project_id = #{project_id,jdbcType=INTEGER}) tt
+        ON tt.language = languages.language;
+    </select>
+
+    <select id="getLangAbility" resultType="java.util.Map">
+        SELECT <foreach collection="langs" item="item" index="index" separator=",">${item}</foreach>
+        FROM LangCompetence_norm WHERE author_id = #{author_id,jdbcType=INTEGER}
+    </select>
+
+    <update id="updateGrowDiff">
+        UPDATE TeamRecordAnalysis_Comp SET grow = #{grow,jdbcType=DOUBLE}, diff = #{diff,jdbcType=DOUBLE}
+        WHERE member_id = #{member_id,jdbcType=INTEGER} AND project_id = #{project_id,jdbcType=INTEGER}
+    </update>
+
+    <insert id="updateCost">
+        UPDATE TeamRecordAnalysis_Comp SET cost = #{cost,jdbcType=DOUBLE}
+        WHERE member_id = #{member_id,jdbcType=INTEGER} AND project_id = #{project_id,jdbcType=INTEGER}
+    </insert>
+
+</mapper>

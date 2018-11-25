@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.springmvcGithub.dao.SocIntimacyMapper">
+
+    <select id="getUserId" resultType="java.lang.Integer">
+        SELECT DISTINCT(userA)
+        FROM Relation
+    </select>
+
+    <select id="getOrgs" parameterType="java.lang.Integer" resultType="java.util.Map">
+        SELECT userA, sum(org) AS orgs FROM Relation
+        WHERE userA = #{uid,jdbcType=INTEGER}
+    </select>
+
+    <update id="updateOrg" parameterType="java.lang.Integer">
+        UPDATE Relation
+        SET orgCost = org / #{val,jdbcType=INTEGER}
+        WHERE userA = #{uid,jdbcType=INTEGER}
+    </update>
+
+    <update id="updateOrg0" parameterType="java.lang.Integer">
+        UPDATE Relation
+        SET orgCost = 0
+        WHERE userA = #{uid,jdbcType=INTEGER}
+    </update>
+
+</mapper>

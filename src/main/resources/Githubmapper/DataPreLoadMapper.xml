@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.springmvcGithub.dao.DataPreLoadMapper">
+
+    <select id="loadLanguage" resultType="java.util.Map">
+        SELECT * FROM languages
+    </select>
+
+    <select id="loadCompetence" resultType="java.util.Map">
+        SELECT * FROM LangCompetence_norm_bge5_Filtered
+    </select>
+
+    <select id="loadCoefficient" resultType="java.util.Map">
+        SELECT * FROM bge5_5_1_5_params
+    </select>
+
+    <select id="loadIntimacy" resultType="java.util.Map">
+        SELECT * FROM Relation#{tid,jdbcType=INTEGER}
+    </select>
+
+</mapper>

@@ -129,6 +129,7 @@ public class LangCompetence {
             Map<String, Integer> secondMap = suffixMap.get(suffix);
             secondMap.put(language, freq);
         }
+        System.out.println("Suffix Map Loaded");
     }
 
     //将后缀名映射为语言

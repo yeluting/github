@@ -58,7 +58,7 @@
     </insert>
 
     <select id="getProjects" resultType="java.lang.Integer">
-        SELECT #{cn,jdbcType=VARCHAR} FROM #{tn,jdbcType=VARCHAR}
+        SELECT ${cn} FROM #{tn,jdbcType=VARCHAR}
     </select>
 
     <insert id="insertContributionByUser">

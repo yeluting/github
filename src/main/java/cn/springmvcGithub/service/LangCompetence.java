@@ -120,6 +120,7 @@ public class LangCompetence {
     private void loadSuffixMap(){
         suffixMap = new HashMap<String, Map<String, Integer>>();
         ArrayList<Map<String, Object>> mappers = langCompetenceMapper.loadSuffixMap();
+        System.out.println("Suffix Map Loaded");
         for(Map<String, Object> mapper : mappers){
             String language = (String) mapper.get("language");
             String suffix = (String) mapper.get("suffix");
@@ -129,7 +130,7 @@ public class LangCompetence {
             Map<String, Integer> secondMap = suffixMap.get(suffix);
             secondMap.put(language, freq);
         }
-        System.out.println("Suffix Map Loaded");
+        System.out.println("Suffix Map Parsed");
     }
 
     //将后缀名映射为语言

@@ -107,6 +107,7 @@ public class TeamSuccessRate {
                     coef[1] * addCoef[1] * (1 - memberDiff[i]) +
                     coef[2] * addCoef[2] * memberGrow[i];
             successRate += tmpsuccessRate;
+            memberJson.put("userId", team[i]);
             memberJson.put("closeness", 1 - memberCost[i]);
             memberJson.put("diff", memberDiff[i]);
             memberJson.put("grow", memberGrow[i]);

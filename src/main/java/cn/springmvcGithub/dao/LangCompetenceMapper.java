@@ -23,4 +23,9 @@ public interface LangCompetenceMapper {
 
     void updateCompetenceByUser(@Param("uid") int author_id, @Param("langComp") Map<String, Integer> langComp);
 
+    ArrayList<Integer> getProjects(@Param("tn") String tn, @Param("cn") String cn);
+
+    void insertContributionByUser(@Param("project_id") int pid, @Param("user_id") int uid,
+                                  @Param("langMap") Map<String, Integer> langCon);
+
 }

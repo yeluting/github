@@ -1,5 +1,6 @@
 package cn.springmvc.test;
 
+import cn.springmvcGithub.service.LangCompetence;
 import cn.springmvcGithub.service.RecommendGithub;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -17,13 +18,11 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 public class AppTest
 {
     @Autowired
-    private RecommendGithub recommendGithub;
+    private LangCompetence langCompetence;
 
     @Test
     public void test() {
-        int[] memberNeeded = {1,4,1,4};
-        String[] skills = {"css", "javascript", "html", "ruby"};
-        System.out.println(recommendGithub.recommend(2, "github", memberNeeded, skills));
+        langCompetence.calculate("projectAna", "project_id");
     }
 
 }

@@ -57,4 +57,15 @@
         </foreach>
     </insert>
 
+    <select id="getProjects" resultType="java.lang.Integer">
+        SELECT #{cn,jdbcType=VARCHAR} FROM #{tn,jdbcType=VARCHAR}
+    </select>
+
+    <insert id="insertContributionByUser">
+        INSERT INTO ContributionExp(project_id,user_id,language,contribution) VALUES
+        <foreach collection="langMap" separator="," index="key" item="val">
+            (#{project_id,jdbcType=INTEGER},#{user_id,jdbcType=INTEGER},#{key,jdbcType=VARCHAR},#{val,jdbcType=INTEGER})
+        </foreach>
+    </insert>
+
 </mapper>

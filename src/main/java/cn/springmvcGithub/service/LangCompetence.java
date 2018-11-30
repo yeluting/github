@@ -57,6 +57,20 @@ public class LangCompetence {
         }
     }
 
+    public void calculate(String tableName, String columnName){
+        loadSuffixMap();
+        project_ids = langCompetenceMapper.getProjects(tableName, columnName);
+        int i = 0;
+        for(int project_id : project_ids) {
+            System.out.printf("Project ID : %d %d/%d\n", project_id, ++i, project_ids.size());
+            Map<Integer, Map<String, Integer>> LangContribution = new HashMap<Integer, Map<String, Integer>>();
+            calcContribution(project_id, LangContribution);
+            for(Map.Entry<Integer, Map<String, Integer>> lc : LangContribution.entrySet()) {
+                langCompetenceMapper.insertContributionByUser(project_id, lc.getKey(), lc.getValue());
+            }
+        }
+    }
+
     //得到项目贡献矩阵
     private void calcContribution(int project_id, Map<Integer, Map<String, Integer>> LangContribution){
         String[] langs = langCompetenceMapper.getLang(project_id);
@@ -99,7 +113,7 @@ public class LangCompetence {
                 }
             }
         }
-        if(!missed.isEmpty())langCompetenceMapper.saveMissed(project_id, missed);
+//        if(!missed.isEmpty())langCompetenceMapper.saveMissed(project_id, missed);
     }
 
     //读取后缀名与语言映射

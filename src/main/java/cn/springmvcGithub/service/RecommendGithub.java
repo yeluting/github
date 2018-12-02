@@ -116,10 +116,10 @@ public class RecommendGithub {
             memberString += String.format("&%d", maxUserId);
         }
         JSONObject teamDetail = teamSuccessRate.getTeamDetail(team, totalMember + 1, chosenLang);
-//        JSONObject beRecommended = teamDetail.getJSONObject(String.format("%d", userId));
-//        recommendMapper.saveRecResult(SetID, DisID, RecType, userId, memberString,
-//                beRecommended.getDouble("closeness"), beRecommended.getDouble("diff"),
-//                beRecommended.getDouble("grow"), teamDetail.getDouble("willingness"));
+        JSONObject beRecommended = teamDetail.getJSONObject(String.format("%d", userId));
+        recommendMapper.saveRecResult(SetID, DisID, RecType, userId, memberString,
+                beRecommended.getDouble("closeness"), beRecommended.getDouble("diff"),
+                beRecommended.getDouble("grow"), teamDetail.getDouble("willingness"));
         return teamDetail;
     }
 

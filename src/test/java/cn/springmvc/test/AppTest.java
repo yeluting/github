@@ -23,7 +23,7 @@ public class AppTest
     @Test
     public void test() {
         for(int setId = 1; setId <= 3; setId++) {
-            recommendGithub.setDisID(setId);
+            recommendGithub.setSetID(setId);
             int disId = 1;
             recommendGithub.setDisID(disId);
             recommendGithub.loadExpDataSet();

@@ -18,11 +18,25 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 public class AppTest
 {
     @Autowired
-    private LangCompetence langCompetence;
+    private RecommendGithub recommendGithub;
 
     @Test
     public void test() {
-        langCompetence.calculate("projectAna", "project_id");
+        recommendGithub.setDisID(1);
+        int disId = 1;
+        recommendGithub.setDisID(disId);
+        recommendGithub.loadExpDataSet();
+        for (int recType = 0; recType < 4; recType++) {
+            recommendGithub.setRecType(recType);
+            int[] tmp = new int[recommendGithub.memberNeeded.length];
+            for (int i = 0; i < tmp.length; i++) tmp[i] = recommendGithub.memberNeeded[i];
+            int i = 0;
+            for (int userId : recommendGithub.users) {
+                recommendGithub.recommend(userId, "github", recommendGithub.memberNeeded, recommendGithub.skills);
+                System.out.printf("SET%d DIS%d RecType%d : %d/%d\n", 1, disId, recType, ++i, recommendGithub.users.size());
+                for (int j = 0; j < tmp.length; j++) recommendGithub.memberNeeded[j] = tmp[j];
+            }
+        }
     }
 
 }

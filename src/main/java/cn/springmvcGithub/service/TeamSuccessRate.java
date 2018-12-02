@@ -100,7 +100,8 @@ public class TeamSuccessRate {
         for(int i = 0; i < teamSize; i++){
 //            System.out.println(memberCost[i]+","+memberDiff[i]+","+memberGrow[i]);
             JSONObject memberJson = new JSONObject();
-            String memberId = DataPreLoad.NameMap.get(team[i]);
+//            String memberId = DataPreLoad.NameMap.get(team[i]);
+            String memberId = String.format("%d", team[i]);
             double[] coef = DataPreLoad.Coefficient.get(team[i]);
             double tmpsuccessRate =
                     coef[0] * addCoef[0] * (1 - memberCost[i]) +

@@ -32,10 +32,14 @@ public class TeamSuccessRate {
         double successRate = 0.0;
         for(int i = 0; i < teamSize; i++){
             double[] coef = DataPreLoad.Coefficient.get(team[i]);
-            successRate +=
+            double temp =
                     coef[0] * addCoef[0] * (1 - memberCost[i]) +
                     coef[1] * addCoef[1] * (1 - memberDiff[i]) +
                     coef[2] * addCoef[2] * memberGrow[i];
+            if(temp < 0.64)
+                return -1;
+            successRate += temp;
+
         }
         return successRate;
     }

@@ -77,6 +77,7 @@ public class RecommendGithub {
         Set<String> chosenLang = new HashSet<String>();
         Set<Integer> chosen = new HashSet<Integer>();
         String memberString = String.format("%d", userId);
+        boolean find = true;
         for(int i = 0; i < totalMember; i++){
             double maxSuccessRate = -1;
             int maxSkillIndex = -1;
@@ -108,19 +109,29 @@ public class RecommendGithub {
                 }
                 if(newAdded) chosenLang.remove(skills[j]);
             }
-            memberNeeded[maxSkillIndex]--;
-            if(!chosenLang.contains(skills[maxSkillIndex]))
-                chosenLang.add(skills[maxSkillIndex]);
-            team[i + 1] = maxUserId;
-            chosen.add(maxUserId);
-            memberString += String.format("&%d", maxUserId);
+            if(maxSkillIndex == -1){
+                System.out.println("找不到队友");
+                find = false;
+                break;
+            }else {
+                memberNeeded[maxSkillIndex]--;
+                if (!chosenLang.contains(skills[maxSkillIndex]))
+                    chosenLang.add(skills[maxSkillIndex]);
+                team[i + 1] = maxUserId;
+                chosen.add(maxUserId);
+                memberString += String.format("&%d", maxUserId);
+            }
         }
-        JSONObject teamDetail = teamSuccessRate.getTeamDetail(team, totalMember + 1, chosenLang);
-        JSONObject beRecommended = teamDetail.getJSONObject(String.format("%d", userId));
-        recommendMapper.saveRecResult(SetID, DisID, RecType, userId, memberString,
-                beRecommended.getDouble("closeness"), beRecommended.getDouble("diff"),
-                beRecommended.getDouble("grow"), teamDetail.getDouble("willingness"));
-        return teamDetail;
+        if(find) {
+            JSONObject teamDetail = teamSuccessRate.getTeamDetail(team, totalMember + 1, chosenLang);
+            JSONObject beRecommended = teamDetail.getJSONObject(String.format("%d", userId));
+//        recommendMapper.saveRecResult(SetID, DisID, RecType, userId, memberString,
+//                beRecommended.getDouble("closeness"), beRecommended.getDouble("diff"),
+//                beRecommended.getDouble("grow"), teamDetail.getDouble("willingness"));
+            return teamDetail;
+        }else{
+            return null;
+        }
     }
 
 }
